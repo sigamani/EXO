@@ -1,0 +1,129 @@
+#include <iostream> 
+#include <vector>
+#include <fstream>
+#include <string>
+#include <algorithm>
+#include <stdio.h>
+#include <TString.h>
+#include <TSystem.h>
+#include <TFile.h>
+#include <TTree.h>
+#include <TMinuit.h>
+
+//#include <pthread.h>
+//#include <unistd.h>
+//#include "TThread.h"
+
+#include "AnaInput.h"
+#include "TestGen.h"
+#include "Trigger.h"
+#include "Histogram.h"
+#include "Background.h"
+#include "BackgroundStudy.h"
+#include "Systematic.h"
+#include "Output.h"
+//#include "mtest.h"
+
+using namespace std; 
+
+int main( int argc, const char* argv[] ) { 
+
+  string datacardfile = ( argc > 1 ) ? argv[1] : "DataCard.txt";
+  AnaInput  *Input = new AnaInput( datacardfile );
+
+  // method to read root files
+  string dataFileNames ;
+  Input->GetParameters( "TheData", &dataFileNames );
+  vector<string> mcFileNames ;
+  Input->GetParameters( "TheMC",   &mcFileNames );
+
+  int module = -1 ;
+  Input->GetParameters( "Module", & module ) ;
+
+  if ( module == 0 ) {
+     TestGen   *tgen  = new TestGen( datacardfile ) ;
+     tgen->ReadTree( dataFileNames);
+     delete tgen ;
+
+     Histogram *histo = new Histogram( datacardfile ) ;
+     histo->DrawHistograms();
+     delete histo ;
+  }
+  if ( module == 1 ) {
+     Trigger   *trg   = new Trigger( datacardfile ) ;
+     //trg->ReadTree( dataFileNames);
+     trg->EventList( dataFileNames ) ;
+     trg->CutFlow( dataFileNames ) ;
+     delete trg ;
+  }
+  if ( module == 2 ) {
+     Histogram *histo = new Histogram( datacardfile ) ;
+     histo->DrawHistograms();
+     delete histo ;
+  }
+  if ( module == 3 ) {
+     TestGen   *tgen  = new TestGen( datacardfile ) ;
+     vector<double >normV = Input->NormalizeComponents( datacardfile );
+
+     for ( size_t i=0 ; i < mcFileNames.size() ; i++ ) { 
+         tgen->ReadTree( mcFileNames[i] , normV[i] );
+     }
+     delete tgen ;
+
+     Histogram *histo = new Histogram( datacardfile ) ;
+     histo->DrawHistograms();
+     delete histo ;
+  }
+  if ( module == 4 ) {
+
+     Output* out = new Output( datacardfile ) ;
+     out->Produce() ;
+
+     delete out ;
+  }
+  if ( module == 5 ) {
+     Systematic* syst  = new Systematic( datacardfile ) ;
+     syst->McDataCompare() ;
+     delete syst ;
+  }
+  if ( module == 6 ) {
+     Background * bg = new Background( datacardfile ) ;
+     bg->RunEstimation( dataFileNames ) ;
+     //bg->SpikeShape() ;
+     delete bg ;
+  }
+  if ( module == 7 ||  module == 8 || module == 9 ) {
+     
+     BackgroundStudy * bgS = new BackgroundStudy( datacardfile ) ;
+     if ( module == 7 ) {
+        bgS->Create() ;
+        bgS->init() ;
+        bgS->Run() ;
+        bgS->DrawHistograms() ;
+     } 
+     if ( module == 8 ) {
+        vector<double >normV = Input->NormalizeComponents( datacardfile );
+        bgS->Create() ;
+        for ( size_t i = 0 ; i < mcFileNames.size() ; i++ ) { 
+            cout<<" Runing MC : "<< mcFileNames[i] << endl ;
+            bgS->init( mcFileNames[i] ) ;
+            bgS->Run( normV[i] ) ;
+        } 
+        bgS->DrawHistograms() ;
+     } 
+     if ( module == 9 ) {
+     //if ( isData == 0 ) bgS->Run( mcFileNames[0] ) ;
+         bgS->Open() ;
+         bgS->DrawHistograms() ;
+     }
+
+     delete bgS ;
+  }
+
+  cout<<" Finished !!!"<<endl ;
+
+  return 0;
+
+}
+
+

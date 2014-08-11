@@ -1,0 +1,18 @@
+[MULTICRAB]
+cfg=crab_DATA.cfg
+
+[Run2012A]         
+CMSSW.datasetpath = /Photon/Run2012A-22Jan2013-v1/AOD 
+USER.user_remote_dir         = DATA/v20/Run2012A
+
+[Run2012B]
+CMSSW.datasetpath = /DoublePhoton/Run2012B-22Jan2013-v1/AOD 
+USER.user_remote_dir         = DATA/v20/Run2012B
+
+[Run2012C]
+CMSSW.datasetpath = /DoublePhoton/Run2012C-22Jan2013-v2/AOD 
+USER.user_remote_dir         = DATA/v20/Run2012C
+
+[Run2012D]
+CMSSW.datasetpath = /DoublePhoton/Run2012D-22Jan2013-v1/AOD 
+USER.user_remote_dir         = DATA/v20/Run2012D

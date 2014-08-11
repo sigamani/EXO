@@ -1,0 +1,25 @@
+from os import listdir
+import ROOT
+from ROOT import TFile
+
+
+a = listdir("/pnfs//iihe/cms/store/user/sigamani/DATA/v8/Run2012C/")
+
+b = listdir("/pnfs//iihe/cms/store/user/sigamani/DATA/v8/Run2012D/")
+
+i = 0
+
+for j in range(len(a)):
+    print str(j) + "/" + str(len(a))
+    data = TFile.Open("dcap://maite.iihe.ac.be/pnfs//iihe/cms/store/user/sigamani/DATA/v8/Run2012C/"+str(a[j]))
+    tree = data.Get("DPAnalysis")
+    i += tree.GetEntries()
+
+for j in range(len(b)):
+    print str(j) + "/" + str(len(b))
+    data = TFile.Open("dcap://maite.iihe.ac.be/pnfs//iihe/cms/store/user/sigamani/DATA/v8/Run2012D/"+str(b[j]))
+    tree = data.Get("DPAnalysis")
+    i += tree.GetEntries()
+
+
+print i
