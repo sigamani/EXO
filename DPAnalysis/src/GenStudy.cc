@@ -102,7 +102,7 @@ void GenStudy::GetGenEvent(const edm::Event& iEvent, Ntuple& leaves, bool debug 
        leaves.genVy[i] = v2.y() / 10.;
        leaves.genVz[i] = v2.z() / 10.;
        if ( debug ) {
-          HepMC::FourVector v1 = (*it)->production_vertex()->position() ;
+	 //          HepMC::FourVector v1 = (*it)->production_vertex()->position() ;
        //   printf(" X[%d] v1[%.2f,%.2f,%.2f] -> v2[%.2f,%.2f,%.2f]\n", i, v1.x(), v1.y(), v1.z(), v2.x(), v2.y(), v2.z() ) ;
        //   printf("       p4: (%.1f,%.1f,%.1f,%.1f) \n", p4.px(), p4.py(), p4.pz(), p4.e() ) ;
        //   printf(" --------------------------------------------- \n");
@@ -111,7 +111,7 @@ void GenStudy::GetGenEvent(const edm::Event& iEvent, Ntuple& leaves, bool debug 
        int xi = i ;
        i++ ;
 
-       double beta  = sqrt( (p4.px()*p4.px()) + (p4.py()*p4.py()) + (p4.pz()*p4.pz()) ) / p4.e() ;
+       //       double beta  = sqrt( (p4.px()*p4.px()) + (p4.py()*p4.py()) + (p4.pz()*p4.pz()) ) / p4.e() ;
        // trace its children, photon(22) and gravitino(1000039)
        // looping over the particles at the end vertex of the mother particle
        HepMC::GenVertex* v_out = (*it)->end_vertex() ;
@@ -134,14 +134,14 @@ void GenStudy::GetGenEvent(const edm::Event& iEvent, Ntuple& leaves, bool debug 
 	       leaves.genT[xi]  = (v1_out->position().t() - v_out->position().t()) / 300. ; // this is tau*gamma for neutralino
 	       leaves.genT[i]  = -1 ;  // this is lifetime(tau*gamma) for photon and gravitino
                if ( debug ) {
-                  HepMC::FourVector v_x =  v_out->position() ;
-                  HepMC::FourVector v_g =  v1_out->position() ;
-                  double dx = v1_out->position().x() - v_out->position().x() ;
-		  double dy = v1_out->position().y() - v_out->position().y() ;
-		  double dz = v1_out->position().z() - v_out->position().z() ;
-		  double dr = sqrt( (dx*dx) +  (dy*dy) + (dz*dz) ) ;
+		 //       HepMC::FourVector v_x =  v_out->position() ;
+		 //              HepMC::FourVector v_g =  v1_out->position() ;
+                  // double dx = v1_out->position().x() - v_out->position().x() ;
+		  // double dy = v1_out->position().y() - v_out->position().y() ;
+		  // double dz = v1_out->position().z() - v_out->position().z() ;
+		  //		  double dr = sqrt( (dx*dx) +  (dy*dy) + (dz*dz) ) ;
 
-                  HepMC::FourVector g4 = (*i2)->momentum() ;
+		 //                  HepMC::FourVector g4 = (*i2)->momentum() ;
                  /* printf("   g[%d] v1[%.2f,%.2f,%.2f] -> v2[%.2f,%.2f,%.2f]\n", 
                              i-xi, v_x.x(), v_x.y(), v_x.z(), v_g.x(), v_g.y(), v_g.z() ) ;
                   printf("         p4 (%.1f,%.1f,%.1f,%.1f) , dT = %.3f , dr/beta = %.3f \n", 
