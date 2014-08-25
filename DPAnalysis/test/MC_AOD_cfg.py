@@ -12,9 +12,11 @@ process.source = cms.Source("PoolSource",
 
 
     fileNames = cms.untracked.vstring(
+        'root://eoscms//eos/cms/store//caf/user/sigamani/13TeV_DPTRIGSTUDIES/GMSB_L180_Ctau1000_Pythia8_13TeV_AODSIM_tsg_PU40bx50.root'
+#'root://eoscms//eos/cms/store/mc/Summer13/DiPhotonBox_Pt-25To250_14TeV-pythia6/GEN-SIM-RECO/UpgradePhase1Age0START_DR61SLHCx_PU140Bx25_STAR17_61_V1A-v1/20000/F8E9FAAF-87D4-E211-BDCC-003048678EE2.root'
     #'root://xrootd.unl.edu//store/mc/Summer12_DR53X/GMSB_Lambda-180_CTau-250_TuneZ2star_8TeV-pythia6/AODSIM/PU_S10_START53_V19-v1/00000/26EDCC8B-EE6F-E311-B003-002590574604.root' 
     #'/store/mc/Summer12_DR53X/TTJets_SemiLeptMGDecays_TuneP11noCR_8TeV-madgraph-tauola/AODSIM/PU_S10_START53_V19-v1/10000/FED86752-97C5-E211-B82C-003048678F74.root' 
-    '/store/mc/Summer12_DR53X/GMSB_Lambda-160_CTau-500_TuneZ2star_8TeV-pythia6/GEN-SIM-RECO/PU_S10_START53_V7A-v2/00000/08514E95-F110-E211-A67D-E41F13181030.root'
+#    '/store/mc/Summer12_DR53X/GMSB_Lambda-160_CTau-500_TuneZ2star_8TeV-pythia6/GEN-SIM-RECO/PU_S10_START53_V7A-v2/00000/08514E95-F110-E211-A67D-E41F13181030.root'
     #'/store/mc/Summer12_DR53X/GMSB_Lambda-160_CTau-500_TuneZ2star_8TeV-pythia6/GEN-SIM-RECO/PU_S10_START53_V7A-v2/00000/1E3079E2-E310-E211-9A4E-00215E222286.root',
     #'/store/mc/Summer12_DR53X/GMSB_Lambda-160_CTau-500_TuneZ2star_8TeV-pythia6/GEN-SIM-RECO/PU_S10_START53_V7A-v2/00000/36C021CC-FE10-E211-8CEB-00215E21D77A.root',
     #'/store/mc/Summer12_DR53X/GMSB_Lambda-160_CTau-500_TuneZ2star_8TeV-pythia6/GEN-SIM-RECO/PU_S10_START53_V7A-v2/00000/40EFD7D7-FE10-E211-BA54-001A645C0E8C.root',
@@ -65,7 +67,7 @@ process.ana = cms.EDAnalyzer('DPAnalysis',
     #DTSegmentCollection = cms.InputTag("dt4DCosmicSegments"),
     muonSource  = cms.InputTag("muonsFromCosmics"),
     trigSource = cms.InputTag("TriggerResults","","HLT"),
-    jetSource   = cms.InputTag("ak5PFJets"),
+    jetSource   = cms.InputTag("ak7PFJets"),
     patJetSource = cms.InputTag("selectedPatJetsPFlow"),
     metSource   = cms.InputTag("pfMet"),
     type1metSource   = cms.InputTag("pfType1CorrectedMet"),
@@ -208,11 +210,11 @@ postfix = "PFlow"
 
 usePF2PAT( process
                , runPF2PAT = True
-               , jetAlgo   = 'AK5'
+               , jetAlgo   = 'AK7'
                , runOnMC   = True 
                , postfix   = postfix
                # for MC
-               , jetCorrections=('AK5PFchs', ['L1FastJet','L2Relative','L3Absolute'])
+               , jetCorrections=('AK7PFchs', ['L1FastJet','L2Relative','L3Absolute'])
                # for data
                #, jetCorrections=('AK5PFchs', ['L2L3Residual'])
         )
@@ -230,7 +232,7 @@ process.p = cms.Path(
 getattr(process,"pfNoPileUp"+postfix).enable = True
 getattr(process,"pfNoMuon"+postfix).enable = True
 getattr(process,"pfNoElectron"+postfix).enable = True
-getattr(process,"pfNoTau"+postfix).enable = False
+#getattr(process,"pfNoTau"+postfix).enable = False
 getattr(process,"pfNoJet"+postfix).enable = True
 
 # verbose flags for the PF2PAT modules

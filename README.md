@@ -3,11 +3,15 @@ EXO-DisplacedPhotons
 
 Displaced photons package 
 
-scramv1 project -n CMSSW_5_3_11_DP CMSSW CMSSW_5_3_11
+setenv SCRAM_ARCH slc6_amd64_gcc481   (get the architecture)
+ 
+scramv1 project -n CMSSW_7_1_0_DP CMSSW CMSSW_7_1_0
 
-cd CMSSW_5_3_11_DP/src/ 
+cd CMSSW_7_1_0_DP/src/ 
 
-git clone git@github.com:sigamani/EXO.git
+git clone https://github.com/sigamani/EXO
+
+git fetch https://github.com/sigamani/EXO rel7:rel7
 
 cd EXO
 
@@ -15,4 +19,4 @@ tar -xvf RecoMET.tar
 
 scramv1 b clean ; scramv1 b
 
-Then run over some AOD files
+The next step should be to run over some AOD files, but that doesn't quite work yet.
