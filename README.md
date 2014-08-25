@@ -3,6 +3,8 @@ EXO-DisplacedPhotons
 
 Displaced photons package 
 
+setenv SCRAM_ARCH slc6_amd64_gcc481   (get the architecture)
+ 
 scramv1 project -n CMSSW_7_1_0_DP CMSSW CMSSW_7_1_0
 
 cd CMSSW_7_1_0_DP/src/ 
