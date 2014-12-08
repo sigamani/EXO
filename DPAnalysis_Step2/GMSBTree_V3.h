@@ -105,6 +105,7 @@ public :
    Float_t         convEta[MAXCONV];   //[nConversions]
    Float_t         convR[MAXCONV];   //[nConversions]
    Float_t         convMatchedEle[MAXCONV];   //[nConversions]
+   Float_t         convChi2[MAXCONV];   //[nConversions]
    Float_t         phoPx[MAXPHO];   //[nPhotons]
    Float_t         phoPy[MAXPHO];   //[nPhotons]
    Float_t         phoPz[MAXPHO];   //[nPhotons]
@@ -233,6 +234,7 @@ public :
    TBranch        *b_convEta;   //!
    TBranch        *b_convR;   //!
    TBranch        *b_convMatchedEle;   //!
+   TBranch        *b_convChi2; //!
    TBranch        *b_phoPx;   //!
    TBranch        *b_phoPy;   //!
    TBranch        *b_phoPz;   //!
@@ -430,6 +432,7 @@ void GMSBTree_V3::Init(TTree *tree)
    fChain->SetBranchAddress("convEta", convEta, &b_convEta);
    fChain->SetBranchAddress("convR", convR, &b_convR);
    fChain->SetBranchAddress("convMatchedEle", convMatchedEle, &b_convMatchedEle);
+   fChain->SetBranchAddress("convChi2", convChi2, &b_convChi2);
    fChain->SetBranchAddress("phoPx", phoPx, &b_phoPx);
    fChain->SetBranchAddress("phoPy", phoPy, &b_phoPy);
    fChain->SetBranchAddress("phoPz", phoPz, &b_phoPz);
@@ -511,3 +514,4 @@ Int_t GMSBTree_V3::Cut(Long64_t entry)
    return 1;
 }
 #endif // #ifdef GMSBTree_V3_cxx
+

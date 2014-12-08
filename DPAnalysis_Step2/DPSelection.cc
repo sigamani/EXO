@@ -24,11 +24,14 @@
 #define pi 3.141592653589793
 #include "DPSelection.h"
 
-
 using namespace std;
 using std::vector;
 using std::cout; using std::endl;
 
+
+vector<TLorentzVector> CombineJets_R_no_seed(vector<TLorentzVector> ,TLorentzVector, TLorentzVector);
+double CalcMTR(TLorentzVector , TLorentzVector , TVector3 );
+double CalcGammaMRstar(TLorentzVector , TLorentzVector);
 
 
 
@@ -68,8 +71,7 @@ double deltaR(TLorentzVector a, TLorentzVector b) {
  
 
 bool comp_pair (double i,double j) { return (i>j); }
-
-
+bool comp_pair2(const TLorentzVector &a, const TLorentzVector &b){ return a.Pt() > b.Pt(); }
 
 //================================================
 double weightCrossSection(const char* outname) {
@@ -110,13 +112,12 @@ double weightCrossSection(const char* outname) {
 
 int getsumcounterzero(TString infile){
 
-	  //TString dir = "/localgrid/wvandrie/CMSSW_5_3_11_DP/src/EXO/DPAnalysis/test/v21/";
-          //TFile f(dir+infile+".root");
+	  TString dir = "/afs/cern.ch/work/w/wvandrie/public/EXO/CMSSW_7_1_8/src/EXO/DPAnalysis/test/v22/";
+	  //TString dir = "/afs/cern.ch/work/s/sigamani/public/CMSSW_5_3_22_DP/src/EXO/DPAnalysis_Step2/"; 
+          TFile f(dir+infile+".root");
 
-	  TString dir = "root://eoscms//eos/cms/store/caf/user/sigamani/DPAnalysis/v21/"; 
-          TFile *f = TFile::Open(dir+infile+".root");
 
-          TTree* ftree= (TTree*)f->Get("CutFlow");
+          TTree* ftree= (TTree*)f.Get("CutFlow");
       
           TH1D* hist = new TH1D("hist","",150000,0,150000);
 
@@ -163,9 +164,9 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
    h000->GetXaxis()->SetBinLabel(1,"All");
    h000->GetXaxis()->SetBinLabel(2,"Preselection");
    h000->GetXaxis()->SetBinLabel(3,"OneGoodVtx");
-   h000->GetXaxis()->SetBinLabel(4,"MET>0");
-   h000->GetXaxis()->SetBinLabel(5,"nPhot1");
-   h000->GetXaxis()->SetBinLabel(6,"nJet2");
+   h000->GetXaxis()->SetBinLabel(4,"MET>30");
+   h000->GetXaxis()->SetBinLabel(5,"nJet2");
+   h000->GetXaxis()->SetBinLabel(6,"nPhot2");
 
    h000->Fill(0.,entries);
    
@@ -178,10 +179,12 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
    Int_t isMC; 
 
    Float_t MET;
+   Float_t METUP;
+   Float_t METDOWN;
    Float_t CrossSectionWeight;
    Float_t EfficiencyScaleFactors;
    Float_t PUScaleFactors;
-
+   Float_t Rsqrd;
 
    TTree *anaTree     = new TTree("anaTree","Tree of variables"); 
    anaTree->Branch("nPhot", &nPhot, "nPhot/I");
@@ -190,25 +193,37 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
    anaTree->Branch("nJet", &nJet, "nJet/I");
    anaTree->Branch("nGoodVtx", &nGoodVtx, "nGoodVtx/I");
    anaTree->Branch("isMC", &isMC, "isMC/I");
+   anaTree->Branch("Rsqrd", &Rsqrd);
    anaTree->Branch("ptPhot", &ptPhot);
+   anaTree->Branch("ptPhotUp", &ptPhotUp);
+   anaTree->Branch("ptPhotDown", &ptPhotDown);
    anaTree->Branch("etaPhot", &etaPhot);
    anaTree->Branch("phiPhot", &phiPhot);
    anaTree->Branch("dxyConv", &dxyConv);
    anaTree->Branch("dzConv", &dzConv);
    anaTree->Branch("etaConv", &etaConv);
    anaTree->Branch("phiConv", &phiConv);
-   anaTree->Branch("deltaR", &deltaR);
+   anaTree->Branch("deltaRward", &deltaRward);
+   anaTree->Branch("ConvChi2", &ConvChi2);
    anaTree->Branch("sMinPhot", &sMinPhot);
    anaTree->Branch("sMajPhot", &sMajPhot);
    anaTree->Branch("sigmaIetaPhot", &sigmaIetaPhot);
    anaTree->Branch("aveTimePhot", &aveTimePhot);
    anaTree->Branch("ptJet", &ptJet);
+   anaTree->Branch("ptJetUp", &ptJetUp);
+   anaTree->Branch("ptJetDown", &ptJetDown);
    anaTree->Branch("MET", &MET, "MET/F");
+   anaTree->Branch("METUP", &METUP, "METUP/F");
+   anaTree->Branch("METDOWN", &METDOWN, "METDOWN/F");
    anaTree->Branch("CrossSectionWeight", &CrossSectionWeight, "CrossSectionWeight/F");
    anaTree->Branch("EfficiencyScaleFactors", &EfficiencyScaleFactors, "EfficiencyScaleFactors/F");
    anaTree->Branch("PUScaleFactors", &PUScaleFactors, "PUScaleFactors/F");
    anaTree->Branch("convMatched", &convMatched, "convMatched/F");
    anaTree->Branch("phoMatched", &phoMatched, "phoMatched/F");
+   anaTree->Branch("phohovere", &phohovere);
+   anaTree->Branch("chadiso", &chadiso);
+   anaTree->Branch("nhadiso", &nhadiso);
+   anaTree->Branch("photiso", &photiso);
 
 
    Long64_t nentries = fChain->GetEntriesFast();
@@ -243,8 +258,8 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
   
      if (string(outname).find("Run2012") != std::string::npos)  { MC=0;} 
      else MC = 1;
-	
-     if (triggered != 1) continue;
+     	
+     if (!(triggered == 1 || triggered == 3)) continue;
 
      int entries = getsumcounterzero(outname); 
 
@@ -266,18 +281,27 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
 
 
      ptPhot.clear();
+     ptPhotUp.clear();
+     ptPhotDown.clear();
      ptJet.clear();
+     ptJetUp.clear();
+     ptJetDown.clear();
      etaPhot.clear();
      phiPhot.clear();
      dxyConv.clear();
      dzConv.clear();
      phiConv.clear();
      etaConv.clear();
-     deltaR.clear();
+     deltaRward.clear();
+     ConvChi2.clear();
      sMinPhot.clear();
      sMajPhot.clear();
      sigmaIetaPhot.clear(); 
      aveTimePhot.clear();
+     photiso.clear();
+     nhadiso.clear();
+     chadiso.clear();
+     phohovere.clear();
 
      int nVtx = 0 ;
 	
@@ -300,8 +324,7 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
      double largesttempphi = 0.;
      
      for (int i=0; i < nConversions; i++) {
-
-       /*
+       
        if (convMatchedEle[i] > 0) continue;
        
        bool matching = false;
@@ -311,95 +334,119 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
          TLorentzVector phoP4( phoPx[k], phoPy[k], phoPz[k], phoE[k] );
          double photonEta = phoP4.Eta();
          double photonPhi = phoP4.Phi();
+	 if (photonPhi > pi){
+	   photonPhi -= 2.*pi;
+	 }
+	 if (photonPhi < -pi){
+	   photonPhi += 2.*pi;
+	 }
 
          deltar = sqrt((photonEta-convEta[i])*(photonEta-convEta[i]) + (photonPhi-convPhi[i])*(photonPhi-convPhi[i]));
 
-         deltaR.push_back(deltar);
+         deltaRward.push_back(deltar);
 
-         if (deltar < 0.25) {matching = true;}
+         //if (deltar < 0.25) {matching = true;}
 
        }
 
-       if (!matching) continue;
-       */
-
+       //if (!matching) continue;
+       
        dzConv.push_back(convDz[i]);
        dxyConv.push_back(convDxy[i]);
        phiConv.push_back(convPhi[i]);
        etaConv.push_back(convEta[i]);
-
-       /*
-       if (abs(convDxy[i]) > abs(largestvalue)){
-         largest = i;
-	 largestvalue = convDxy[i];
-       }
-       */       
+       ConvChi2.push_back(convChi2[i]);
      }
 
-     /*
-     //sorting the largest Dxy in the first place
-     if(dxyConv.size() > 0 && largest != 0){
 
-       largesttempdxy = dxyConv.at(0);
-       largesttempeta = etaConv.at(0);
-       largesttempphi = phiConv.at(0);
-       
-       dxyConv.at(0) = dxyConv.at(largest);
-       phiConv.at(0) = phiConv.at(largest);
-       etaConv.at(0) = etaConv.at(largest);
-       
-       //dxyConv.at(largest) = largesttempdxy;
-       //phiConv.at(largest) = largesttempphi;
-       //etaConv.at(largest) = largesttempeta;
-     }
-     */
+     // For R^2 calculation
+     vector<TLorentzVector> jets;
+     vector<TLorentzVector> photons;
+
 
      for (int i=0; i <nPhotons; i++) {
 			 
-
        TLorentzVector phoP4( phoPx[i], phoPy[i], phoPz[i], phoE[i] ) ;
+       TLorentzVector phoP4up( phoPx[i], phoPy[i], phoPz[i], phoE[i] ) ;
+       TLorentzVector phoP4down( phoPx[i], phoPy[i], phoPz[i], phoE[i] ) ;
 
+       double egScaleup = 1.;
+       double egScaledown  = 1.;
+
+       bool photpt = true;
+       bool photptup = true;
+       bool photptdown = true;
+       
+       egScaleup = ( fabs(phoP4up.Eta()) < 1.479 ) ? 1.006 : 1.015 ;
+       egScaledown = ( fabs(phoP4down.Eta()) < 1.479 ) ? 0.994 : 0.985 ;
+
+       phoP4up = phoP4up * egScaleup;
+       phoP4down = phoP4down * egScaledown;
        
        if ( fabs(fSpike[i]) > 0.001 ) continue ;
-       if ( phoP4.Pt() < 50. )  continue ;
-       if ( fabs(phoP4.Eta()) > 1.47 )  continue ;
+       if ( phoP4.Pt() < 50. )  photpt = false ;
+       if ( phoP4up.Pt() < 50. )  photptup = false ;
+       if ( phoP4down.Pt() < 50. )  photptdown = false ;
+       if ( fabs(phoP4.Eta()) > 1.47 )  photpt = false ;
+       if ( fabs(phoP4up.Eta()) > 1.47 )  photptup = false ;
+       if ( fabs(phoP4down.Eta()) > 1.47 )  photptdown = false ;
        if ( phoHoverE[i] > 0.05 ) continue ;
        //if ( sMinPho[i] < 0.15 || sMinPho[i] > 0.3 )  continue ; WAS WEG
        //if ( sMinPho[i] < 0.12 || sMinPho[i] > 0.38 )                continue ; WAS WEG
        if ( sigmaIeta[i] >  0.012 ) continue ;
        //if ( dR_TrkPho[i] < 0.6 ) continue; WAS WEG
-       if ( phoP4.Eta() > -0.75 && phoP4.Eta() < -0.6 && phoP4.Phi() > -1. && phoP4.Phi() < -0.8 ) continue ;
-       if ( phoP4.Eta() > 0.80 && phoP4.Eta() < 0.95 && phoP4.Phi() > -1.95 && phoP4.Phi() < -1.8 ) continue ;
-       
+       if ( phoP4.Eta() > -0.75 && phoP4.Eta() < -0.6 && phoP4.Phi() > -1. && phoP4.Phi() < -0.8 ) photpt = false ;
+       if ( phoP4up.Eta() > -0.75 && phoP4up.Eta() < -0.6 && phoP4up.Phi() > -1. && phoP4up.Phi() < -0.8 ) photptup = false ;
+       if ( phoP4down.Eta() > -0.75 && phoP4down.Eta() < -0.6 && phoP4down.Phi() > -1. && phoP4down.Phi() < -0.8 ) photptdown = false ;
+
+       if ( phoP4.Eta() > 0.80 && phoP4.Eta() < 0.95 && phoP4.Phi() > -1.95 && phoP4.Phi() < -1.8 ) photpt = false ;
+       if ( phoP4up.Eta() > 0.80 && phoP4up.Eta() < 0.95 && phoP4up.Phi() > -1.95 && phoP4up.Phi() < -1.8 ) photptup = false ;
+       if ( phoP4down.Eta() > 0.80 && phoP4down.Eta() < 0.95 && phoP4down.Phi() > -1.95 && phoP4down.Phi() < -1.8 ) photptdown = false ;
        
        /***********************************************************************/
        //                   Cut for isolated photons  
        /***********************************************************************/
-      
-       if ( cHadIso[i] >= 2.6 ) continue ;  // chargedHadron
-       if ( nHadIso[i] >= 3.5 + ( 0.04*phoP4.Pt()   ) ) continue ;  // neutralHadron
-       if ( photIso[i] >= 1.3 + ( 0.005*phoP4.Pt() ) ) continue ;  // photon
        
+               
+       if ( cHadIso[i] >= 2.6 ) continue ;  // chargedHadron
+       if ( nHadIso[i] >= 3.5 + ( 0.04*phoP4.Pt()   ) ) photpt = false ;  // neutralHadron
+       if ( nHadIso[i] >= 3.5 + ( 0.04*phoP4up.Pt()   ) ) photptup = false ;  // neutralHadron
+       if ( nHadIso[i] >= 3.5 + ( 0.04*phoP4down.Pt()   ) ) photptdown = false ;  // neutralHadron
+       if ( photIso[i] >= 1.3 + ( 0.005*phoP4.Pt() ) ) photpt = false ;  // photon
+       if ( photIso[i] >= 1.3 + ( 0.005*phoP4up.Pt() ) ) photptup = false ;  // photon
+       if ( photIso[i] >= 1.3 + ( 0.005*phoP4down.Pt() ) ) photptdown = false ;  // photon
+
        /***********************************************************************/
        //                   Cut for fake photons                                                                                                                                                          
        /***********************************************************************/
        
-       /*       	   	   
+       /*
        if (!( cHadIso[i] >= 2.6 )  && (!( nHadIso[i] >= 3.5 + ( 0.04*phoP4.Pt()   ) )) && (!( photIso[i] >= 1.3 + ( 0.005*phoP4.Pt() ) ))  ) continue ;
        */
 
-       //if (phoMatchedEle[i] > 0) continue;
+       if (phoMatchedEle[i] > 0) continue;
        
-       ptPhot.push_back(phoP4.Pt());
+       if ( photpt ) ptPhot.push_back(phoP4.Pt());
+       if ( photptup ) ptPhotUp.push_back(phoP4up.Pt());
+       if ( photptdown ) ptPhotDown.push_back(phoP4down.Pt());
        sort(ptPhot.begin(),ptPhot.end(),comp_pair);
+       sort(ptPhotUp.begin(),ptPhotUp.end(),comp_pair);
+       sort(ptPhotDown.begin(),ptPhotDown.end(),comp_pair);
        etaPhot.push_back(fabs(phoP4.Eta()));
        phiPhot.push_back(fabs(phoP4.Phi()));
        sMinPhot.push_back(sMinPho[i]);
        sMajPhot.push_back(sMajPho[i]);
        sigmaIetaPhot.push_back(sigmaIeta[i]);
        aveTimePhot.push_back(aveTime[i]);
+       phohovere.push_back(phoHoverE[i]);
+       chadiso.push_back(cHadIso[i]);
+       nhadiso.push_back(nHadIso[i]);
+       photiso.push_back(photIso[i]);
 
        weight = pow(0.99887, ptPhot.size());
+
+	   photons.push_back(phoP4);
+       sort(photons.begin(),photons.end(),comp_pair2);
 
      }	
 
@@ -415,50 +462,48 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
 
        
        TLorentzVector jp4( jetPx[j], jetPy[j], jetPz[j], jetE[j] ) ;
+       TLorentzVector jp4up( jetPx[j], jetPy[j], jetPz[j], jetE[j] ) ;
+       TLorentzVector jp4down( jetPx[j], jetPy[j], jetPz[j], jetE[j] ) ;
 
-       if ( jp4.Pt()        < 35 ) continue ;
-       if ( fabs(jp4.Eta()) > 2.4 ) continue ;
+       double jCorr;
+
+       jCorr = ( 1. + jecUnc[j] ) ;
+       jp4up = jp4up*jCorr;
+       
+       jCorr = ( 1. - jecUnc[j] ) ;
+       jp4down = jp4down*jCorr;
+
+       bool jetpt = true;
+       bool jetptup = true;
+       bool jetptdown = true;
+
+       if ( jp4.Pt() < 30) jetpt == false;
+       if ( jp4up.Pt() < 30) jetptup == false;
+       if ( jp4down.Pt() < 30) jetptdown == false;
+
+       if ( fabs(jp4.Eta()) > 2.4 ) jetpt == false ;
+       if ( fabs(jp4up.Eta()) > 2.4 ) jetptup == false ;
+       if ( fabs(jp4down.Eta()) > 2.4 ) jetptdown == false ;
        
        if ( jetNDau[j] < (double)   2 )  continue ;
        if ( jetCEF[j] >= (double)0.99 )  continue ;
        if ( jetNEF[j] >= (double)0.99 )  continue ;
        if ( jetNHF[j] >= (double)0.99 )  continue ;
-       if ( fabs( jp4.Eta() ) < 2.4 && jetCM[j]  <= 0 ) continue ;
-       
-       double dR_gj = 999. ;
-       
-       for ( int k=0 ; k< nPhotons; k++ ) {
-	 TLorentzVector phoP4( phoPx[k], phoPy[k], phoPz[k], phoE[k] ) ;
-	 
-	 if ( phoP4.Pt() < 50. )   continue ;
-	 if ( phoHoverE[j] > 0.05 ) continue ;
-	 
-	 /***********************************************************************/
-	 //                   Cut for isolated photons
-	 /***********************************************************************/
-	 
-	 if ( cHadIso[j] >= 2.6 ) continue ;  // chargedHadron
-	 if ( nHadIso[j] >= 3.5 + ( 0.04*phoP4.Pt()   ) ) continue ;  // neutralHadron
-	 if ( photIso[j] >= 1.3 + ( 0.005*phoP4.Pt() ) ) continue ;  // photon      
-	 
-
-	 /***********************************************************************/
-         //                   Cut for fake photons
-	 /***********************************************************************/
-
-         /*  
-         if (!( cHadIso[j] >= 2.6 )  && (!( nHadIso[j] >= 3.5 + ( 0.04*phoP4.Pt()   ) )) && (!( photIso[j] >= 1.3 + ( 0.005*phoP4.Pt() ) ))  ) continue ;
-	 */
-	 
-	 //if ( phoP4.DeltaR( jp4 ) < dR_gj )  dR_gj  = phoP4.DeltaR( jp4 ) ; 
-       }	     
-       
-       //if ( dR_gj < 0.3 ) continue ;
-       
-       ptJet.push_back(jp4.Pt());
+       if ( fabs( jp4.Eta() ) < 2.4 && jetCM[j]  <= 0 ) jetpt == false ;
+       if ( fabs( jp4up.Eta() ) < 2.4 && jetCM[j]  <= 0 ) jetptup == false ;
+       if ( fabs( jp4down.Eta() ) < 2.4 && jetCM[j]  <= 0 ) jetptdown == false ;
+      
+       if ( jetpt ) ptJet.push_back(jp4.Pt());
+       if ( jetptup ) ptJetUp.push_back(jp4up.Pt());
+       if ( jetptdown ) ptJetDown.push_back(jp4down.Pt());
        sort(ptJet.begin(),ptJet.end(),comp_pair);
-       
+       sort(ptJetUp.begin(), ptJetUp.end(),comp_pair);
+       sort(ptJetDown.begin(), ptJetDown.end(), comp_pair);
+
+       jets.push_back(jp4);
+
      }
+
 
      nPhot = ptPhot.size(); 
      nJet = ptJet.size();
@@ -466,14 +511,26 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
      nEle = nElectrons; 
      isMC = MC;
      nGoodVtx = nVtx; 
-     MET = met; 
-     
+     MET = met;
+     METUP = met*1.01;
+     METDOWN = met*0.99;
+
                                         h000->Fill(1.);
-     if (nGoodVtx < 0) continue; 	h000->Fill(2.);
-     if (MET < 30) continue; 	        h000->Fill(3.);
-     if (nPhot < 1) continue;  	        h000->Fill(4.);
-     if (nJet < 2) continue; 	        h000->Fill(5.);
-	  
+     if (nGoodVtx < 0) continue; 		h000->Fill(2.);
+//     if (MET < 30) continue; 	        h000->Fill(3.);
+     if (nJet < 2) continue;  	        h000->Fill(4.);
+     if (nPhot < 2) continue;           h000->Fill(5.);
+
+
+     TVector3 MET( metPx, metPy, 0);  
+	 vector<TLorentzVector> HEMIS = CombineJets_R_no_seed(jets, photons[0], photons[1]);
+
+     double MTR = CalcMTR(HEMIS[0], HEMIS[1], MET);
+     double MRSTAR = CalcGammaMRstar(HEMIS[0], HEMIS[1]);
+
+//	 cout << pow(MTR/MRSTAR,2) << endl;
+	 Rsqrd = pow(MTR/MRSTAR,2); 
+		
      anaTree->Fill();
 
 
@@ -487,4 +544,99 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
    fout->Close();
 
 }
+
+
+
+vector<TLorentzVector> CombineJets_R_no_seed(vector<TLorentzVector> myjets,TLorentzVector ph1, TLorentzVector ph2){
+  vector<TLorentzVector> mynewjets;
+  TLorentzVector j1, j2;
+
+  myjets.push_back(ph1);
+  myjets.push_back(ph2);
+
+  int N_comb = 1;
+  for(int i = 0; i < myjets.size(); i++){
+    N_comb *= 2;
+  }
+
+  double M_min = 9999999999.0;
+  int j_count;
+  for(int i = 1; i < N_comb-1; i++){
+    TLorentzVector j_temp1, j_temp2;
+    int itemp = i;
+    j_count = N_comb/2;
+    int count = 0;
+    while(j_count > 0){
+      if(itemp/j_count == 1){
+        j_temp1 += myjets[count];
+      } else {
+        j_temp2 += myjets[count];
+      }
+      itemp -= j_count*(itemp/j_count);
+      j_count /= 2;
+      count++;
+    }
+    double M_temp = j_temp1.M2()+j_temp2.M2();
+    // smallest mass
+    if(M_temp < M_min){
+      // R selection
+      M_min = M_temp;
+      j1 = j_temp1;
+      j2 = j_temp2;
+    }
+  }
+
+
+  // set masses to 0
+  j1.SetPtEtaPhiM(j1.Pt(),j1.Eta(),j1.Phi(),0.0);
+  j2.SetPtEtaPhiM(j2.Pt(),j2.Eta(),j2.Phi(),0.0);
+
+  if(j2.Pt() > j1.Pt()){
+    TLorentzVector temp = j1;
+    j1 = j2;
+    j2 = temp;
+  }
+
+  mynewjets.push_back(j1);
+  mynewjets.push_back(j2);
+  return mynewjets;
+}
+
+
+
+double CalcMTR(TLorentzVector ja, TLorentzVector jb, TVector3 met){
+
+  double temp = met.Mag()*(ja.Pt()+jb.Pt()) - met.Dot(ja.Vect()+jb.Vect());
+  temp /= 2.;
+
+  temp = sqrt(temp);
+
+  return temp;
+}
+
+
+double CalcGammaMRstar(TLorentzVector ja, TLorentzVector jb){
+  double A = ja.P();
+  double B = jb.P();
+  double az = ja.Pz();
+  double bz = jb.Pz();
+  TVector3 jaT, jbT;
+  jaT.SetXYZ(ja.Px(),ja.Py(),0.0);
+  jbT.SetXYZ(jb.Px(),jb.Py(),0.0);
+  double ATBT = (jaT+jbT).Mag2();
+
+  double temp = sqrt((A+B)*(A+B)-(az+bz)*(az+bz)-
+                     (jbT.Dot(jbT)-jaT.Dot(jaT))*(jbT.Dot(jbT)-jaT.Dot(jaT))/(jaT+jbT).Mag2());
+
+  double mybeta = (jbT.Dot(jbT)-jaT.Dot(jaT))/
+    sqrt(ATBT*((A+B)*(A+B)-(az+bz)*(az+bz)));
+
+  double mygamma = 1./sqrt(1.-mybeta*mybeta);
+
+  //gamma times MRstar                                                                                                                                                                              
+  temp *= mygamma;
+
+  return temp;
+}
+
 

@@ -10,8 +10,7 @@ process.source = cms.Source("PoolSource",
 
     fileNames = cms.untracked.vstring(
     #'file:SinglePhoton_Run2012B-20Nov2012-v2_AOD.root'
-    #'root://xrootd.unl.edu//store/data/Run2012B/SinglePhoton/AOD/22Jan2013-v1/20000/0029D61A-FE71-E211-9B83-0026189438C0.root'
-     'root://xrootd.unl.edu//store/data/Run2012C/DoublePhoton/AOD/22Jan2013-v2/20000/00156CC5-AF70-E211-A09E-0026189438EA.root'
+     'file:/tmp/sigamani/RunAdata.root'
     ),
 
     # explicitly drop photons resident in AOD/RECO, to make sure only those locally re-made (uncleaned photons) are used

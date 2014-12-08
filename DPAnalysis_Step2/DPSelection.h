@@ -1,4 +1,5 @@
 
+
 //
 //  last commit by $Id: DPSelection.h,v 1.1 2012/05/30 12:56:26 sigamani Exp $
 //
@@ -36,6 +37,8 @@ private:
     unsigned int selectedEvents_;
 
     std::vector<double> ptPhot;
+    std::vector<double> ptPhotUp;
+    std::vector<double> ptPhotDown;
     std::vector<double> etaPhot;
     std::vector<double> phiPhot;
     std::vector<double> sMinPhot;
@@ -43,13 +46,20 @@ private:
     std::vector<double> sigmaIetaPhot;
     std::vector<double> aveTimePhot;
     std::vector<double> ptJet;
+    std::vector<double> ptJetUp;
+    std::vector<double> ptJetDown;
     std::vector<double> dxyConv;
     std::vector<double> dzConv;
     std::vector<double> etaConv;
     std::vector<double> phiConv;
-    std::vector<double> deltaR;
+    std::vector<double> deltaRward;
+    std::vector<double> ConvChi2;
     std::vector<double> convMatched;
     std::vector<double> phoMatched;
+    std::vector<double> phohovere;
+    std::vector<double> chadiso;
+    std::vector<double> nhadiso;
+    std::vector<double> photiso;
 
 };
 

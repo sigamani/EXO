@@ -514,8 +514,9 @@ bool DPAnalysis::EventSelection(const edm::Event& iEvent, const edm::EventSetup&
    CosmicRayMatch( dtSegments, selectedPhotons, iSetup ) ;
 */
 
-	
-   CosmicRayMatch( muons, selectedPhotons ) ;
+	// seems to be screwing up in new release m.s.
+
+  /* CosmicRayMatch( muons, selectedPhotons ) ;
    
    Handle< edm::OwnVector<TrackingRecHit> >  mu_rhits ;
    iEvent.getByLabel( staMuons,  mu_rhits );
@@ -524,6 +525,8 @@ bool DPAnalysis::EventSelection(const edm::Event& iEvent, const edm::EventSetup&
    {
      cout << "Something didn't work!" << endl;
    }
+  */
+
 
    //IsoPhotonSelection( selectedPhotons ) ;
    //if ( selectedPhotons.size() < photonCuts[5] )  passEvent = false ;
@@ -1809,18 +1812,17 @@ bool DPAnalysis::JetSelection( Handle< vector<pat::Jet> > patjets, vector<const 
    int k = 0 ;
    double met_dx(0), met_dy(0) ;
    double met_sx(0), met_sy(0) ;
-   //double SF = 1. ;
+//   double SF = 1. ;
    for (std::vector<pat::Jet>::const_iterator it = patjets->begin(); it != patjets->end(); it++) {
  
        bool passPtCut = it->pt() > jetCuts[0] ;
        // calculate JER uncertainty 
-       /* double ptscale = 1 ;
+   /*    double ptscale = 1 ;
        double dPt = 0 ;
        if ( !isData ) {
           const reco::GenJet* matchedGenJet = it->genJet() ;
 	  if ( it->pt() < 10. ) continue ;
 	  if ( matchedGenJet == NULL ) continue ;
-
 	  met_dx += it->px() ;
 	  met_dy += it->py() ;
 
@@ -1838,7 +1840,7 @@ bool DPAnalysis::JetSelection( Handle< vector<pat::Jet> > patjets, vector<const 
        }
 
        if ( (it->pt() + dPt) > jetCuts[0] || (it->pt() - dPt) > jetCuts[0] ) passPtCut = true ;
-
+*/
        // Calculate JES uncertainty
        vector<double> uncV = JECUncertainty( it->pt(), it->eta(), jecUnc ) ;
        if ( (it->pt() + (uncV[2]*it->pt()) ) > jetCuts[0] || (it->pt() - (uncV[2]*it->pt()) ) > jetCuts[0] ) passPtCut = true ;
@@ -1848,7 +1850,7 @@ bool DPAnalysis::JetSelection( Handle< vector<pat::Jet> > patjets, vector<const 
        met_sx -= it->px() * jes_sc ;
        met_sy -= it->py() * jes_sc ;
 
-       */
+        
 
        // Pt and Fiducial cuts - include those within JES and JER range
        if ( !passPtCut || fabs( it->eta() ) > jetCuts[1] ) continue ;
@@ -1883,7 +1885,7 @@ bool DPAnalysis::JetSelection( Handle< vector<pat::Jet> > patjets, vector<const 
        leaves.jetNEF[k]  = it->neutralEmEnergyFraction() ;
        //leaves.jecUncU[k]  = uncV[0] ;
        //leaves.jecUncD[k]  = uncV[1] ;
-       //leaves.jecUnc[k]  = uncV[2] ;
+       leaves.jecUnc[k]  = uncV[2] ;
        //leaves.jerUnc[k]  = dPt ;
        k++ ;
    }

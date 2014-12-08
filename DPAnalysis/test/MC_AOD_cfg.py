@@ -5,30 +5,16 @@ process = cms.Process("test")
 
 process.load("FWCore.MessageService.MessageLogger_cfi")
 
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(1000) )
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
 
 process.source = cms.Source("PoolSource",
 
 
 
     fileNames = cms.untracked.vstring(
-        'root://eoscms//eos/cms/store//caf/user/sigamani/13TeV_DPTRIGSTUDIES/GMSB_L180_Ctau1000_Pythia8_13TeV_AODSIM_tsg_PU40bx50.root'
-#'root://eoscms//eos/cms/store/mc/Summer13/DiPhotonBox_Pt-25To250_14TeV-pythia6/GEN-SIM-RECO/UpgradePhase1Age0START_DR61SLHCx_PU140Bx25_STAR17_61_V1A-v1/20000/F8E9FAAF-87D4-E211-BDCC-003048678EE2.root'
-    #'root://xrootd.unl.edu//store/mc/Summer12_DR53X/GMSB_Lambda-180_CTau-250_TuneZ2star_8TeV-pythia6/AODSIM/PU_S10_START53_V19-v1/00000/26EDCC8B-EE6F-E311-B003-002590574604.root' 
-    #'/store/mc/Summer12_DR53X/TTJets_SemiLeptMGDecays_TuneP11noCR_8TeV-madgraph-tauola/AODSIM/PU_S10_START53_V19-v1/10000/FED86752-97C5-E211-B82C-003048678F74.root' 
-#    '/store/mc/Summer12_DR53X/GMSB_Lambda-160_CTau-500_TuneZ2star_8TeV-pythia6/GEN-SIM-RECO/PU_S10_START53_V7A-v2/00000/08514E95-F110-E211-A67D-E41F13181030.root'
-    #'/store/mc/Summer12_DR53X/GMSB_Lambda-160_CTau-500_TuneZ2star_8TeV-pythia6/GEN-SIM-RECO/PU_S10_START53_V7A-v2/00000/1E3079E2-E310-E211-9A4E-00215E222286.root',
-    #'/store/mc/Summer12_DR53X/GMSB_Lambda-160_CTau-500_TuneZ2star_8TeV-pythia6/GEN-SIM-RECO/PU_S10_START53_V7A-v2/00000/36C021CC-FE10-E211-8CEB-00215E21D77A.root',
-    #'/store/mc/Summer12_DR53X/GMSB_Lambda-160_CTau-500_TuneZ2star_8TeV-pythia6/GEN-SIM-RECO/PU_S10_START53_V7A-v2/00000/40EFD7D7-FE10-E211-BA54-001A645C0E8C.root',
-    #'/store/mc/Summer12_DR53X/GMSB_Lambda-160_CTau-500_TuneZ2star_8TeV-pythia6/GEN-SIM-RECO/PU_S10_START53_V7A-v2/00000/48F5456A-FF10-E211-A8C7-00215E22122A.root',
-    #'/store/mc/Summer12_DR53X/GMSB_Lambda-160_CTau-500_TuneZ2star_8TeV-pythia6/GEN-SIM-RECO/PU_S10_START53_V7A-v2/00000/4CEC4CCB-FB10-E211-AA8D-00215E222772.root',
-    #'/store/mc/Summer12_DR53X/GMSB_Lambda-160_CTau-500_TuneZ2star_8TeV-pythia6/GEN-SIM-RECO/PU_S10_START53_V7A-v2/00000/5030F4E8-0211-E211-9B38-001A645C984A.root',
-    #'/store/mc/Summer12_DR53X/GMSB_Lambda-160_CTau-500_TuneZ2star_8TeV-pythia6/GEN-SIM-RECO/PU_S10_START53_V7A-v2/00000/5A83CB41-FD10-E211-95C5-E41F13181594.root',
-    #'/store/mc/Summer12_DR53X/GMSB_Lambda-160_CTau-500_TuneZ2star_8TeV-pythia6/GEN-SIM-RECO/PU_S10_START53_V7A-v2/00000/749737BC-0111-E211-800C-00215E21D9AE.root',
-    #'/store/mc/Summer12_DR53X/GMSB_Lambda-160_CTau-500_TuneZ2star_8TeV-pythia6/GEN-SIM-RECO/PU_S10_START53_V7A-v2/00000/78E2956B-FF10-E211-A185-001A645CAEBE.root',
-    #'/store/mc/Summer12_DR53X/GMSB_Lambda-160_CTau-500_TuneZ2star_8TeV-pythia6/GEN-SIM-RECO/PU_S10_START53_V7A-v2/00000/8698AB36-FB10-E211-AFEB-00215E21D6D2.root',
-    #'/store/mc/Summer12_DR53X/GMSB_Lambda-160_CTau-500_TuneZ2star_8TeV-pythia6/GEN-SIM-RECO/PU_S10_START53_V7A-v2/00000/A0AC074D-0011-E211-8C20-00215E21F18A.root'
-  ),
+        #'/store/mc/Summer12DR53X/PYTHIA6_Tauola_nMSSM_bba1_tautau_m55_FilterMuOrEle15_8TeV/AODSIM/PU_S10_START53_V19-v1/20000/F2DB8572-8E38-E411-872C-02163E00B4E0.root' 
+        'file:root://eoscms//eos/cms/store/caf/user/sigamani/signal.root' 
+    ),
 
     # explicitly drop photons resident in AOD/RECO, to make sure only those locally re-made (uncleaned photons) are used
     inputCommands = cms.untracked.vstring('keep *'
@@ -88,7 +74,6 @@ process.ana = cms.EDAnalyzer('DPAnalysis',
        photonCuts    = cms.vdouble( 45,  2.4,     99.,      -1.,     99.,   0.0,  1,    45  ),
        # photon isolation           trkR,  ecalSumEt, ecalR, hcalSumEt, hcalR
        photonIso     = cms.vdouble(  1.,       5.0,   1.,       5.0,   1. ),
-    #   photonIso     = cms.vdouble(  1000.,       1000.0,   1000.,       1000.0,   1000. ),
        # jet cuts                   pt    eta    dR,  nJets
        jetCuts       = cms.vdouble( 30. , 2.4,  0.3,    0 ),
        metCuts       = cms.vdouble( 0. ),
