@@ -138,6 +138,7 @@ void setBranchAddresses(TTree* chain, Ntuple& treeVars)
   chain -> SetBranchAddress("dtdPhi",       treeVars.dtdPhi ) ;
   chain -> SetBranchAddress("dtdEta",       treeVars.dtdEta ) ;
   chain -> SetBranchAddress("phoMatchedEle",treeVars.phoMatchedEle ) ;
+  chain -> SetBranchAddress("conversionVeto",treeVars.conversionVeto ) ;
 
   chain -> SetBranchAddress("genPx",        treeVars.genPx       );
   chain -> SetBranchAddress("genPy",        treeVars.genPy       );
@@ -279,6 +280,7 @@ void setBranches(TTree* chain, Ntuple& treeVars)
   chain -> Branch("dtdPhi",       treeVars.dtdPhi,                "dtdPhi[nPhotons]/F"  ) ;
   chain -> Branch("dtdEta",       treeVars.dtdEta,                "dtdEta[nPhotons]/F"  ) ;
   chain -> Branch("phoMatchedEle",treeVars.phoMatchedEle,         "phoMatchedEle[nPhotons]/F"  ) ;
+  chain -> Branch("conversionVeto",treeVars.conversionVeto,         "conversionVeto[nPhotons]/F"  ) ;
 //  chain -> Branch("convDxy",       treeVars.convDxy,                "convDxy[nPhotons]/F");
 //  chain -> Branch("convDz",        treeVars.convDz,                 "convDz[nPhotons]/F");
 //  chain -> Branch("convEta",      treeVars.convEta,               "convEta[nPhotons]/F");
@@ -435,6 +437,7 @@ void initializeBranches(TTree* chain, Ntuple& treeVars)
       treeVars.dtdPhi[i]      = 99. ;
       treeVars.dtdEta[i]      = 99. ;
       treeVars.phoMatchedEle[i] = 99. ;
+      treeVars.conversionVeto[i] = 99. ;
   }
   for ( int i=0; i< MAXCONV; i++) {
       treeVars.convDxy[i] = 0 ;

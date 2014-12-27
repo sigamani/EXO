@@ -155,6 +155,7 @@ struct Ntuple
   float dtdEta[MAXPHO];
   float dtdPhi[MAXPHO];
   float phoMatchedEle[MAXPHO];
+  float conversionVeto[MAXPHO];
 
 
   int   nConversions ;

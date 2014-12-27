@@ -56,9 +56,9 @@ using namespace cms ;
 using namespace edm ;
 using namespace std ;
 
-// static bool HtDecreasing( VtxInfo s1, VtxInfo s2) { return ( s1.ht > s2.ht ); }
-// static bool ZDecreasing( VtxInfo s1, VtxInfo s2) { return ( s1.z > s2.z ); }
-// static bool Z0Decreasing( TrkInfo s1, TrkInfo s2) { return ( s1.dz > s2.dz ); }
+static bool HtDecreasing( VtxInfo s1, VtxInfo s2) { return ( s1.ht > s2.ht ); }
+static bool ZDecreasing( VtxInfo s1, VtxInfo s2) { return ( s1.z > s2.z ); }
+static bool Z0Decreasing( TrkInfo s1, TrkInfo s2) { return ( s1.dz > s2.dz ); }
 
 // constants, enums and typedefs
 // static data member definitions
@@ -514,18 +514,11 @@ bool DPAnalysis::EventSelection(const edm::Event& iEvent, const edm::EventSetup&
    CosmicRayMatch( dtSegments, selectedPhotons, iSetup ) ;
 */
 
-	// seems to be screwing up in new release m.s.
-
-  /* CosmicRayMatch( muons, selectedPhotons ) ;
+	
+   CosmicRayMatch( muons, selectedPhotons ) ;
    
    Handle< edm::OwnVector<TrackingRecHit> >  mu_rhits ;
    iEvent.getByLabel( staMuons,  mu_rhits );
-   bool haloMuon = BeamHaloMatch( *(mu_rhits.product()), selectedPhotons, iSetup ) ;
-   if (!haloMuon)
-   {
-     cout << "Something didn't work!" << endl;
-   }
-  */
 
 
    //IsoPhotonSelection( selectedPhotons ) ;
@@ -959,7 +952,10 @@ bool DPAnalysis::PhotonSelection( Handle<reco::PhotonCollection> photons, Handle
     //if ( ConversionVeto( &(*it) ) ) cout<<" Got Conversion Case !! " << endl ; 
     //if ( !(ConversionVeto( &(*it) )) ) continue;  
 
-//    cout << "look: photon " << it->pt() << endl;
+        if (ConversionVeto( &(*it) )) {  leaves.conversionVeto[k] = 1; }
+              else leaves.conversionVeto[k] = 0;
+
+
     gcounter[3]++ ;
     
     // S_Minor Cuts from the seed cluster
@@ -1084,47 +1080,45 @@ bool DPAnalysis::PhotonSelection( Handle<reco::PhotonCollection> photons, Handle
 
 
 
-     	     // double minDR_ = 1000.;
-	     // bool matchieleassocPhot = false;
-     	     // const reco::GsfElectron* bestMatchedPromptEle=0;
+     	     double minDR_ = 1000.;
+	     bool matchieleassocPhot = false;
 
-	     // for(reco::GsfElectronCollection::const_iterator itEle = electrons->begin(); itEle != electrons->end(); itEle++) {
+	     for(reco::GsfElectronCollection::const_iterator itEle = electrons->begin(); itEle != electrons->end(); itEle++) {
 
-	     // 	       double etaEle = itEle->eta();
-	     // 	       double phiEle = itEle->phi();
+		       double etaEle = itEle->eta();
+		       double phiEle = itEle->phi();
 
-	     // 	       double deltaPhi = phiEle-it->phi();
-	     // 	       double deltaEta = etaEle-it->eta();
-	     // 	       if (deltaPhi > Geom::pi()) deltaPhi -= 2.*Geom::pi();
-	     // 	       if (deltaPhi < -Geom::pi()) deltaPhi += 2.*Geom::pi();
-	     // 	       double deltaR = std::sqrt(deltaEta*deltaEta+deltaPhi*deltaPhi);
+		       double deltaPhi = phiEle-it->phi();
+		       double deltaEta = etaEle-it->eta();
+		       if (deltaPhi > Geom::pi()) deltaPhi -= 2.*Geom::pi();
+		       if (deltaPhi < -Geom::pi()) deltaPhi += 2.*Geom::pi();
+		       double deltaR = std::sqrt(deltaEta*deltaEta+deltaPhi*deltaPhi);
 
-	     // 	       if (deltaR > .25)
-	     // 		 continue;
+		       if (deltaR > .25)
+			 continue;
 
-	     // 	       if (itEle->pt()<2.5)
-	     // 		 continue;
+		       if (itEle->pt()<2.5)
+			 continue;
 
-	     // 	       if (itEle->gsfTrack()->trackerExpectedHitsInner().numberOfHits()>0)
-	     // 		 continue;
+		       if (itEle->gsfTrack()->trackerExpectedHitsInner().numberOfHits()>0)
+			 continue;
 
-	     // 		 matchieleassocPhot = true;
-
-
-	     // 	       float deta=itEle->deltaEtaSuperClusterTrackAtVtx();
-	     // 	       float dphi=itEle->deltaPhiSuperClusterTrackAtVtx();
-	     // 	       float DR = sqrt ( deta*deta + dphi*dphi);
-	     // 	       if (DR<minDR_)
-	     // 		 {
-	     // 		   minDR_=DR;
-	     // 		   bestMatchedPromptEle = &(*itEle);
-	     // 		 }
-
-	     // }
+			 matchieleassocPhot = true;
 
 
-    //		if (matchieleassocPhot == true) {  leaves.phoMatchedEle[k] = 1; }
-    //			  else leaves.phoMatchedEle[k] = 0;
+		       float deta=itEle->deltaEtaSuperClusterTrackAtVtx();
+		       float dphi=itEle->deltaPhiSuperClusterTrackAtVtx();
+		       float DR = sqrt ( deta*deta + dphi*dphi);
+		       if (DR<minDR_)
+			 {
+			   minDR_=DR;
+			 }
+
+	     }
+
+
+		if (matchieleassocPhot == true) {  leaves.phoMatchedEle[k] = 1; }
+			  else leaves.phoMatchedEle[k] = 0;
  
     
     k++ ;
@@ -1214,47 +1208,45 @@ bool DPAnalysis::PhotonSelection( Handle<reco::PhotonCollection> photons, Handle
 
 
 
-     	     // double minDR2_ = 1000.;
-	     // bool matchieleassocConv = false;
-     	     // const reco::GsfElectron* bestMatchedPromptEle=0;
+     	     double minDR2_ = 1000.;
+	     bool matchieleassocConv = false;
 
-	     // for(reco::GsfElectronCollection::const_iterator itEle = electrons->begin(); itEle != electrons->end(); itEle++) {
+	     for(reco::GsfElectronCollection::const_iterator itEle = electrons->begin(); itEle != electrons->end(); itEle++) {
 
-	     // 	       double etaEle = itEle->eta();
-	     // 	       double phiEle = itEle->phi();
+		       double etaEle = itEle->eta();
+		       double phiEle = itEle->phi();
 
-	     // 	       double deltaPhi = phiEle-conv_photon_dir.phi();
-	     // 	       double deltaEta = etaEle-conv_photon_dir.eta();
-	     // 	       if (deltaPhi > Geom::pi()) deltaPhi -= 2.*Geom::pi();
-	     // 	       if (deltaPhi < -Geom::pi()) deltaPhi += 2.*Geom::pi();
-	     // 	       double deltaR = std::sqrt(deltaEta*deltaEta+deltaPhi*deltaPhi);
+		       double deltaPhi = phiEle-conv_photon_dir.phi();
+		       double deltaEta = etaEle-conv_photon_dir.eta();
+		       if (deltaPhi > Geom::pi()) deltaPhi -= 2.*Geom::pi();
+		       if (deltaPhi < -Geom::pi()) deltaPhi += 2.*Geom::pi();
+		       double deltaR = std::sqrt(deltaEta*deltaEta+deltaPhi*deltaPhi);
 
-	     // 	       if (deltaR > .25)
-	     // 		 continue;
+		       if (deltaR > .25)
+			 continue;
 
-	     // 	       if (itEle->pt()<2.5)
-	     // 		 continue;
+		       if (itEle->pt()<2.5)
+			 continue;
 
-	     // 	       if (itEle->gsfTrack()->trackerExpectedHitsInner().numberOfHits()>0)
-	     // 		 continue;
+		       if (itEle->gsfTrack()->trackerExpectedHitsInner().numberOfHits()>0)
+			 continue;
 
-	     // 		 matchieleassocConv = true;
-
-
-	     // 	       float deta=itEle->deltaEtaSuperClusterTrackAtVtx();
-	     // 	       float dphi=itEle->deltaPhiSuperClusterTrackAtVtx();
-	     // 	       float DR = sqrt ( deta*deta + dphi*dphi);
-	     // 	       if (DR<minDR2_)
-	     // 		 {
-	     // 		   minDR2_=DR;
-	     // 		   bestMatchedPromptEle = &(*itEle);
-	     // 		 }
-
-	     // }
+			 matchieleassocConv = true;
 
 
-	     // 	if (matchieleassocConv == true) {  leaves.convMatchedEle[j] = 1; }
-	     // 		  else leaves.convMatchedEle[j] = 0;
+		       float deta=itEle->deltaEtaSuperClusterTrackAtVtx();
+		       float dphi=itEle->deltaPhiSuperClusterTrackAtVtx();
+		       float DR = sqrt ( deta*deta + dphi*dphi);
+		       if (DR<minDR2_)
+			 {
+			   minDR2_=DR;
+			 }
+
+	     }
+
+
+		if (matchieleassocConv == true) {  leaves.convMatchedEle[j] = 1; }
+			  else leaves.convMatchedEle[j] = 0;
 
 		//cout << conv_phot_eta << endl;
 		//cout << conv_phot_phi << endl;
@@ -1284,6 +1276,7 @@ bool DPAnalysis::PhotonSelection( Handle<reco::PhotonCollection> photons, Handle
       }
       //GlobalPoint point_wrt(point.x()-bs.position().x(), point.y()-bs.position().y(), point.z()-bs.position().z());                                                                                                                                                       
       GlobalPoint point_wrt(point.x()-the_pvtx.position().x(), point.y()-the_pvtx.position().y(), point.z()-the_pvtx.position().z());
+  	  float radius = sqrt(point_wrt.x()*point_wrt.x()+point_wrt.y()*point_wrt.y());
       
       edm::Handle<reco::BeamSpot> recoBeamSpotHandle;
       
@@ -1297,6 +1290,7 @@ bool DPAnalysis::PhotonSelection( Handle<reco::PhotonCollection> photons, Handle
 
      leaves.convDxy[j]=dxy;
      leaves.convDz[j]=dz;
+     leaves.convR[j]=radius;
 
 
 
@@ -1799,7 +1793,6 @@ bool DPAnalysis::JetSelection( Handle<reco::PFJetCollection> jets, vector<const 
 
    leaves.nJets = (int)( selectedJets.size() ) ;
 
-//   cout << "Titties: " << leaves.nJets<< endl;
 
    if ( selectedJets.size() > 0 )  return true ; 
    else                            return false ;    
@@ -1812,17 +1805,18 @@ bool DPAnalysis::JetSelection( Handle< vector<pat::Jet> > patjets, vector<const 
    int k = 0 ;
    double met_dx(0), met_dy(0) ;
    double met_sx(0), met_sy(0) ;
-//   double SF = 1. ;
+   //double SF = 1. ;
    for (std::vector<pat::Jet>::const_iterator it = patjets->begin(); it != patjets->end(); it++) {
  
        bool passPtCut = it->pt() > jetCuts[0] ;
        // calculate JER uncertainty 
-   /*    double ptscale = 1 ;
+       /* double ptscale = 1 ;
        double dPt = 0 ;
        if ( !isData ) {
           const reco::GenJet* matchedGenJet = it->genJet() ;
 	  if ( it->pt() < 10. ) continue ;
 	  if ( matchedGenJet == NULL ) continue ;
+
 	  met_dx += it->px() ;
 	  met_dy += it->py() ;
 
@@ -1841,16 +1835,16 @@ bool DPAnalysis::JetSelection( Handle< vector<pat::Jet> > patjets, vector<const 
 
        if ( (it->pt() + dPt) > jetCuts[0] || (it->pt() - dPt) > jetCuts[0] ) passPtCut = true ;
 */
-       // Calculate JES uncertainty
-       vector<double> uncV = JECUncertainty( it->pt(), it->eta(), jecUnc ) ;
+       // Calculate JES uncertainty   ** Take out for V24
+/*       vector<double> uncV = JECUncertainty( it->pt(), it->eta(), jecUnc ) ;
        if ( (it->pt() + (uncV[2]*it->pt()) ) > jetCuts[0] || (it->pt() - (uncV[2]*it->pt()) ) > jetCuts[0] ) passPtCut = true ;
        met_sx += it->px() ;
        met_sy += it->py() ;
        double jes_sc = ( it->pt() + uncV[2] ) / it->pt() ;
        met_sx -= it->px() * jes_sc ;
        met_sy -= it->py() * jes_sc ;
-
-        
+*/ 
+       
 
        // Pt and Fiducial cuts - include those within JES and JER range
        if ( !passPtCut || fabs( it->eta() ) > jetCuts[1] ) continue ;
@@ -1885,7 +1879,7 @@ bool DPAnalysis::JetSelection( Handle< vector<pat::Jet> > patjets, vector<const 
        leaves.jetNEF[k]  = it->neutralEmEnergyFraction() ;
        //leaves.jecUncU[k]  = uncV[0] ;
        //leaves.jecUncD[k]  = uncV[1] ;
-       leaves.jecUnc[k]  = uncV[2] ;
+       //leaves.jecUnc[k]  = uncV[2] ;  // Take out for V24
        //leaves.jerUnc[k]  = dPt ;
        k++ ;
    }
@@ -2055,9 +2049,9 @@ bool DPAnalysis::ElectronSelection( Handle<reco::GsfElectronCollection> electron
        leaves.eleHcalIso[k] = hcalSumEt ;
        leaves.eleTrkIso[k]  = trkSumPt ;
        leaves.eleNLostHits[k]  = nLost ;
-       // leaves.e_cHadIso[k]  = it->pfIsolationVariables().chargedHadronIso ;
-       // leaves.e_nHadIso[k]  = it->pfIsolationVariables().neutralHadronIso ;
-       // leaves.e_photIso[k]  = it->pfIsolationVariables().photonIso ;
+       leaves.e_cHadIso[k]  = it->pfIsolationVariables().chargedHadronIso ;
+       leaves.e_nHadIso[k]  = it->pfIsolationVariables().neutralHadronIso ;
+       leaves.e_photIso[k]  = it->pfIsolationVariables().photonIso ;
        k++;
    }
    leaves.nElectrons = (int)( selectedElectrons.size() ) ;
