@@ -112,8 +112,8 @@ double weightCrossSection(const char* outname) {
 
 int getsumcounterzero(TString infile){
 
-	  TString dir = "/afs/cern.ch/work/w/wvandrie/public/EXO/CMSSW_7_1_8/src/EXO/DPAnalysis/test/v22/";
-	  //TString dir = "/afs/cern.ch/work/s/sigamani/public/CMSSW_5_3_22_DP/src/EXO/DPAnalysis_Step2/"; 
+	  //TString dir = "/afs/cern.ch/work/w/wvandrie/public/EXO/CMSSW_7_1_8/src/EXO/DPAnalysis/test/v22/";
+	  TString dir = "/afs/cern.ch/work/w/wvandrie/public/EXO/CMSSW_7_1_8/src/EXO/DPAnalysis/test/v24/";
           TFile f(dir+infile+".root");
 
 
@@ -181,6 +181,7 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
    Float_t MET;
    Float_t METUP;
    Float_t METDOWN;
+   Float_t phiMET;
    Float_t CrossSectionWeight;
    Float_t EfficiencyScaleFactors;
    Float_t PUScaleFactors;
@@ -215,6 +216,7 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
    anaTree->Branch("MET", &MET, "MET/F");
    anaTree->Branch("METUP", &METUP, "METUP/F");
    anaTree->Branch("METDOWN", &METDOWN, "METDOWN/F");
+   anaTree->Branch("phiMET", &phiMET, "phiMET/F");
    anaTree->Branch("CrossSectionWeight", &CrossSectionWeight, "CrossSectionWeight/F");
    anaTree->Branch("EfficiencyScaleFactors", &EfficiencyScaleFactors, "EfficiencyScaleFactors/F");
    anaTree->Branch("PUScaleFactors", &PUScaleFactors, "PUScaleFactors/F");
@@ -523,6 +525,9 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
 
 
      TVector3 MET( metPx, metPy, 0);  
+
+     phiMET = MET.Phi();
+
 	 vector<TLorentzVector> HEMIS = CombineJets_R_no_seed(jets, photons[0], photons[1]);
 
      double MTR = CalcMTR(HEMIS[0], HEMIS[1], MET);
