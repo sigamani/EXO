@@ -48,14 +48,17 @@ private:
     std::vector<double> ptJet;
     std::vector<double> ptJetUp;
     std::vector<double> ptJetDown;
+    std::vector<double> phiJet;
     std::vector<double> dxyConv;
     std::vector<double> dzConv;
+    std::vector<double> conversionR;
     std::vector<double> etaConv;
     std::vector<double> phiConv;
     std::vector<double> deltaRward;
     std::vector<double> ConvChi2;
     std::vector<double> convMatched;
     std::vector<double> phoMatched;
+//    std::vector<double> conversionVeto;
     std::vector<double> phohovere;
     std::vector<double> chadiso;
     std::vector<double> nhadiso;
@@ -65,3 +68,4 @@ private:
 
 
 #endif
+
