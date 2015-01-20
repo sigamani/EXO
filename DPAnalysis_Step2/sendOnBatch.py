@@ -50,14 +50,15 @@ while (len(inputfiles) > 0):
 
     outputname = dir+"/src/"+dataset_name+"_"+str(ijob)+".src"
     outputfile = open(outputname,'w')
-    outputfile.write('#!/bin/bash\n')
-    outputfile.write('source $VO_CMS_SW_DIR/cmsset_default.sh\n')
-    outputfile.write('export SCRAM_ARCH=slc5_amd64_gcc462\n')
-    outputfile.write('cd '+pwd[0:]+'; eval `scramv1 runtime -sh`; \n')
+    #outputfile.write('#!/bin/bash\n')
+    #outputfile.write('source $VO_CMS_SW_DIR/cmsset_default.sh\n')
+    #outputfile.write('export SCRAM_ARCH=slc5_amd64_gcc462\n')
+    outputfile.write('cd '+pwd[0:]+';eval `scramv1 runtime -sh` \n')
     outputfile.write("./tmp/main list/"+dataset_name+" "+dataset_name+";")
 
     outputfile.close
-    os.system('echo qsub -q localgrid@cream02 -o '+dirout[0:]+'/log/'+dataset_name+"_"+str(ijob)+'.stdout -e '+dirout[0:]+'/log/'+dataset_name+"_"+str(ijob)+'.stderr '+dir+'/src/'+dataset_name+'_'+str(ijob)+'.src')
+    os.system('echo bsub -q 8nh "<" '+pwd+'/'+ dir+'/src/'+dataset_name+'_'+str(ijob)+'.src'+' -o ' +dirout[0:]+'/log/'+dataset_name+"_"+str(ijob)+'.out' + ' -e '+dirout[0:]+'/log/'+dataset_name+"_"+str(ijob)+'.stderr ')
+    #os.system('echo bsub -q 8nh -o '+dirout[0:]+'/log/'+dataset_name+"_"+str(ijob)+'.out < '+ pwd+'/'+ dir+'/src/'+dataset_name+'_'+str(ijob)+'.src')
     #os.system('qsub -q localgrid@cream02 -o '+dirout[14:]+'/log/'+dataset_name+"_"+str(ijob)+'.stdout -e '+dirout[14:]+'/log/'+dataset_name+"_"+str(ijob)+'.stderr '+dir+'/src/'+dataset_name+'_'+str(ijob)+'.src')
     ijob = ijob+1
     continue

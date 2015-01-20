@@ -1,36 +1,10 @@
 from ROOT import *
-from tdrStyle import *
+from array import array
+from math import fabs, sqrt
+import CMS_lumi, tdrstyle
 
-setTDRStyle()
-
-def label(quadrant):
-    if (quadrant!=1 and quadrant !=2):
-        print "This quadrant is not defined, choose a value of 1 or 2!"
-    else:
-        if (quadrant == 1):
-            x1 = 0.1
-            x2 = 0.28
-            y1 = 0.95
-            y2 = 1.0
-        if (quadrant == 2):
-            x1 = 0.75
-            x2 = 0.93
-            y1 = 0.95
-            y2 = 1.0
-            
-    headlabel = TPaveText( x1, y1, x2, y2, "brNDC" )
-    if (quadrant == 1):
-        headlabel.AddText("CMS = 15.3 fb^{-1}")
-    if (quadrant == 2):
-        headlabel.AddText("#sqrt{s} = 8 TeV")
-
-    headlabel.SetFillColor(kWhite)
-    headlabel.SetTextSize(0.04)
-    headlabel.SetTextFont(42)
-    headlabel.SetBorderSize(0)
-    headlabel.SetShadowColor(kWhite)
-
-    return headlabel
+#set the tdr style                                                                                                                                                                                                                             
+tdrstyle.setTDRStyle()
 
 def loop(vec,vechist):
     for i in range(len(vec)):
@@ -38,74 +12,124 @@ def loop(vec,vechist):
         entr = tree.GetEntries()
         print 'total events ' + str(entr)
         for event in tree:
-            lum = 1. #!!!!!!!!!!!!!!!! doet er toch niet toe
-            for each in event.dzPhot:
+            for each in event.dzConv:
                 vechist[i].Fill( each )
 
     return vechist
 
 def function():
 
-    files = ["./v18/GMSB_L180-CTAU10.root","./v18/GMSB_L180-CTAU50.root","./v18/GMSB_L180-CTAU250.root","./v18/GMSB_L180-CTAU500.root"]
+    files = ["./v22/GMSB_L180-CTAU10.root","./v22/GMSB_L180-CTAU50.root","./v22/GMSB_L180-CTAU250.root","./v22/GMSB_L180-CTAU500.root"]
     vecfiles = []
     
     for item in files:
         temp = TFile.Open(item)
         vecfiles.append(temp)
 
-    dxy10 = TH1D("Dxy10","",50,-150,150)
-    dxy50 = TH1D("Dxy50","",50,-150,150)
-    dxy250 = TH1D("Dxy250","",50,-150,150)
-    dxy500 = TH1D("Dxy500","",50,-150,150)
+    dz10 = TH1D("Dz10","",50,-150,150)
+    dz50 = TH1D("Dz50","",50,-150,150)
+    dz250 = TH1D("Dz250","",50,-150,150)
+    dz500 = TH1D("Dz500","",50,-150,150)
 
-    dxy = [dxy10,dxy50,dxy250,dxy500]
+    dz = [dz10,dz50,dz250,dz500]
 
-    dxy = loop(vecfiles,dxy)
+    dz = loop(vecfiles,dz)
 
-    return dxy
+    return dz
 
-def plot(dxy,cmslabel,sqrtlabel):
-    dxy[0].SetLineWidth(2)
-    dxy[1].SetLineWidth(2)
-    dxy[2].SetLineWidth(2)
-    dxy[3].SetLineWidth(2)
-    dxy[0].SetLineColor(kRed)
-    dxy[1].SetLineColor(kGreen)
-    dxy[2].SetLineColor(kOrange)
-    dxy[3].SetLineColor(kBlue)
+def plot(dz):
+    dz[0].SetLineWidth(2)
+    dz[1].SetLineWidth(2)
+    dz[2].SetLineWidth(2)
+    dz[3].SetLineWidth(2)
+    dz[0].SetLineColor(kRed)
+    dz[1].SetLineColor(kGreen)
+    dz[2].SetLineColor(kOrange)
+    dz[3].SetLineColor(kBlue)
 
-    c1 = TCanvas("c1","c1",600,500)
-    c1.SetLogy()
     leg = TLegend(0.65,0.75,0.89,0.89)
     leg.SetFillColor(kWhite)
     leg.SetTextSize(0.03)
     leg.SetTextFont(42)
     leg.SetBorderSize(0)
-    leg.AddEntry(dxy[0], "GMSB (180,10)","l")
-    leg.AddEntry(dxy[1], "GMSB (180,50)","l")
-    leg.AddEntry(dxy[2], "GMSB (180,250)","l")
-    leg.AddEntry(dxy[3], "GMSB (180,500)","l")
+    leg.AddEntry(dz[0], "GMSB (180,10)","l")
+    leg.AddEntry(dz[1], "GMSB (180,50)","l")
+    leg.AddEntry(dz[2], "GMSB (180,250)","l")
+    leg.AddEntry(dz[3], "GMSB (180,500)","l")
     
     
-    dxy[0].GetXaxis().SetTitle("d_{Z}")
-    dxy[0].GetYaxis().SetTitle("Events")
+    dz[0].GetXaxis().SetTitle("Conversion d_{Z} (cm)")
+    dz[0].GetXaxis().SetTitleSize(0.05)
+    dz[0].GetYaxis().SetTitleSize(0.05)
+    dz[0].GetYaxis().SetTitle("Events")
 
-    dxy[0].Draw()
-    dxy[1].Draw("same")
-    dxy[2].Draw("same")
-    dxy[3].Draw("same")
-    cmslabel.Draw("same")
-    sqrtlabel.Draw("same")
+    gStyle.SetOptStat(0)
+
+    #change the CMS_lumi variables (see CMS_lumi.py)                                                                                                                                                                                           
+
+    CMS_lumi.lumi_7TeV = "4.8 fb^{-1}"
+    CMS_lumi.lumi_8TeV = "19.3 fb^{-1}"
+    CMS_lumi.writeExtraText = 1
+    CMS_lumi.extraText = "Simulation"
+
+    iPos = 11
+    if( iPos==0 ): CMS_lumi.relPosX = 0.12
+
+    H_ref = 600;
+    W_ref = 800;
+    W = W_ref
+    H  = H_ref
+
+
+    # Simple example of macro: plot with CMS name and lumi text
+    #  (this script does not pretend to work in all configurations)
+    # iPeriod = 1*(0/1 7 TeV) + 2*(0/1 8 TeV)  + 4*(0/1 13 TeV)
+    # For instance:
+    #               iPeriod = 3 means: 7 TeV + 8 TeV
+    #               iPeriod = 7 means: 7 TeV + 8 TeV + 13 TeV
+    # references for T, B, L, R
+
+    T = 0.08*H_ref
+    B = 0.12*H_ref
+    L = 0.12*W_ref
+    R = 0.04*W_ref
+
+    canvas = TCanvas("c2","c2",50,50,W,H)
+    canvas.SetFillColor(0)
+    canvas.SetBorderMode(0)
+    canvas.SetFrameFillStyle(0)
+    canvas.SetFrameBorderMode(0)
+    canvas.SetLeftMargin( L/W )
+    canvas.SetRightMargin( R/W )
+    canvas.SetTopMargin( T/H )
+    canvas.SetBottomMargin( B/H )
+    canvas.SetTickx(0)
+    canvas.SetTicky(0)
+    canvas.SetLogy()
+
+
+    dz[0].Draw()
+    dz[1].Draw("same")
+    dz[2].Draw("same")
+    dz[3].Draw("same")
     leg.Draw("same")
     
-    c1.SaveAs("dzcomparisonsignal.png")
-    c1.Close()
+    #draw the lumi text on the canvas 
+    CMS_lumi.CMS_lumi(canvas, 2, iPos)
+
+    canvas.cd()
+    canvas.Update()
+    canvas.RedrawAxis()
+    frame = canvas.GetFrame()
+    frame.Draw()
+
+
+    canvas.SaveAs("dzcomparisonsignal.png")
+    canvas.Close()
 
 def main():
-    dxy = function()
-    cmslabel = label(1)
-    sqrtlabel = label(2)
-    plot(dxy,cmslabel,sqrtlabel)
+    dz = function()
+    plot(dz)
 
 if __name__ == "__main__":
     main()
