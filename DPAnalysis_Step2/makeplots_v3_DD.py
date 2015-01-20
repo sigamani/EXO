@@ -18,8 +18,8 @@ def loop(vec, vechisto, flag, phot):
                     dxytemp.append(fabs(event.dxyConv[i]))
             dxytemp = sorted(dxytemp)
 
-            if (event.Rsqrd < 0.035):
-                continue
+            #if (event.Rsqrd < 0.035):
+            #    continue
             if (event.nPhot < phot):
                 continue
             if (event.sMinPhot[0] < 0.15 or event.sMinPhot[0] > 0.3):
@@ -126,8 +126,6 @@ def function (lamb,ctau1,ctau2,phot):
     listsig2 = ["./v24/GMSB_L"+lamb+"-CTAU"+ctau2+".root"]
     listdata = ["./v24/Run2012A.root","./v24/Run2012B.root","./v24/Run2012C_1.root","./v24/Run2012C_2.root","./v24/Run2012C_3.root","./v24/Run2012D_1.root","./v24/Run2012D_2.root","./v24/Run2012D_3.root"]
     listdataisolow = ["./v24/Run2012Aisolow20.root","./v24/Run2012Bisolow20.root","./v24/Run2012C_1isolow20.root","./v24/Run2012C_2isolow20.root","./v24/Run2012C_3isolow20.root","./v24/Run2012D_1isolow20.root","./v24/Run2012D_2isolow20.root","./v24/Run2012D_3isolow20.root"]
-    #listfakehigh = ["./v24/Run2012Afakehigh.root","./v24/Run2012Bfakehigh.root","./v24/Run2012C_1fakehigh.root","./v24/Run2012C_2fakehigh.root","./v24/Run2012C_3fakehigh.root","./v24/Run2012D_1fakehigh.root","./v24/Run2012D_2fakehigh.root","./v24/Run2012D_3fakehigh.root"]
-    #listfakelow = ["./v24/Run2012Afakelow.root","./v24/Run2012Bfakelow.root","./v24/Run2012C_1fakelow.root","./v24/Run2012C_2fakelow.root","./v24/Run2012C_3fakelow.root","./v24/Run2012D_1fakelow.root","./v24/Run2012D_2fakelow.root","./v24/Run2012D_3fakelow.root"]
 
     vecfilesttjets = []
     for item in listttjets:
@@ -141,14 +139,6 @@ def function (lamb,ctau1,ctau2,phot):
     for item in listdataisolow:
         temp = TFile.Open(item)
         vecfilesdataisolow.append(temp)
-    #vecfilesfakehigh = []
-    #for item in listfakehigh:
-    #    temp = TFile.Open(item)
-    #    vecfilesfakehigh.append(temp)
-    #vecfilesfakelow = []
-    #for item in listfakelow:
-    #    temp = TFile.Open(item)
-    #    vecfilesfakelow.append(temp)
     vecfilessig1 = []
     for item in listsig1:
         temp = TFile.Open(item)
@@ -295,60 +285,6 @@ def function (lamb,ctau1,ctau2,phot):
     vechisisolow = loop(vecfilesdataisolow, vechisisolow, 2, phot)
 
     
-    # ptpholeadfakehigh = TH1D("PtPhotonleadingfakehigh","",24,0,500)
-    # ptphosubleadfakehigh = TH1D("PtPhotonsubleadingfakehigh","",12,0,500)
-    # ptjetleadfakehigh = TH1D("PtJetleadingfakehigh","",12,0,500)
-    # ptjetsubleadfakehigh = TH1D("PtJetsubleadingfakehigh","",12,0,500)
-    # dxyfakehigh = TH1D("Dxyfakehigh","",4,xbins)
-    # #dxyfakehigh = TH1D("Dxyfakehigh","",20,0,10)
-    # metfakehigh = TH1D("METfakehigh","",50,0,1000)
-    # njetsfakehigh = TH1D("nJetsfakehigh","",15,0,15)
-    # nphotfakehigh = TH1D("nPhotfakehigh","",15,0,15)
-    # nvertfakehigh = TH1D("nVertfakehigh","",8,0,40)
-    # smajfakehigh = TH1D("sMajfakehigh","",20,0,3)
-    # sminfakehigh = TH1D("sMinfakehigh","",20,0,0.5)
-    # sigietafakehigh = TH1D("SigmaIetafakehigh","",50,0,0.03)
-    # etafakehigh = TH1D("Etafakehigh","",50,0,2)
-    # chadisofakehigh = TH1D("cHadIsofakehigh","",50,0,5)
-    # nhadisofakehigh = TH1D("nHadIsofakehigh","",50,0,5)
-    # photisofakehigh = TH1D("photIsofakehigh","",50,0,5)
-    # phohoverefakehigh = TH1D("phoHoverEfakehigh","",50,0,5)
-    # rsqrdfakehigh = TH1D("Rsqrdfakehigh","",50,0,1)
-    # vechisfakehigh = [ptpholeadfakehigh,ptphosubleadfakehigh,ptjetleadfakehigh,ptjetsubleadfakehigh,dxyfakehigh,metfakehigh,njetsfakehigh,nphotfakehigh,nvertfakehigh,smajfakehigh,sminfakehigh,sigietafakehigh,etafakehigh,chadisofakehigh,nhadisofakehigh,photisofakehigh,phohoverefakehigh,rsqrdfakehigh]
-
-    # for each in vechisfakehigh:
-    #     each.Sumw2()
-
-    # vechisfakehigh = loop(vecfilesfakehigh, vechisfakehigh, 1, phot)
-
-    
-    # ptpholeadfakelow = TH1D("PtPhotonleadingfakelow","",24,0,500)
-    # ptphosubleadfakelow = TH1D("PtPhotonsubleadingfakelow","",12,0,500)
-    # ptjetleadfakelow = TH1D("PtJetleadingfakelow","",12,0,500)
-    # ptjetsubleadfakelow = TH1D("PtJetsubleadingfakelow","",12,0,500)
-    # dxyfakelow = TH1D("Dxyfakelow","",4,xbins)
-    # #dxyfakelow = TH1D("Dxyfakelow","",20,0,10)
-    # metfakelow = TH1D("METfakelow","",50,0,1000)
-    # njetsfakelow = TH1D("nJetsfakelow","",15,0,15)
-    # nphotfakelow = TH1D("nPhotfakelow","",15,0,15)
-    # nvertfakelow = TH1D("nVertfakelow","",8,0,40)
-    # smajfakelow = TH1D("sMajfakelow","",20,0,3)
-    # sminfakelow = TH1D("sMinfakelow","",20,0,0.5)
-    # sigietafakelow = TH1D("SigmaIetafakelow","",50,0,0.03)
-    # etafakelow = TH1D("Etafakelow","",50,0,2)
-    # chadisofakelow = TH1D("cHadIsofakelow","",50,0,5)
-    # nhadisofakelow = TH1D("nHadIsofakelow","",50,0,5)
-    # photisofakelow = TH1D("photIsofakelow","",50,0,5)
-    # phohoverefakelow = TH1D("phoHoverEfakelow","",50,0,5)
-    # rsqrdfakelow = TH1D("Rsqrdfakelow","",50,0,1)
-    # vechisfakelow = [ptpholeadfakelow,ptphosubleadfakelow,ptjetleadfakelow,ptjetsubleadfakelow,dxyfakelow,metfakelow,njetsfakelow,nphotfakelow,nvertfakelow,smajfakelow,sminfakelow,sigietafakelow,etafakelow,chadisofakelow,nhadisofakelow,photisofakelow,phohoverefakelow,rsqrdfakelow]
-
-    # for each in vechisfakelow:
-    #     each.Sumw2()
-
-    # vechisfakelow = loop(vecfilesfakelow, vechisfakelow, 1, phot)    
-    
-
     dxy.SetBinContent(dxy.GetNbinsX(),(dxy.GetBinContent(dxy.GetNbinsX())+dxy.GetBinContent(dxy.GetNbinsX()+1)))
     dxysig1.SetBinContent(dxysig1.GetNbinsX(),(dxysig1.GetBinContent(dxysig1.GetNbinsX())+dxysig1.GetBinContent(dxysig1.GetNbinsX()+1)))
     dxysig2.SetBinContent(dxysig2.GetNbinsX(),(dxysig2.GetBinContent(dxysig2.GetNbinsX())+dxysig2.GetBinContent(dxysig2.GetNbinsX()+1)))
@@ -360,54 +296,30 @@ def function (lamb,ctau1,ctau2,phot):
     dxyttjet.SetBinError(dxyttjet.GetNbinsX(),(dxyttjet.GetBinError(dxyttjet.GetNbinsX())+dxyttjet.GetBinError(dxyttjet.GetNbinsX()+1)))
     dxyisolow.SetBinError(dxyisolow.GetNbinsX(),(dxyisolow.GetBinError(dxyisolow.GetNbinsX())+dxyisolow.GetBinError(dxyisolow.GetNbinsX()+1)))
 
-    #dxyfakehigh.SetBinContent(dxyfakehigh.GetNbinsX(),dxyfakehigh.GetBinContent(dxy.GetNbinsX()+1))
-    #dxyfakelow.SetBinContent(dxyfakelow.GetNbinsX(),dxyfakelow.GetBinContent(dxy.GetNbinsX()+1))
-
+    
     for i in range(len(vechis)):
         datatotal = vechis[i].Integral()
         ttjettotal = vechisttjet[i].Integral()
         isolowtotal = vechisisolow[i].Integral()
-   #     fakehightotal = vechisfakehigh[i].Integral()
-   #     fakelowtotal = vechisfakelow[i].Integral()
         newisolowtotal = datatotal - ttjettotal
-        #print "oldtotal: " + str(isolowtotal) + ", newtotal: " + str(newisolowtotal)
-
+  
         if(isolowtotal != 0):
             ratio = newisolowtotal/isolowtotal
-            #ratiofakelow = newisolowtotal/fakelowtotal
-            #ratiofakehigh = newisolowtotal/fakehightotal
         else:
             ratio = 1.
-            #ratiofakelow = 1.
-            #ratiofakehigh = 1.
         vechisisolow[i].Scale(ratio)
-        #vechisfakelow[i].Scale(ratiofakelow)
-        #vechisfakehigh[i].Scale(ratiofakehigh)
-
-       #print "old: " + str(isolowtotal) + ", new: " + str(vechisisolow[i].Integral())
-
-    
+      
     datatotal = vechis[4].GetBinContent(1)
     ttjettotal = vechisttjet[4].GetBinContent(1)
     isolowtotal = vechisisolow[4].GetBinContent(1)
-    #fakehightotal = vechisfakehigh[4].GetBinContent(1)
-    #fakelowtotal = vechisfakelow[4].GetBinContent(1)
     newisolowtotal = datatotal - ttjettotal
 
     if(isolowtotal != 0):
         ratio = newisolowtotal/isolowtotal
-        #ratiofakelow = newisolowtotal/fakelowtotal
-        #ratiofakehigh = newisolowtotal/fakehightotal
     else:
         ratio = 1.
-        #ratiofakelow = 1.
-        #ratiofakehigh = 1.
     vechisisolow[4].Scale(ratio)
-    #vechisfakelow[4].Scale(ratiofakelow)
-    #vechisfakehigh[4].Scale(ratiofakehigh)
-
-    print vechis[4].GetBinError(4)
-
+  
     """ 
     vechis[4].SetBinContent(3,0.)
     vechis[4].SetBinContent(2,0.)
@@ -431,28 +343,12 @@ def function (lamb,ctau1,ctau2,phot):
         it.Write()
     for it in vechisisolow:
         it.Write()
-    #for it in vechisfakehigh:
-    #    it.Write()
-    #for it in vechisfakelow:
-    #    it.Write()
-
-    #ptpho.Write()
-    #ptphomc.Write()    
-    #ptphosig.Write()    
 
     output.Close()
 
 
 def main():
-    #function("180","500","500",2)
-    #function("180","250","500",2)
-    #function("180","50","500",2)
     function("180","10","500",2)
-
-    #function("160","500","500",2)
-    #function("160","100","500",2)
-    #function("160","50","500",2)
-    #function("160","10","500",2)
 
 if __name__ == "__main__":
     main()
