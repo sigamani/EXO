@@ -10,16 +10,12 @@ def loop(vec, vechisto, flag, phot):
         j=0
         print 'total events ' + str(entr)
         for event in tree:
-            
             dxytemp = []
-            
             for i in range(len(event.dxyConv)):
                 if (event.ConvChi2[i] > 0.01):
                     dxytemp.append(fabs(event.dxyConv[i]))
             dxytemp = sorted(dxytemp)
 
-            #if (event.Rsqrd < 0.035):
-            #    continue
             if (event.nPhot < phot):
                 continue
             if (event.sMinPhot[0] < 0.15 or event.sMinPhot[0] > 0.3):
@@ -32,7 +28,8 @@ def loop(vec, vechisto, flag, phot):
                 continue
             if (event.sMajPhot[0] > 1.35):
                 continue
-                
+#            if (event.MET < 30):
+#                continue
             if(flag == 0):
                 lum = 19280.
                 vechisto[0].Fill( event.ptPhot[0], (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors) )
@@ -43,8 +40,8 @@ def loop(vec, vechisto, flag, phot):
                 if(event.ptJet.size() > 2):
                     vechisto[3].Fill( event.ptJet[1], (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors) )
                 if(len(dxytemp) > 0):
-                    vechisto[4].Fill( dxytemp[-1], (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors))
-
+                    vechisto[4].Fill( dxytemp[-1], (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors))                
+                    
                 vechisto[5].Fill( event.MET, (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors) )
                 vechisto[6].Fill( event.nJet, (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors))
                 vechisto[7].Fill( event.nPhot, (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors))
@@ -57,7 +54,6 @@ def loop(vec, vechisto, flag, phot):
                 vechisto[14].Fill( event.nhadiso[0], (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors))
                 vechisto[15].Fill( event.photiso[0], (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors))
                 vechisto[16].Fill( event.phohovere[0], (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors))
-                vechisto[17].Fill( event.Rsqrd, (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors))
                 
             if (flag == 1):
                 vechisto[0].Fill( event.ptPhot[0], 1./event.EfficiencyScaleFactors )
@@ -69,11 +65,8 @@ def loop(vec, vechisto, flag, phot):
                     vechisto[3].Fill( event.ptJet[1], 1./event.EfficiencyScaleFactors )
 
                 if(len(dxytemp) > 0):
-                    vechisto[4].Fill( dxytemp[-1], 1./event.EfficiencyScaleFactors)                            
-                    if (dxytemp[-1] > 6):
-                        print dxytemp[-1]
-                        print event.minDPhi
-
+                    vechisto[4].Fill( dxytemp[-1], 1./event.EfficiencyScaleFactors)
+                            
                 vechisto[5].Fill( event.MET, 1./event.EfficiencyScaleFactors )
                 vechisto[6].Fill( event.nJet, 1./event.EfficiencyScaleFactors )
                 vechisto[7].Fill( event.nPhot, 1./event.EfficiencyScaleFactors )
@@ -86,7 +79,6 @@ def loop(vec, vechisto, flag, phot):
                 vechisto[14].Fill( event.nhadiso[0], 1./(event.EfficiencyScaleFactors))
                 vechisto[15].Fill( event.photiso[0], 1./(event.EfficiencyScaleFactors))
                 vechisto[16].Fill( event.phohovere[0], 1./(event.EfficiencyScaleFactors))
-                vechisto[17].Fill( event.Rsqrd, 1./(event.EfficiencyScaleFactors))
                     
             if (flag == 2):
                 vechisto[0].Fill( event.ptPhot[0], 1./event.EfficiencyScaleFactors )
@@ -99,9 +91,6 @@ def loop(vec, vechisto, flag, phot):
                     
                 if(len(dxytemp) > 0):
                     vechisto[4].Fill( dxytemp[-1], 1./event.EfficiencyScaleFactors)
-                    if (dxytemp[-1] > 6):
-                        print dxytemp[-1]
-                        print event.minDPhi
 
                 vechisto[5].Fill( event.MET, 1./event.EfficiencyScaleFactors )
                 vechisto[6].Fill( event.nJet, 1./event.EfficiencyScaleFactors )
@@ -115,17 +104,19 @@ def loop(vec, vechisto, flag, phot):
                 vechisto[14].Fill( event.nhadiso[0], 1./(event.EfficiencyScaleFactors))
                 vechisto[15].Fill( event.photiso[0], 1./(event.EfficiencyScaleFactors))
                 vechisto[16].Fill( event.phohovere[0], 1./(event.EfficiencyScaleFactors))
-                vechisto[17].Fill( event.Rsqrd, 1./(event.EfficiencyScaleFactors))
-        
+                
     return vechisto
 
 def function (lamb,ctau1,ctau2,phot):
 
-    listttjets = ["./v24/TTJets.root"]
-    listsig1 = ["./v24/GMSB_L"+lamb+"-CTAU"+ctau1+".root"]
-    listsig2 = ["./v24/GMSB_L"+lamb+"-CTAU"+ctau2+".root"]
-    listdata = ["./v24/Run2012A.root","./v24/Run2012B.root","./v24/Run2012C_1.root","./v24/Run2012C_2.root","./v24/Run2012C_3.root","./v24/Run2012D_1.root","./v24/Run2012D_2.root","./v24/Run2012D_3.root"]
-    listdataisolow = ["./v24/Run2012Aisolow20.root","./v24/Run2012Bisolow20.root","./v24/Run2012C_1isolow20.root","./v24/Run2012C_2isolow20.root","./v24/Run2012C_3isolow20.root","./v24/Run2012D_1isolow20.root","./v24/Run2012D_2isolow20.root","./v24/Run2012D_3isolow20.root"]
+    listttjets = ["./v21/TTJets.root"]
+    listsig1 = ["./v22/GMSB_L"+lamb+"-CTAU"+ctau1+".root"]
+    listsig2 = ["./v22/GMSB_L"+lamb+"-CTAU"+ctau2+".root"]
+    listdata = ["./v21/Run2012A.root","./v21/Run2012B.root","./v21/Run2012C_1.root","./v21/Run2012C_2.root","./v21/Run2012C_3.root","./v21/Run2012D_1.root","./v21/Run2012D_2.root","./v21/Run2012D_3.root"]
+    listdataisolow = ["./v21/Run2012Aisolow.root","./v21/Run2012Bisolow.root","./v21/Run2012C_1isolow.root","./v21/Run2012C_2isolow.root","./v21/Run2012C_3isolow.root","./v21/Run2012D_1isolow.root","./v21/Run2012D_2isolow.root","./v21/Run2012D_3isolow.root"]
+    listfakehigh = ["./v21/Run2012Afakehigh.root","./v21/Run2012Bfakehigh.root","./v21/Run2012C_1fakehigh.root","./v21/Run2012C_2fakehigh.root","./v21/Run2012C_3fakehigh.root","./v21/Run2012D_1fakehigh.root","./v21/Run2012D_2fakehigh.root","./v21/Run2012D_3fakehigh.root"]
+    listfakelow = ["./v21/Run2012Afakelow.root","./v21/Run2012Bfakelow.root","./v21/Run2012C_1fakelow.root","./v21/Run2012C_2fakelow.root","./v21/Run2012C_3fakelow.root","./v21/Run2012D_1fakelow.root","./v21/Run2012D_2fakelow.root","./v21/Run2012D_3fakelow.root"]
+    
 
     vecfilesttjets = []
     for item in listttjets:
@@ -139,6 +130,14 @@ def function (lamb,ctau1,ctau2,phot):
     for item in listdataisolow:
         temp = TFile.Open(item)
         vecfilesdataisolow.append(temp)
+    vecfilesfakehigh = []
+    for item in listfakehigh:
+        temp = TFile.Open(item)
+        vecfilesfakehigh.append(temp)
+    vecfilesfakelow = []
+    for item in listfakelow:
+        temp = TFile.Open(item)
+        vecfilesfakelow.append(temp)
     vecfilessig1 = []
     for item in listsig1:
         temp = TFile.Open(item)
@@ -156,7 +155,6 @@ def function (lamb,ctau1,ctau2,phot):
     ptjetleadttjet = TH1D("PtJetleadingTTJet","",12,0,500)
     ptjetsubleadttjet = TH1D("PtJetsubleadingTTJet","",12,0,500)
     dxyttjet = TH1D("DxyTTJet","",4,xbins)
-    #dxyttjet = TH1D("DxyTTJet","",20,0,10)
     metttjet = TH1D("METTTJet","",50,0,1000)
     njetsttjet = TH1D("nJetsTTJet","",15,0,15)
     nphotttjet = TH1D("nPhotTTJet","",15,0,15)
@@ -169,9 +167,8 @@ def function (lamb,ctau1,ctau2,phot):
     nhadisottjet = TH1D("nHadIsoTTJet","",50,0,5)
     photisottjet = TH1D("photIsoTTJet","",50,0,5)
     phohoverettjet = TH1D("phoHoverETTJet","",50,0,5)
-    rsqrdttjet = TH1D("RsqrdTTJet","",50,0,1)
-    vechisttjet = [ptpholeadttjet,ptphosubleadttjet,ptjetleadttjet,ptjetsubleadttjet,dxyttjet,metttjet,njetsttjet,nphotttjet,nvertttjet,smajttjet,sminttjet,sigietattjet,etattjet,chadisottjet,nhadisottjet,photisottjet,phohoverettjet,rsqrdttjet]
-
+    vechisttjet = [ptpholeadttjet,ptphosubleadttjet,ptjetleadttjet,ptjetsubleadttjet,dxyttjet,metttjet,njetsttjet,nphotttjet,nvertttjet,smajttjet,sminttjet,sigietattjet,etattjet,chadisottjet,nhadisottjet,photisottjet,phohoverettjet]
+    
     for each in vechisttjet:
         each.Sumw2()
 
@@ -183,7 +180,6 @@ def function (lamb,ctau1,ctau2,phot):
     ptjetleadsig1 = TH1D("PtJetleadingSignal1","",12,0,500)
     ptjetsubleadsig1 = TH1D("PtJetsubleadingSignal1","",12,0,500)
     dxysig1 = TH1D("DxySignal1","",4,xbins)
-    #dxysig1 = TH1D("DxySignal1","",20,0,10)
     metsig1 = TH1D("METSignal1","",50,0,1000)
     njetssig1 = TH1D("nJetsSignal1","",15,0,15)
     nphotsig1 = TH1D("nPhotSignal1","",15,0,15)
@@ -196,8 +192,7 @@ def function (lamb,ctau1,ctau2,phot):
     nhadisosig1 = TH1D("nHadIsoSignal1","",50,0,5)
     photisosig1 = TH1D("photIsoSignal1","",50,0,5)
     phohoveresig1 = TH1D("phoHoverESignal1","",50,0,5)
-    rsqrdsig1 = TH1D("RsqrdSignal1","",50,0,1)
-    vechissig1 = [ptpholeadsig1,ptphosubleadsig1,ptjetleadsig1,ptjetsubleadsig1,dxysig1,metsig1,njetssig1,nphotsig1,nvertsig1,smajsig1,sminsig1,sigietasig1,etasig1,chadisosig1,nhadisosig1,photisosig1,phohoveresig1,rsqrdsig1]
+    vechissig1 = [ptpholeadsig1,ptphosubleadsig1,ptjetleadsig1,ptjetsubleadsig1,dxysig1,metsig1,njetssig1,nphotsig1,nvertsig1,smajsig1,sminsig1,sigietasig1,etasig1,chadisosig1,nhadisosig1,photisosig1,phohoveresig1]
     
     for each in vechissig1:
         each.Sumw2()
@@ -209,7 +204,6 @@ def function (lamb,ctau1,ctau2,phot):
     ptjetleadsig2 = TH1D("PtJetleadingSignal2","",12,0,500)
     ptjetsubleadsig2 = TH1D("PtJetsubleadingSignal2","",12,0,500)
     dxysig2 = TH1D("DxySignal2","",4,xbins)
-    #dxysig2 = TH1D("DxySignal2","",20,0,10)
     metsig2 = TH1D("METSignal2","",50,0,1000)
     njetssig2 = TH1D("nJetsSignal2","",15,0,15)
     nphotsig2 = TH1D("nPhotSignal2","",15,0,15)
@@ -222,8 +216,7 @@ def function (lamb,ctau1,ctau2,phot):
     nhadisosig2 = TH1D("nHadIsoSignal2","",50,0,5)
     photisosig2 = TH1D("photIsoSignal2","",50,0,5)
     phohoveresig2 = TH1D("phoHoverESignal2","",50,0,5)
-    rsqrdsig2 = TH1D("RsqrdSignal2","",50,0,1)
-    vechissig2 = [ptpholeadsig2,ptphosubleadsig2,ptjetleadsig2,ptjetsubleadsig2,dxysig2,metsig2,njetssig2,nphotsig2,nvertsig2,smajsig2,sminsig2,sigietasig2,etasig2,chadisosig2,nhadisosig2,photisosig2,phohoveresig2,rsqrdsig2]
+    vechissig2 = [ptpholeadsig2,ptphosubleadsig2,ptjetleadsig2,ptjetsubleadsig2,dxysig2,metsig2,njetssig2,nphotsig2,nvertsig2,smajsig2,sminsig2,sigietasig2,etasig2,chadisosig2,nhadisosig2,photisosig2,phohoveresig2]
     
     for each in vechissig2:
         each.Sumw2()
@@ -236,7 +229,6 @@ def function (lamb,ctau1,ctau2,phot):
     ptjetlead = TH1D("PtJetleading","",12,0,500)
     ptjetsublead = TH1D("PtJetsubleading","",12,0,500)
     dxy = TH1D("Dxy","",4,xbins)
-    #dxy = TH1D("Dxy","",20,0,10)
     met = TH1D("MET","",50,0,1000)
     njets = TH1D("nJets","",15,0,15)
     nphot = TH1D("nPhot","",15,0,15)
@@ -249,8 +241,7 @@ def function (lamb,ctau1,ctau2,phot):
     nhadiso = TH1D("nHadIso","",50,0,5)
     photiso = TH1D("photIso","",50,0,5)
     phohovere = TH1D("phoHoverE","",50,0,5)
-    rsqrd = TH1D("Rsqrd","",50,0,1)
-    vechis = [ptpholead,ptphosublead,ptjetlead,ptjetsublead,dxy,met,njets,nphot,nvert,smaj,smin,sigieta,eta,chadiso,nhadiso,photiso,phohovere,rsqrd]
+    vechis = [ptpholead,ptphosublead,ptjetlead,ptjetsublead,dxy,met,njets,nphot,nvert,smaj,smin,sigieta,eta,chadiso,nhadiso,photiso,phohovere]
     
     for each in vechis:
         each.Sumw2()
@@ -263,7 +254,6 @@ def function (lamb,ctau1,ctau2,phot):
     ptjetleadisolow = TH1D("PtJetleadingisolow","",12,0,500)
     ptjetsubleadisolow = TH1D("PtJetsubleadingisolow","",12,0,500)
     dxyisolow = TH1D("Dxyisolow","",4,xbins)
-    #dxyisolow = TH1D("Dxyisolow","",20,0,10)
     metisolow = TH1D("METisolow","",50,0,1000)
     njetsisolow = TH1D("nJetsisolow","",15,0,15)
     nphotisolow = TH1D("nPhotisolow","",15,0,15)
@@ -276,8 +266,7 @@ def function (lamb,ctau1,ctau2,phot):
     nhadisoisolow = TH1D("nHadIsoisolow","",50,0,5)
     photisoisolow = TH1D("photIsoisolow","",50,0,5)
     phohovereisolow = TH1D("phoHoverEisolow","",50,0,5)
-    rsqrdisolow = TH1D("Rsqrdisolow","",50,0,1)
-    vechisisolow= [ptpholeadisolow,ptphosubleadisolow,ptjetleadisolow,ptjetsubleadisolow,dxyisolow,metisolow,njetsisolow,nphotisolow,nvertisolow,smajisolow,sminisolow,sigietaisolow,etaisolow,chadisoisolow,nhadisoisolow,photisoisolow,phohovereisolow,rsqrdisolow]
+    vechisisolow= [ptpholeadisolow,ptphosubleadisolow,ptjetleadisolow,ptjetsubleadisolow,dxyisolow,metisolow,njetsisolow,nphotisolow,nvertisolow,smajisolow,sminisolow,sigietaisolow,etaisolow,chadisoisolow,nhadisoisolow,photisoisolow,phohovereisolow]
 
     for each in vechisisolow:
         each.Sumw2()
@@ -285,44 +274,109 @@ def function (lamb,ctau1,ctau2,phot):
     vechisisolow = loop(vecfilesdataisolow, vechisisolow, 2, phot)
 
     
-    dxy.SetBinContent(dxy.GetNbinsX(),(dxy.GetBinContent(dxy.GetNbinsX())+dxy.GetBinContent(dxy.GetNbinsX()+1)))
-    dxysig1.SetBinContent(dxysig1.GetNbinsX(),(dxysig1.GetBinContent(dxysig1.GetNbinsX())+dxysig1.GetBinContent(dxysig1.GetNbinsX()+1)))
-    dxysig2.SetBinContent(dxysig2.GetNbinsX(),(dxysig2.GetBinContent(dxysig2.GetNbinsX())+dxysig2.GetBinContent(dxysig2.GetNbinsX()+1)))
-    dxyttjet.SetBinContent(dxyttjet.GetNbinsX(),(dxyttjet.GetBinContent(dxyttjet.GetNbinsX())+dxyttjet.GetBinContent(dxyttjet.GetNbinsX()+1)))
-    dxyisolow.SetBinContent(dxyisolow.GetNbinsX(),(dxyisolow.GetBinContent(dxyisolow.GetNbinsX())+dxyisolow.GetBinContent(dxyisolow.GetNbinsX()+1)))
-    dxy.SetBinError(dxy.GetNbinsX(),(dxy.GetBinError(dxy.GetNbinsX())+dxy.GetBinError(dxy.GetNbinsX()+1)))
-    dxysig1.SetBinError(dxysig1.GetNbinsX(),(dxysig1.GetBinError(dxysig1.GetNbinsX())+dxysig1.GetBinError(dxysig1.GetNbinsX()+1)))
-    dxysig2.SetBinError(dxysig2.GetNbinsX(),(dxysig2.GetBinError(dxysig2.GetNbinsX())+dxysig2.GetBinError(dxysig2.GetNbinsX()+1)))
-    dxyttjet.SetBinError(dxyttjet.GetNbinsX(),(dxyttjet.GetBinError(dxyttjet.GetNbinsX())+dxyttjet.GetBinError(dxyttjet.GetNbinsX()+1)))
-    dxyisolow.SetBinError(dxyisolow.GetNbinsX(),(dxyisolow.GetBinError(dxyisolow.GetNbinsX())+dxyisolow.GetBinError(dxyisolow.GetNbinsX()+1)))
+    ptpholeadfakehigh = TH1D("PtPhotonleadingfakehigh","",24,0,500)
+    ptphosubleadfakehigh = TH1D("PtPhotonsubleadingfakehigh","",12,0,500)
+    ptjetleadfakehigh = TH1D("PtJetleadingfakehigh","",12,0,500)
+    ptjetsubleadfakehigh = TH1D("PtJetsubleadingfakehigh","",12,0,500)
+    dxyfakehigh = TH1D("Dxyfakehigh","",4,xbins)
+    metfakehigh = TH1D("METfakehigh","",50,0,1000)
+    njetsfakehigh = TH1D("nJetsfakehigh","",15,0,15)
+    nphotfakehigh = TH1D("nPhotfakehigh","",15,0,15)
+    nvertfakehigh = TH1D("nVertfakehigh","",8,0,40)
+    smajfakehigh = TH1D("sMajfakehigh","",20,0,3)
+    sminfakehigh = TH1D("sMinfakehigh","",20,0,0.5)
+    sigietafakehigh = TH1D("SigmaIetafakehigh","",50,0,0.03)
+    etafakehigh = TH1D("Etafakehigh","",50,0,2)
+    chadisofakehigh = TH1D("cHadIsofakehigh","",50,0,5)
+    nhadisofakehigh = TH1D("nHadIsofakehigh","",50,0,5)
+    photisofakehigh = TH1D("photIsofakehigh","",50,0,5)
+    phohoverefakehigh = TH1D("phoHoverEfakehigh","",50,0,5)
+    vechisfakehigh = [ptpholeadfakehigh,ptphosubleadfakehigh,ptjetleadfakehigh,ptjetsubleadfakehigh,dxyfakehigh,metfakehigh,njetsfakehigh,nphotfakehigh,nvertfakehigh,smajfakehigh,sminfakehigh,sigietafakehigh,etafakehigh,chadisofakehigh,nhadisofakehigh,photisofakehigh,phohoverefakehigh]
+
+    for each in vechisfakehigh:
+        each.Sumw2()
+
+    vechisfakehigh = loop(vecfilesfakehigh, vechisfakehigh, 1, phot)
+
+    
+    ptpholeadfakelow = TH1D("PtPhotonleadingfakelow","",24,0,500)
+    ptphosubleadfakelow = TH1D("PtPhotonsubleadingfakelow","",12,0,500)
+    ptjetleadfakelow = TH1D("PtJetleadingfakelow","",12,0,500)
+    ptjetsubleadfakelow = TH1D("PtJetsubleadingfakelow","",12,0,500)
+    dxyfakelow = TH1D("Dxyfakelow","",4,xbins)
+    metfakelow = TH1D("METfakelow","",50,0,1000)
+    njetsfakelow = TH1D("nJetsfakelow","",15,0,15)
+    nphotfakelow = TH1D("nPhotfakelow","",15,0,15)
+    nvertfakelow = TH1D("nVertfakelow","",8,0,40)
+    smajfakelow = TH1D("sMajfakelow","",20,0,3)
+    sminfakelow = TH1D("sMinfakelow","",20,0,0.5)
+    sigietafakelow = TH1D("SigmaIetafakelow","",50,0,0.03)
+    etafakelow = TH1D("Etafakelow","",50,0,2)
+    chadisofakelow = TH1D("cHadIsofakelow","",50,0,5)
+    nhadisofakelow = TH1D("nHadIsofakelow","",50,0,5)
+    photisofakelow = TH1D("photIsofakelow","",50,0,5)
+    phohoverefakelow = TH1D("phoHoverEfakelow","",50,0,5)
+    vechisfakelow = [ptpholeadfakelow,ptphosubleadfakelow,ptjetleadfakelow,ptjetsubleadfakelow,dxyfakelow,metfakelow,njetsfakelow,nphotfakelow,nvertfakelow,smajfakelow,sminfakelow,sigietafakelow,etafakelow,chadisofakelow,nhadisofakelow,photisofakelow,phohoverefakelow]
+
+    for each in vechisfakelow:
+        each.Sumw2()
+
+    vechisfakelow = loop(vecfilesfakelow, vechisfakelow, 1, phot)
+    
+
+    #dxy.SetBinContent(25,dxy.GetBinContent(26))
+    #dxysig.SetBinContent(25,dxysig.GetBinContent(26))
+    #dxyttjet.SetBinContent(25,dxyttjet.GetBinContent(26))
+    #dxyisolow.SetBinContent(25,dxyisolow.GetBinContent(26))
 
     
     for i in range(len(vechis)):
         datatotal = vechis[i].Integral()
         ttjettotal = vechisttjet[i].Integral()
         isolowtotal = vechisisolow[i].Integral()
+        fakehightotal = vechisfakehigh[i].Integral()
+        fakelowtotal = vechisfakelow[i].Integral()
         newisolowtotal = datatotal - ttjettotal
-  
+        #print "oldtotal: " + str(isolowtotal) + ", newtotal: " + str(newisolowtotal)
+
         if(isolowtotal != 0):
             ratio = newisolowtotal/isolowtotal
+            ratiofakelow = newisolowtotal/fakelowtotal
+            ratiofakehigh = newisolowtotal/fakehightotal
         else:
             ratio = 1.
+            ratiofakelow = 1.
+            ratiofakehigh = 1.
         vechisisolow[i].Scale(ratio)
-      
+        vechisfakelow[i].Scale(ratiofakelow)
+        vechisfakehigh[i].Scale(ratiofakehigh)
+
+       #print "old: " + str(isolowtotal) + ", new: " + str(vechisisolow[i].Integral())
+
+    
     datatotal = vechis[4].GetBinContent(1)
     ttjettotal = vechisttjet[4].GetBinContent(1)
     isolowtotal = vechisisolow[4].GetBinContent(1)
+    fakehightotal = vechisfakehigh[4].GetBinContent(1)
+    fakelowtotal = vechisfakelow[4].GetBinContent(1)
     newisolowtotal = datatotal - ttjettotal
 
     if(isolowtotal != 0):
         ratio = newisolowtotal/isolowtotal
+        ratiofakelow = newisolowtotal/fakelowtotal
+        ratiofakehigh = newisolowtotal/fakehightotal
     else:
         ratio = 1.
+        ratiofakelow = 1.
+        ratiofakehigh = 1.
     vechisisolow[4].Scale(ratio)
-  
-    """ 
+    vechisfakelow[4].Scale(ratiofakelow)
+    vechisfakehigh[4].Scale(ratiofakehigh)
+
+    
     vechis[4].SetBinContent(3,0.)
     vechis[4].SetBinContent(2,0.)
+    """
     vechissig[4].SetBinContent(1,0.)
     vechissig[4].SetBinContent(2,0.)
     vechisttjet[4].SetBinContent(1,0.)
@@ -343,12 +397,28 @@ def function (lamb,ctau1,ctau2,phot):
         it.Write()
     for it in vechisisolow:
         it.Write()
+    for it in vechisfakehigh:
+        it.Write()
+    for it in vechisfakelow:
+        it.Write()
+
+    #ptpho.Write()
+    #ptphomc.Write()    
+    #ptphosig.Write()    
 
     output.Close()
 
 
 def main():
+    #function("180","500","500",2)
+    #function("180","250","500",2)
+    #function("180","50","500",2)
     function("180","10","500",2)
+
+    #function("160","500","500",2)
+    #function("160","100","500",2)
+    #function("160","50","500",2)
+    #function("160","10","500",2)
 
 if __name__ == "__main__":
     main()
