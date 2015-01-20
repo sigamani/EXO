@@ -111,7 +111,6 @@ def function (lamb,ctau,phot):
     datatotal = data_obs.GetBinContent(1)
     ttjettotal = ttjet.GetBinContent(1)
     isolowtotal = background.GetBinContent(1)
-    print isolowtotal
     background_alphaUptotal = background_alphaUp.GetBinContent(1)
     background_alphaDowntotal = background_alphaDown.GetBinContent(1)
     newisolowtotal = datatotal - ttjettotal

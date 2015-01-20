@@ -16,7 +16,7 @@ def loop(vec, dxy, phot):
         tree = i.Get("anaTree")
         entr = tree.GetEntries()
         j=0
-        print 'total events ' + str(entr)
+        #print 'total events ' + str(entr)
         for event in tree:
             dxytemp = []
             for i in range(len(event.dxyConv)):
@@ -75,32 +75,62 @@ def function (phot):
     biglistData = [None]*13
 
     biglistMC[0] = loop(vecfilesMC, 0,phot)
-    biglistMC[1] = loop(vecfilesMC, 2,phot)
-    biglistMC[2] = loop(vecfilesMC, 4,phot)
-    biglistMC[3] = loop(vecfilesMC, 6,phot)
-    biglistMC[4] = loop(vecfilesMC, 8,phot)
-    biglistMC[5] = loop(vecfilesMC, 10,phot)
-    biglistMC[6] = loop(vecfilesMC, 12,phot)
-    biglistMC[7] = loop(vecfilesMC, 14,phot)
-    biglistMC[8] = loop(vecfilesMC, 16,phot)
-    biglistMC[9] = loop(vecfilesMC, 18,phot)
-    biglistMC[10] = loop(vecfilesMC, 20,phot)
-    biglistMC[11] = loop(vecfilesMC, 22,phot)
-    biglistMC[12] = loop(vecfilesMC, 24,phot)
+    biglistMC[1] = loop(vecfilesMC, 0.5,phot)
+    biglistMC[2] = loop(vecfilesMC, 1,phot)
+    biglistMC[3] = loop(vecfilesMC, 1.5,phot)
+    biglistMC[4] = loop(vecfilesMC, 2,phot)
+    biglistMC[5] = loop(vecfilesMC, 2.5,phot)
+    biglistMC[6] = loop(vecfilesMC, 3,phot)
+    biglistMC[7] = loop(vecfilesMC, 3.5,phot)
+    biglistMC[8] = loop(vecfilesMC, 4,phot)
+    biglistMC[9] = loop(vecfilesMC, 4.5,phot)
+    biglistMC[10] = loop(vecfilesMC, 5,phot)
+    biglistMC[11] = loop(vecfilesMC, 5.5,phot)
+    biglistMC[12] = loop(vecfilesMC, 6,phot)
+
 
     biglistData[0] = loop(vecfilesdata, 0,phot)
-    biglistData[1] = loop(vecfilesdata, 2,phot)
-    biglistData[2] = loop(vecfilesdata, 4,phot)
-    biglistData[3] = loop(vecfilesdata, 6,phot)
-    biglistData[4] = loop(vecfilesdata, 8,phot)
-    biglistData[5] = loop(vecfilesdata, 10,phot)
-    biglistData[6] = loop(vecfilesdata, 12,phot)
-    biglistData[7] = loop(vecfilesdata, 14,phot)
-    biglistData[8] = loop(vecfilesdata, 16,phot)
-    biglistData[9] = loop(vecfilesdata, 18,phot)
-    biglistData[10] = loop(vecfilesdata, 20,phot)
-    biglistData[11] = loop(vecfilesdata, 22,phot)
-    biglistData[12] = loop(vecfilesdata, 24,phot)
+    biglistData[1] = loop(vecfilesdata, 0.5,phot)
+    biglistData[2] = loop(vecfilesdata, 1,phot)
+    biglistData[3] = loop(vecfilesdata, 1.5,phot)
+    biglistData[4] = loop(vecfilesdata, 2,phot)
+    biglistData[5] = loop(vecfilesdata, 2.5,phot)
+    biglistData[6] = loop(vecfilesdata, 3,phot)
+    biglistData[7] = loop(vecfilesdata, 3.5,phot)
+    biglistData[8] = loop(vecfilesdata, 4,phot)
+    biglistData[9] = loop(vecfilesdata, 4.5,phot)
+    biglistData[10] = loop(vecfilesdata, 5,phot)
+    biglistData[11] = loop(vecfilesdata, 5.5,phot)
+    biglistData[12] = loop(vecfilesdata, 6,phot)
+
+    # biglistMC[0] = loop(vecfilesMC, 0,phot)
+    # biglistMC[1] = loop(vecfilesMC, 2,phot)
+    # biglistMC[2] = loop(vecfilesMC, 4,phot)
+    # biglistMC[3] = loop(vecfilesMC, 6,phot)
+    # biglistMC[4] = loop(vecfilesMC, 8,phot)
+    # biglistMC[5] = loop(vecfilesMC, 10,phot)
+    # biglistMC[6] = loop(vecfilesMC, 12,phot)
+    # biglistMC[7] = loop(vecfilesMC, 14,phot)
+    # biglistMC[8] = loop(vecfilesMC, 16,phot)
+    # biglistMC[9] = loop(vecfilesMC, 18,phot)
+    # biglistMC[10] = loop(vecfilesMC, 20,phot)
+    # biglistMC[11] = loop(vecfilesMC, 22,phot)
+    # biglistMC[12] = loop(vecfilesMC, 24,phot)
+
+    
+    # biglistData[0] = loop(vecfilesdata, 0,phot)
+    # biglistData[1] = loop(vecfilesdata, 2,phot)
+    # biglistData[2] = loop(vecfilesdata, 4,phot)
+    # biglistData[3] = loop(vecfilesdata, 6,phot)
+    # biglistData[4] = loop(vecfilesdata, 8,phot)
+    # biglistData[5] = loop(vecfilesdata, 10,phot)
+    # biglistData[6] = loop(vecfilesdata, 12,phot)
+    # biglistData[7] = loop(vecfilesdata, 14,phot)
+    # biglistData[8] = loop(vecfilesdata, 16,phot)
+    # biglistData[9] = loop(vecfilesdata, 18,phot)
+    # biglistData[10] = loop(vecfilesdata, 20,phot)
+    # biglistData[11] = loop(vecfilesdata, 22,phot)
+    # biglistData[12] = loop(vecfilesdata, 24,phot)
 
     for i in range(len(biglistMC)):
         nPhotMC[i] = biglistMC[i][0]
@@ -115,11 +145,11 @@ def function (phot):
     EfficienciesData = [None]*13
     ErrorsData = [None]*13
 
-    EfficiencyHistMC = TH1D("EfficienciesMC","",13,0,26)
+    EfficiencyHistMC = TH1D("EfficienciesMC","",13,0,6)
     EfficiencyHistMC.Sumw2()
     EfficiencyHistMC.SetMarkerSize(0.7)
 
-    EfficiencyHistData = TH1D("EfficienciesData","",13,0,26)
+    EfficiencyHistData = TH1D("EfficienciesData","",13,0,6)
     EfficiencyHistData.Sumw2()
     EfficiencyHistData.SetMarkerSize(0.7)
     
@@ -153,8 +183,9 @@ def function (phot):
     return EfficiencyHistMC, EfficiencyHistData
 
 def main():
-    MC = function(2)[0]
-    data = function(2)[1]
+    thing = function(2)
+    MC = thing[0]
+    data = thing[1]
 
     MC.SetMarkerColor(1)
     MC.SetLineColor(1)
@@ -173,7 +204,7 @@ def main():
     leg.AddEntry(MC, "MC","p")
     leg.AddEntry(data, "DD bkg","p")
    
-    MC.GetYaxis().SetRangeUser(0.00001,0.1)
+    MC.GetYaxis().SetRangeUser(0.0001,0.2)
     MC.GetYaxis().SetTitleSize(0.05)
     MC.GetYaxis().SetTitleOffset(1.2)
     MC.GetYaxis().SetTitle("Efficiency")
@@ -223,7 +254,7 @@ def main():
     canvas.SetBottomMargin( B/H )
     canvas.SetTickx(0)
     canvas.SetTicky(0)
-    canvas.SetLogy()
+    #canvas.SetLogy()
 
 
     MC.Draw("PE")
