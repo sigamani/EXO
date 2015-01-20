@@ -577,17 +577,9 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
     
                                           h000->Fill(1.);
     if (nGoodVtx < 0) continue;           h000->Fill(2.);
-    if (MET < 30) continue;               h000->Fill(3.);
+    if (MET > 30) continue;               h000->Fill(3.);
     if (nJet < 2) continue;               h000->Fill(4.);
     if (nPhot < 2) continue;              h000->Fill(5.);
-
-
-    /*
-    cout << "1: " << photons[0].Pt() << ", " << phiPhot1 << endl;
-    cout << "2: " << photons[1].Pt() << ", " << phiPhot2 << endl;
-    cout << "3: " << jets[0].Pt() << ", " << phiJet1 << endl;
-    cout << "4: "<< jets[1].Pt() << ", " << phiJet2 << endl;
-    */
 
 
     TVector3 MET( metPx, metPy, 0);  
@@ -604,17 +596,6 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
  
     // Fill Tree
     minDPhi = mindPhi;
-
-/* 
-    cout << "1: " << dPhi1 << endl;
-    cout << "2: " << dPhi2 << endl;
-    cout << "3: " << dPhi3 << endl;
-    cout << "4: "<<  dPhi4 << endl;
-    cout << "********* "<< endl;
-    cout << "min: "<<  mindPhi << endl;
-    cout << "********* "<< endl;
-*/
-
 
     // R^2 calculation
     vector<TLorentzVector> HEMIS = CombineJets_R_no_seed(jets, photons[0], photons[1]);

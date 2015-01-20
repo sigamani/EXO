@@ -38,7 +38,6 @@ void GMSBTree_V3::Loop()
       Long64_t ientry = LoadTree(jentry);
       if (ientry < 0) break;
       nb = fChain->GetEntry(jentry);   nbytes += nb;
-
       // if (Cut(ientry) < 0) continue;
    }
 }
