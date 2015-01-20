@@ -29,7 +29,7 @@ using namespace std;
 
 
 
-TH1D* bkgShapeErrUp(const TH1D* hin, int bin){
+TH1D* bkgShapeErrUp(const TH1D* bkgnominal, const TH1D* bkgCR2, int bin){
 
   char histname[100];
   
@@ -37,13 +37,18 @@ TH1D* bkgShapeErrUp(const TH1D* hin, int bin){
 	sprintf(histname,"background_shape_b%dUp", bin-1);
 
 
-      TH1D* hout = (TH1D*) hin->Clone(histname);
+      TH1D* hout = (TH1D*) bkgnominal->Clone(histname);
    
       double area = hout->GetBinWidth(bin);
   
-      double bincontent = hout->GetBinContent(bin);     
-      double binerror   = hout->GetBinError(bin);   
-	  double newbincontent = bincontent + binerror;
+      double bincontent = bkgnominal->GetBinContent(bin);     
+      double bincontent2 = bkgCR2->GetBinContent(bin);  
+      double bincontent3 = bincontent2 - bincontent;    // the difference 
+		
+			if (0 > bincontent3) bincontent3 = 0.;
+
+	  double newbincontent = bincontent + bincontent3;
+
 
       hout->SetBinContent(bin, newbincontent); 
   
@@ -62,14 +67,14 @@ TH1D* bkgShapeErrDown(const TH1D* hin, int bin){
 
       TH1D* hout = (TH1D*) hin->Clone(histname);
    
-      double area = hout->GetBinWidth(bin);
+   /*   double area = hout->GetBinWidth(bin);
   
       double bincontent = hout->GetBinContent(bin);     
       double binerror   = hout->GetBinError(bin);   
 	  double newbincontent = bincontent + binerror;
 
       hout->SetBinContent(bin, newbincontent); 
-  
+ */ 
   return hout;  
 }
 
@@ -170,17 +175,18 @@ void makeAllFiles(int Lambda, int ctau) {
          TH1D* bkg_stat_b3_Down = statDown(bkg1hist, 3);
          TH1D* bkg_stat_b4_Down = statDown(bkg1hist, 4);
 
-         TH1D* bkg_shape_b1Up = bkgShapeErrUp(bkg1shapehist, 1);
-         TH1D* bkg_shape_b2Up = bkgShapeErrUp(bkg1shapehist, 2);
-         TH1D* bkg_shape_b3Up = bkgShapeErrUp(bkg1shapehist, 3);
-         TH1D* bkg_shape_b4Up = bkgShapeErrUp(bkg1shapehist, 4);
+         TH1D* bkg_shape_b1Up = bkgShapeErrUp(bkg1hist,bkg1shapehist, 1);
+         TH1D* bkg_shape_b2Up = bkgShapeErrUp(bkg1hist,bkg1shapehist, 2);
+         TH1D* bkg_shape_b3Up = bkgShapeErrUp(bkg1hist,bkg1shapehist, 3);
+         TH1D* bkg_shape_b4Up = bkgShapeErrUp(bkg1hist,bkg1shapehist, 4);
 
-         TH1D* bkg_shape_b1Down = bkgShapeErrDown(bkg1shapehist, 1);
-         TH1D* bkg_shape_b2Down = bkgShapeErrDown(bkg1shapehist, 2);
-         TH1D* bkg_shape_b3Down = bkgShapeErrDown(bkg1shapehist, 3);
-         TH1D* bkg_shape_b4Down = bkgShapeErrDown(bkg1shapehist, 4);
+         TH1D* bkg_shape_b1Down = bkgShapeErrDown(bkg1hist, 1);  //same histo as nominal bkg
+         TH1D* bkg_shape_b2Down = bkgShapeErrDown(bkg1hist, 2);
+         TH1D* bkg_shape_b3Down = bkgShapeErrDown(bkg1hist, 3);
+         TH1D* bkg_shape_b4Down = bkgShapeErrDown(bkg1hist, 4);
 
 
+	  //  TH1D* bkg_shape_b1Down = bkg1hist;
 
       int nbins = signalhist->GetNbinsX();
 
@@ -201,7 +207,7 @@ void makeAllFiles(int Lambda, int ctau) {
       makeCards(Lambda, ctau, ndata, nsignal, sig_err_percentage, nbkg);
 
       fout->cd();
-	  datahist->Write();
+	  //datahist->Write();
 	  signalhist->Write();
 	  bkg1hist->Write();
       fout->Write();
@@ -242,18 +248,18 @@ void makeCards(int Lambda, int ctau, double ndata, double nsignal, double sig_er
              << "rate           	\t\t " << nsignal << "  \t \t "<< nbkg << endl
              << "------------" << endl
              << "signal_syst \t lnN 	\t   " << sig_err_percentage << "          \t\t -      \t   Syst. uncertainty on signal" << endl
-             << "statA_b0 \t shapeN2 	\t   1          \t\t -      \t   Stat. uncertainty on signal" << endl
-             << "statA_b1 \t shapeN2 	\t   1          \t\t -      \t   Stat. uncertainty on signal" << endl
-             << "statA_b2 \t shapeN2 	\t   1          \t\t -      \t   Stat. uncertainty on signal" << endl
-             << "statA_b3 \t shapeN2 	\t   1          \t\t -      \t   Stat. uncertainty on signal" << endl
-             << "statB_b0 \t shapeN2 	\t   -          \t\t 1      \t   Stat. uncertainty on background" << endl
-             << "statB_b1 \t shapeN2 	\t   -          \t\t 1      \t   Stat. uncertainty on background" << endl
-             << "statB_b2 \t shapeN2 	\t   -          \t\t 1      \t   Stat. uncertainty on background" << endl
-             << "statB_b3 \t shapeN2 	\t   -          \t\t 1      \t   Stat. uncertainty on background" << endl
-             << "shape_b0 \t shapeN2 	\t   -          \t\t 1      \t   Shape uncertainty on background" << endl
-             << "shape_b1 \t shapeN2 	\t   -          \t\t 1      \t   Shape uncertainty on background" << endl
-             << "shape_b2 \t shapeN2 	\t   -          \t\t 1      \t   Shape uncertainty on background" << endl
-             << "shape_b3 \t shapeN2 	\t   -          \t\t 1      \t   Shape uncertainty on background" << endl;
+             << "statA_b0 \t shapeN2 	\t   1.          \t\t -      \t   Stat. uncertainty on signal" << endl
+             << "statA_b1 \t shapeN2 	\t   1.          \t\t -      \t   Stat. uncertainty on signal" << endl
+             << "statA_b2 \t shapeN2 	\t   1.          \t\t -      \t   Stat. uncertainty on signal" << endl
+             << "statA_b3 \t shapeN2 	\t   1.          \t\t -      \t   Stat. uncertainty on signal" << endl
+             << "statB_b0 \t shapeN2 	\t   -          \t\t 1.      \t   Stat. uncertainty on background" << endl
+             << "statB_b1 \t shapeN2 	\t   -          \t\t 1.      \t   Stat. uncertainty on background" << endl
+             << "statB_b2 \t shapeN2 	\t   -          \t\t 1.      \t   Stat. uncertainty on background" << endl
+             << "statB_b3 \t shapeN2 	\t   -          \t\t 1.      \t   Stat. uncertainty on background" << endl
+             << "shape_b0 \t shapeN2 	\t   -          \t\t 1.      \t   Shape uncertainty on background" << endl
+             << "shape_b1 \t shapeN2 	\t   -          \t\t 1.      \t   Shape uncertainty on background" << endl
+             << "shape_b2 \t shapeN2 	\t   -          \t\t 1.      \t   Shape uncertainty on background" << endl
+             << "shape_b3 \t shapeN2 	\t   -          \t\t 1.      \t   Shape uncertainty on background" << endl;
 
    
   tablesFile.close();
