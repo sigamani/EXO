@@ -153,38 +153,19 @@ void makeAllFiles(int Lambda, int ctau) {
       TH1D* bkg1hist= (TH1D*)histofile.Get("background"); 
       TH1D* bkg1shapehist= (TH1D*)histofile.Get("background_alphaUp"); 
 
-		 // signal stat
-         TH1D* GMSB_stat_b1_Up = statUp(signalhist, 1);
-         TH1D* GMSB_stat_b2_Up = statUp(signalhist, 2);
-         TH1D* GMSB_stat_b3_Up = statUp(signalhist, 3);
-         TH1D* GMSB_stat_b4_Up = statUp(signalhist, 4);
+         for(int x=1; x<=4; x++){
 
-         TH1D* GMSB_stat_b1_Down = statDown(signalhist, 1);
-         TH1D* GMSB_stat_b2_Down = statDown(signalhist, 2);
-         TH1D* GMSB_stat_b3_Down = statDown(signalhist, 3);
-         TH1D* GMSB_stat_b4_Down = statDown(signalhist, 4);
+		 // signal stat
+         TH1D* GMSB_stat_b1_Up = statUp(signalhist, x);
+         TH1D* GMSB_stat_b1_Down = statDown(signalhist, x);
 
 		 //bkg stat
-         TH1D* bkg_stat_b1_Up = statUp(bkg1hist, 1);
-         TH1D* bkg_stat_b2_Up = statUp(bkg1hist, 2);
-         TH1D* bkg_stat_b3_Up = statUp(bkg1hist, 3);
-         TH1D* bkg_stat_b4_Up = statUp(bkg1hist, 4);
+         TH1D* bkg_stat_b1_Up = statUp(bkg1hist, x);
+         TH1D* bkg_stat_b1_Down = statDown(bkg1hist, x);
+         TH1D* bkg_shape_b1Up = bkgShapeErrUp(bkg1hist,bkg1shapehist, x);
+         TH1D* bkg_shape_b1Down = bkgShapeErrDown(bkg1hist, x);  //same histo as nominal bkg
 
-         TH1D* bkg_stat_b1_Down = statDown(bkg1hist, 1);
-         TH1D* bkg_stat_b2_Down = statDown(bkg1hist, 2);
-         TH1D* bkg_stat_b3_Down = statDown(bkg1hist, 3);
-         TH1D* bkg_stat_b4_Down = statDown(bkg1hist, 4);
-
-         TH1D* bkg_shape_b1Up = bkgShapeErrUp(bkg1hist,bkg1shapehist, 1);
-         TH1D* bkg_shape_b2Up = bkgShapeErrUp(bkg1hist,bkg1shapehist, 2);
-         TH1D* bkg_shape_b3Up = bkgShapeErrUp(bkg1hist,bkg1shapehist, 3);
-         TH1D* bkg_shape_b4Up = bkgShapeErrUp(bkg1hist,bkg1shapehist, 4);
-
-         TH1D* bkg_shape_b1Down = bkgShapeErrDown(bkg1hist, 1);  //same histo as nominal bkg
-         TH1D* bkg_shape_b2Down = bkgShapeErrDown(bkg1hist, 2);
-         TH1D* bkg_shape_b3Down = bkgShapeErrDown(bkg1hist, 3);
-         TH1D* bkg_shape_b4Down = bkgShapeErrDown(bkg1hist, 4);
-
+	     }
 
 	  //  TH1D* bkg_shape_b1Down = bkg1hist;
 
@@ -218,7 +199,7 @@ void makeAllFiles(int Lambda, int ctau) {
       
 
 	  double sig_err_percentage = 0.01*sig_stat_err + 1.;
-      makeCards(Lambda, ctau, ndata, nsignal, sig_err_percentage, nbkg);
+	  makeCards(Lambda, ctau, ndata, nsignal, sig_err_percentage, nbkg);
 
       fout->cd();
 	  datahist->Write();
