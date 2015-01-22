@@ -202,7 +202,7 @@ void makeAllFiles(int Lambda, int ctau) {
       
 
 	  double sig_err_percentage = 0.01*sig_syst_err + 1.;
-	  makeCards(Lambda, ctau, ndata, nsignal, sig_err_percentage, nbkg);
+	  makeCards(Lambda, ctau, ndata, nsignal, sig_err_percentage, nbkg, nbins);
 
       fout->cd();
 	  datahist->Write();
@@ -222,7 +222,7 @@ void makeAllFiles(int Lambda, int ctau) {
 
 
 
-void makeCards(int Lambda, int ctau, double ndata, double nsignal, double sig_err_percentage, double nbkg) { 
+void makeCards(int Lambda, int ctau, double ndata, double nsignal, double sig_err_percentage, double nbkg, int nbins) { 
 
   
   char datacardname[100];
@@ -231,10 +231,12 @@ void makeCards(int Lambda, int ctau, double ndata, double nsignal, double sig_er
   ofstream  tablesFile(datacardname);
   tablesFile.setf(ios::fixed);
   tablesFile.precision(3);
- 
+
+  if (nbins==4) {
+  
   tablesFile << "imax 1  number of channels" << endl
              << "jmax 1  number of backgrounds" << endl
-             << "kmax 13  number of nuisance parameters (sources of systematical uncertainties)"<< endl 
+             << "kmax *  number of nuisance parameters (sources of systematical uncertainties)"<< endl 
              << "------------"<<endl
              << "shapes * * simple-shapes-TH1L"<<Lambda<<"CT"<<ctau<<".root $PROCESS $PROCESS_$SYSTEMATIC" << endl
              << "------------"<<endl
@@ -249,7 +251,7 @@ void makeCards(int Lambda, int ctau, double ndata, double nsignal, double sig_er
              << "statA_b0 \t shapeN2 	\t   1.          \t\t -      \t   Stat. uncertainty on signal" << endl
              << "statA_b1 \t shapeN2 	\t   1.          \t\t -      \t   Stat. uncertainty on signal" << endl
              << "statA_b2 \t shapeN2 	\t   1.          \t\t -      \t   Stat. uncertainty on signal" << endl
-             << "statA_b3 \t shapeN2 	\t   1.          \t\t -      \t   Stat. uncertainty on signal" << endl
+             << "statA_b3 \t shapeN2 	\t   1.          \t\t -      \t   Stat. uncertainty on signal" << endl 
              << "statB_b0 \t shapeN2 	\t   -          \t\t 1.      \t   Stat. uncertainty on background" << endl
              << "statB_b1 \t shapeN2 	\t   -          \t\t 1.      \t   Stat. uncertainty on background" << endl
              << "statB_b2 \t shapeN2 	\t   -          \t\t 1.      \t   Stat. uncertainty on background" << endl
@@ -258,13 +260,43 @@ void makeCards(int Lambda, int ctau, double ndata, double nsignal, double sig_er
              << "shape_b1 \t shapeN2 	\t   -          \t\t 1.      \t   Shape uncertainty on background" << endl
              << "shape_b2 \t shapeN2 	\t   -          \t\t 1.      \t   Shape uncertainty on background" << endl
              << "shape_b3 \t shapeN2 	\t   -          \t\t 1.      \t   Shape uncertainty on background" << endl;
+	
+  }
+
+
+  if (nbins==3) {
+
+  tablesFile << "imax 1  number of channels" << endl
+             << "jmax 1  number of backgrounds" << endl
+             << "kmax *  number of nuisance parameters (sources of systematical uncertainties)"<< endl 
+             << "------------"<<endl
+             << "shapes * * simple-shapes-TH1L"<<Lambda<<"CT"<<ctau<<".root $PROCESS $PROCESS_$SYSTEMATIC" << endl
+             << "------------"<<endl
+             << "bin 1" <<endl    
+             << "observation \t " << ndata << endl
+             << "bin            	\t\t 1              \t 1          	" << endl
+             << "process        	\t\t signal         \t background   " << endl
+             << "process        	\t\t 0              \t 1          	" << endl
+             << "rate           	\t\t " << nsignal << "  \t \t "<< nbkg << endl
+             << "------------" << endl
+             << "signal_syst \t lnN 	\t   " << sig_err_percentage << "          \t\t -      \t   Syst. uncertainty on signal" << endl
+             << "statA_b0 \t shapeN2 	\t   1.          \t\t -      \t   Stat. uncertainty on signal" << endl
+             << "statA_b1 \t shapeN2 	\t   1.          \t\t -      \t   Stat. uncertainty on signal" << endl
+             << "statA_b2 \t shapeN2 	\t   1.          \t\t -      \t   Stat. uncertainty on signal" << endl
+             << "statB_b0 \t shapeN2 	\t   -          \t\t 1.      \t   Stat. uncertainty on background" << endl
+             << "statB_b1 \t shapeN2 	\t   -          \t\t 1.      \t   Stat. uncertainty on background" << endl
+             << "statB_b2 \t shapeN2 	\t   -          \t\t 1.      \t   Stat. uncertainty on background" << endl
+             << "shape_b0 \t shapeN2 	\t   -          \t\t 1.      \t   Shape uncertainty on background" << endl
+             << "shape_b1 \t shapeN2 	\t   -          \t\t 1.      \t   Shape uncertainty on background" << endl
+             << "shape_b2 \t shapeN2 	\t   -          \t\t 1.      \t   Shape uncertainty on background" << endl;
+
+  }
 
    
   tablesFile.close();
 
   // Where you want to save it
  
-  //TString savedir = "/afs/cern.ch/work/s/sigamani/public/CMSSW_6_1_1/src/HiggsAnalysis/CombinedLimit/";
   //TString savedir = "."; 
   //gSystem->Exec("mv "+TString(datacardname)+" "+savedir); 
 
