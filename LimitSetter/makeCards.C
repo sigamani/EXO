@@ -231,7 +231,7 @@ void makeCards(int Lambda, int ctau, double ndata, double nsignal, double sig_er
  
   tablesFile << "imax 1  number of channels" << endl
              << "jmax 1  number of backgrounds" << endl
-             << "kmax 4  number of nuisance parameters (sources of systematical uncertainties)"<< endl 
+             << "kmax 13  number of nuisance parameters (sources of systematical uncertainties)"<< endl 
              << "------------"<<endl
              << "shapes * * simple-shapes-TH1L"<<Lambda<<"CT"<<ctau<<".root $PROCESS $PROCESS_$SYSTEMATIC" << endl
              << "------------"<<endl

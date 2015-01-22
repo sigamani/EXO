@@ -20,8 +20,8 @@ def loop(vec,vechisto,flag):
                     dxytemp.append(fabs(event.dxyConv[i]))
             dxytemp = sorted(dxytemp)
 
-            if (event.Rsqrd < 0.035):
-                continue
+            #if (event.Rsqrd < 0.035):
+            #    continue
             if (event.nPhot < 2):
                 continue
             if (event.sMinPhot[0] < 0.15 or event.sMinPhot[0] > 0.3):
@@ -71,9 +71,9 @@ def function():
     dxylow = TH1D("dXYlow","",4,xbins)
     dxyiso = TH1D("dXYiso","",4,xbins)
 
-    # dxyhigh = TH1D("dXYhigh","",25,0,2.5)
-    # dxylow = TH1D("dXYlow","",25,0,2.5)
-    # dxyiso = TH1D("dXYiso","",25,0,2.5)
+    #dxyhigh = TH1D("dXYhigh","",25,0,2.5)
+    #dxylow = TH1D("dXYlow","",25,0,2.5)
+    #dxyiso = TH1D("dXYiso","",25,0,2.5)
 
     dxyhigh = loop(vecfileshigh,dxyhigh,1)
     dxylow = loop(vecfileslow,dxylow,1)
@@ -82,10 +82,16 @@ def function():
     dxyhigh.SetBinContent(4,(dxyhigh.GetBinContent(5)))
     dxylow.SetBinContent(4,(dxylow.GetBinContent(5)))
     dxyiso.SetBinContent(4,(dxyiso.GetBinContent(5)))
+    
+    dxyhigh.SetBinContent(dxyhigh.GetNbinsX(),(dxyhigh.GetBinContent(dxyhigh.GetNbinsX())+dxyhigh.GetBinContent(dxyhigh.GetNbinsX()+1)))
+    dxylow.SetBinContent(dxylow.GetNbinsX(),(dxylow.GetBinContent(dxylow.GetNbinsX())+dxylow.GetBinContent(dxylow.GetNbinsX()+1)))
+    dxyiso.SetBinContent(dxyiso.GetNbinsX(),(dxyiso.GetBinContent(dxyiso.GetNbinsX())+dxyiso.GetBinContent(dxyiso.GetNbinsX()+1)))
 
-    # dxyhigh.SetBinContent(50,dxyhigh.GetBinContent(51))
-    # dxylow.SetBinContent(50,dxylow.GetBinContent(51))
-    # dxyiso.SetBinContent(50,dxyiso.GetBinContent(51))
+    dxyhigh.SetBinError(dxyhigh.GetNbinsX(),(dxyhigh.GetBinError(dxyhigh.GetNbinsX())+dxyhigh.GetBinError(dxyhigh.GetNbinsX()+1)))
+    dxylow.SetBinError(dxylow.GetNbinsX(),(dxylow.GetBinError(dxylow.GetNbinsX())+dxylow.GetBinError(dxylow.GetNbinsX()+1)))
+    dxyiso.SetBinError(dxyiso.GetNbinsX(),(dxyiso.GetBinError(dxyiso.GetNbinsX())+dxyiso.GetBinError(dxyiso.GetNbinsX()+1)))
+
+
 
     """
     ratiolow = dxyhigh.Integral()/dxylow.Integral()
@@ -121,7 +127,7 @@ def plot(dxy):
 
     dxy[1].GetXaxis().SetTitle("Conversion d_{XY} (cm)")
     dxy[1].GetYaxis().SetTitle("Events")
-    dxy[1].GetYaxis().SetRangeUser(0.1,1000)
+    dxy[1].GetYaxis().SetRangeUser(0.01,100)
     dxy[1].GetYaxis().SetTitleSize(0.05)
     dxy[1].GetXaxis().SetTitleSize(0.05)
 
@@ -169,11 +175,11 @@ def plot(dxy):
     canvas.SetTicky(0)
     canvas.SetLogy()
 
-    dxy[1].Draw("")
-    dxy[0].Draw("same")
-    dxy[2].Draw("same")
-    dxy[1].Draw("same")
-    dxy[0].Draw("same")
+    dxy[1].Draw("HIST")
+    dxy[0].Draw("HISTsame")
+    dxy[2].Draw("HISTsame")
+    dxy[1].Draw("HISTsame")
+    dxy[0].Draw("HISTsame")
     leg.Draw("same")
 
 
