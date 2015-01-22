@@ -157,7 +157,9 @@ void makeAllFiles(int Lambda, int ctau) {
 
          int nbins = signalhist->GetNbinsX();
 
-         for(int x=1; x<=4; x++){
+		 cout << "Making files for a "<< nbins << " bin shape experiment" << endl;
+
+         for(int x=1; x<= nbins; x++){
 
 		 // signal stat
          TH1D* GMSB_stat_b1_Up = statUp(signalhist, x);
