@@ -18,8 +18,8 @@ def loop(vec, vechisto, flag, phot):
                     dxytemp.append(fabs(event.dxyConv[i]))
             dxytemp = sorted(dxytemp)
 
-            #if (event.Rsqrd < 0.035):
-            #    continue
+            if (event.Rsqrd < 0.035):
+                continue
             if (event.nPhot < phot):
                 continue
             if (event.sMinPhot[0] < 0.15 or event.sMinPhot[0] > 0.3):
@@ -34,6 +34,8 @@ def loop(vec, vechisto, flag, phot):
                 continue
                 
             if(flag == 0):
+                #if (event.MET < 60):
+                #    continue
                 lum = 19280.
                 vechisto[0].Fill( event.ptPhot[0], (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors) )
                 if (event.ptPhot.size() > phot):
@@ -60,6 +62,8 @@ def loop(vec, vechisto, flag, phot):
                 vechisto[17].Fill( event.Rsqrd, (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors))
                 
             if (flag == 1):
+                #if (event.MET < 60):
+                #    continue
                 vechisto[0].Fill( event.ptPhot[0], 1./event.EfficiencyScaleFactors )
                 if (event.ptPhot.size() > phot):
                     vechisto[1].Fill( event.ptPhot[1], 1./event.EfficiencyScaleFactors )
@@ -71,8 +75,16 @@ def loop(vec, vechisto, flag, phot):
                 if(len(dxytemp) > 0):
                     vechisto[4].Fill( dxytemp[-1], 1./event.EfficiencyScaleFactors)                            
                     if (dxytemp[-1] > 6):
-                        print dxytemp[-1]
-                        print event.minDPhi
+                        print "dxy: " + str(dxytemp[-1])
+                        print "minDPhi:" + str(event.minDPhi)
+                        print "MET:" + str(event.MET)
+                        print "sMaj:" + str(event.sMajPhot[0])
+                        print "sMin:" + str(event.sMinPhot[0])
+                        print "sigmaieta:" + str(event.sigmaIetaPhot[0])
+                        print "chadiso:" + str(event.chadiso[0])
+                        print "photiso:" + str(event.photiso[0])
+                        print "H/E:" + str(event.phohovere[0])
+                        print "Rsqrd:" + str(event.Rsqrd)
 
                 vechisto[5].Fill( event.MET, 1./event.EfficiencyScaleFactors )
                 vechisto[6].Fill( event.nJet, 1./event.EfficiencyScaleFactors )
@@ -89,6 +101,8 @@ def loop(vec, vechisto, flag, phot):
                 vechisto[17].Fill( event.Rsqrd, 1./(event.EfficiencyScaleFactors))
                     
             if (flag == 2):
+                #if (event.MET > 20):
+                #    continue
                 vechisto[0].Fill( event.ptPhot[0], 1./event.EfficiencyScaleFactors )
                 if (event.ptPhot.size() > phot):
                     vechisto[1].Fill( event.ptPhot[1], 1./event.EfficiencyScaleFactors )
@@ -125,7 +139,7 @@ def function (lamb,ctau1,ctau2,phot):
     listsig1 = ["./v24/GMSB_L"+lamb+"-CTAU"+ctau1+".root"]
     listsig2 = ["./v24/GMSB_L"+lamb+"-CTAU"+ctau2+".root"]
     listdata = ["./v24/Run2012A.root","./v24/Run2012B.root","./v24/Run2012C_1.root","./v24/Run2012C_2.root","./v24/Run2012C_3.root","./v24/Run2012D_1.root","./v24/Run2012D_2.root","./v24/Run2012D_3.root"]
-    listdataisolow = ["./v24/Run2012Aisolow20.root","./v24/Run2012Bisolow20.root","./v24/Run2012C_1isolow20.root","./v24/Run2012C_2isolow20.root","./v24/Run2012C_3isolow20.root","./v24/Run2012D_1isolow20.root","./v24/Run2012D_2isolow20.root","./v24/Run2012D_3isolow20.root"]
+    listdataisolow = ["./v24/Run2012Aisolow.root","./v24/Run2012Bisolow.root","./v24/Run2012C_1isolow.root","./v24/Run2012C_2isolow.root","./v24/Run2012C_3isolow.root","./v24/Run2012D_1isolow.root","./v24/Run2012D_2isolow.root","./v24/Run2012D_3isolow.root"]
 
     vecfilesttjets = []
     for item in listttjets:
@@ -148,20 +162,21 @@ def function (lamb,ctau1,ctau2,phot):
         temp = TFile.Open(item)
         vecfilessig2.append(temp)
 
-    #xbins = array('d',[0.,0.1,0.3, 1., 3., 6.])
-    xbins = array('d',[0.,0.3, 1., 3., 6.])
+    xbins = array('d',[0., 0.2, 1.5, 3., 6.])
+    #xbins = array('d',[0., 0.2, 1.5, 7, 12])
+    #xbins = array('d',[0.,0.3, 1., 3., 6.])
 
     ptpholeadttjet = TH1D("PtPhotonleadingTTJet","",24,0,500)
     ptphosubleadttjet = TH1D("PtPhotonsubleadingTTJet","",12,0,500)
     ptjetleadttjet = TH1D("PtJetleadingTTJet","",12,0,500)
     ptjetsubleadttjet = TH1D("PtJetsubleadingTTJet","",12,0,500)
     dxyttjet = TH1D("DxyTTJet","",4,xbins)
-    #dxyttjet = TH1D("DxyTTJet","",20,0,10)
+    #dxyttjet = TH1D("DxyTTJet","",100,0,2)
     metttjet = TH1D("METTTJet","",50,0,1000)
     njetsttjet = TH1D("nJetsTTJet","",15,0,15)
     nphotttjet = TH1D("nPhotTTJet","",15,0,15)
     nvertttjet = TH1D("nVertTTJet","",8,0,40)
-    smajttjet = TH1D("sMajTTJet","",20,0,3)
+    smajttjet = TH1D("sMajTTJet","",40,0,3)
     sminttjet = TH1D("sMinTTJet","",20,0,0.5)
     sigietattjet = TH1D("SigmaIetaTTJet","",50,0,0.03)
     etattjet = TH1D("EtaTTJet","",50,0,2)
@@ -183,12 +198,12 @@ def function (lamb,ctau1,ctau2,phot):
     ptjetleadsig1 = TH1D("PtJetleadingSignal1","",12,0,500)
     ptjetsubleadsig1 = TH1D("PtJetsubleadingSignal1","",12,0,500)
     dxysig1 = TH1D("DxySignal1","",4,xbins)
-    #dxysig1 = TH1D("DxySignal1","",20,0,10)
+    #dxysig1 = TH1D("DxySignal1","",100,0,2)
     metsig1 = TH1D("METSignal1","",50,0,1000)
     njetssig1 = TH1D("nJetsSignal1","",15,0,15)
     nphotsig1 = TH1D("nPhotSignal1","",15,0,15)
     nvertsig1 = TH1D("nVertSignal1","",8,0,40)
-    smajsig1 = TH1D("sMajSignal1","",20,0,3)
+    smajsig1 = TH1D("sMajSignal1","",40,0,3)
     sminsig1 = TH1D("sMinSignal1","",20,0,0.5)
     sigietasig1 = TH1D("SigmaIetaSignal1","",50,0,0.03)
     etasig1 = TH1D("EtaSignal1","",50,0,2)    
@@ -209,12 +224,12 @@ def function (lamb,ctau1,ctau2,phot):
     ptjetleadsig2 = TH1D("PtJetleadingSignal2","",12,0,500)
     ptjetsubleadsig2 = TH1D("PtJetsubleadingSignal2","",12,0,500)
     dxysig2 = TH1D("DxySignal2","",4,xbins)
-    #dxysig2 = TH1D("DxySignal2","",20,0,10)
+    #dxysig2 = TH1D("DxySignal2","",100,0,2)
     metsig2 = TH1D("METSignal2","",50,0,1000)
     njetssig2 = TH1D("nJetsSignal2","",15,0,15)
     nphotsig2 = TH1D("nPhotSignal2","",15,0,15)
     nvertsig2 = TH1D("nVertSignal2","",8,0,40)
-    smajsig2 = TH1D("sMajSignal2","",20,0,3)
+    smajsig2 = TH1D("sMajSignal2","",40,0,3)
     sminsig2 = TH1D("sMinSignal2","",20,0,0.5)
     sigietasig2 = TH1D("SigmaIetaSignal2","",50,0,0.03)
     etasig2 = TH1D("EtaSignal2","",50,0,2)
@@ -236,12 +251,12 @@ def function (lamb,ctau1,ctau2,phot):
     ptjetlead = TH1D("PtJetleading","",12,0,500)
     ptjetsublead = TH1D("PtJetsubleading","",12,0,500)
     dxy = TH1D("Dxy","",4,xbins)
-    #dxy = TH1D("Dxy","",20,0,10)
+    #dxy = TH1D("Dxy","",100,0,2)
     met = TH1D("MET","",50,0,1000)
     njets = TH1D("nJets","",15,0,15)
     nphot = TH1D("nPhot","",15,0,15)
     nvert = TH1D("nVert","",8,0,40)
-    smaj = TH1D("sMaj","",20,0,3)
+    smaj = TH1D("sMaj","",40,0,3)
     smin = TH1D("sMin","",20,0,0.5)
     sigieta = TH1D("SigmaIeta","",50,0,0.03)
     eta = TH1D("Eta","",50,0,2)
@@ -263,12 +278,12 @@ def function (lamb,ctau1,ctau2,phot):
     ptjetleadisolow = TH1D("PtJetleadingisolow","",12,0,500)
     ptjetsubleadisolow = TH1D("PtJetsubleadingisolow","",12,0,500)
     dxyisolow = TH1D("Dxyisolow","",4,xbins)
-    #dxyisolow = TH1D("Dxyisolow","",20,0,10)
+    #dxyisolow = TH1D("Dxyisolow","",100,0,2)
     metisolow = TH1D("METisolow","",50,0,1000)
     njetsisolow = TH1D("nJetsisolow","",15,0,15)
     nphotisolow = TH1D("nPhotisolow","",15,0,15)
     nvertisolow = TH1D("nVertisolow","",8,0,40)
-    smajisolow = TH1D("sMajisolow","",20,0,3)
+    smajisolow = TH1D("sMajisolow","",40,0,3)
     sminisolow = TH1D("sMinisolow","",20,0,0.5)
     sigietaisolow = TH1D("SigmaIetaisolow","",50,0,0.03)
     etaisolow = TH1D("Etaisolow","",50,0,2)

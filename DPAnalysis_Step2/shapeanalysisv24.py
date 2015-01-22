@@ -34,12 +34,18 @@ def loop(vec, dxy, flag, phot):
             
             if(flag == 0):
                 lum = 19280.
+                #if(event.MET < 60):
+                #    continue
                 if(len(dxytemp) > 0):
                     dxy.Fill( dxytemp[-1], (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors))    
 
             if (flag == 1):
+                #if(event.MET < 60):
+                #    continue
                 if(len(dxytemp) > 0):
-                    dxy.Fill( dxytemp[-1], 1./event.EfficiencyScaleFactors)                       
+                    dxy.Fill( dxytemp[-1], 1./event.EfficiencyScaleFactors)
+                    if(dxytemp[-1] > 6):
+                        print dxytemp[-1]
 
             if (flag == 2):
                 if(len(dxytemp) > 0):
@@ -81,7 +87,8 @@ def function (lamb,ctau,phot):
         vecfilessig.append(temp)
     
 
-    xbins = array('d',[0.,0.3, 1., 3., 6.])
+    #xbins = array('d',[0.,0.3, 1., 3., 6.])
+    xbins = array('d',[0., 0.2, 1.5, 3., 6.])
 
     ttjet = TH1F("TTJet","",4,xbins)
     ttjet.Sumw2()
@@ -111,7 +118,6 @@ def function (lamb,ctau,phot):
     datatotal = data_obs.GetBinContent(1)
     ttjettotal = ttjet.GetBinContent(1)
     isolowtotal = background.GetBinContent(1)
-    print isolowtotal
     background_alphaUptotal = background_alphaUp.GetBinContent(1)
     background_alphaDowntotal = background_alphaDown.GetBinContent(1)
     newisolowtotal = datatotal - ttjettotal
@@ -144,6 +150,21 @@ def function (lamb,ctau,phot):
     background_alphaDown.SetBinContent(1,0.)
     background_alphaDown.SetBinContent(2,0.)
     """
+
+    ttjet.SetBinContent(ttjet.GetNbinsX(),(ttjet.GetBinContent(ttjet.GetNbinsX())+ttjet.GetBinContent(ttjet.GetNbinsX()+1)))
+    signal.SetBinContent(signal.GetNbinsX(),(signal.GetBinContent(signal.GetNbinsX())+signal.GetBinContent(signal.GetNbinsX()+1)))
+    data_obs.SetBinContent(data_obs.GetNbinsX(),(data_obs.GetBinContent(data_obs.GetNbinsX())+data_obs.GetBinContent(data_obs.GetNbinsX()+1)))
+    background.SetBinContent(background.GetNbinsX(),(background.GetBinContent(background.GetNbinsX())+background.GetBinContent(background.GetNbinsX()+1)))
+    background_alphaUp.SetBinContent(background_alphaUp.GetNbinsX(),(background_alphaUp.GetBinContent(background_alphaUp.GetNbinsX())+background_alphaUp.GetBinContent(background_alphaUp.GetNbinsX()+1)))
+    background_alphaDown.SetBinContent(background_alphaDown.GetNbinsX(),(background_alphaDown.GetBinContent(background_alphaDown.GetNbinsX())+background_alphaDown.GetBinContent(background_alphaDown.GetNbinsX()+1)))
+
+    ttjet.SetBinError(ttjet.GetNbinsX(),(ttjet.GetBinError(ttjet.GetNbinsX())+ttjet.GetBinError(ttjet.GetNbinsX()+1)))
+    signal.SetBinError(signal.GetNbinsX(),(signal.GetBinError(signal.GetNbinsX())+signal.GetBinError(signal.GetNbinsX()+1)))
+    data_obs.SetBinError(data_obs.GetNbinsX(),(data_obs.GetBinError(data_obs.GetNbinsX())+data_obs.GetBinError(data_obs.GetNbinsX()+1)))
+    background.SetBinError(background.GetNbinsX(),(background.GetBinError(background.GetNbinsX())+background.GetBinError(background.GetNbinsX()+1)))
+    background_alphaUp.SetBinError(background_alphaUp.GetNbinsX(),(background_alphaUp.GetBinError(background_alphaUp.GetNbinsX())+background_alphaUp.GetBinError(background_alphaUp.GetNbinsX()+1)))
+    background_alphaDown.SetBinError(background_alphaDown.GetNbinsX(),(background_alphaDown.GetBinError(background_alphaDown.GetNbinsX())+background_alphaDown.GetBinError(background_alphaDown.GetNbinsX()+1)))
+
     
     output = TFile.Open("./simpleshapesv24/simple-shapes-TH1L"+lamb+"CT"+ctau+".root","recreate")
 
@@ -161,18 +182,18 @@ def function (lamb,ctau,phot):
 
 
 def main():
-    function("140","10",2)
-    function("140","100",2)
-    function("140","500",2)
-    function("140","1000",2)
-    function("140","2000",2)
+    # function("140","10",2)
+    # function("140","100",2)
+    # function("140","500",2)
+    # function("140","1000",2)
+    # function("140","2000",2)
 
-    function("160","10",2)
-    #function("160","50",2)
-    function("160","100",2)
-    function("160","500",2)
-    function("160","1000",2)
-    function("160","2000",2)
+    # function("160","10",2)
+    # #function("160","50",2)
+    # function("160","100",2)
+    # function("160","500",2)
+    # function("160","1000",2)
+    # function("160","2000",2)
 
     function("180","10",2)
     function("180","50",2)
