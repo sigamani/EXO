@@ -107,6 +107,9 @@ def function (lamb,ctau,phot):
     background = TH1F("background","",4,xbins)
     background.Sumw2()
     background = loop(vecfilesdataisolow, background, 2, phot)
+
+    background.Add(ttjet)
+
     background_alphaUp = TH1F("background_alphaUp","",4,xbins)
     #background_alphaUp = loop(vecfilesfakehigh,background_alphaUp, 2, phot)
     
@@ -120,7 +123,7 @@ def function (lamb,ctau,phot):
     isolowtotal = background.GetBinContent(1)
     background_alphaUptotal = background_alphaUp.GetBinContent(1)
     background_alphaDowntotal = background_alphaDown.GetBinContent(1)
-    newisolowtotal = datatotal - ttjettotal
+    newisolowtotal = datatotal
 
     if(isolowtotal != 0):
         ratio = newisolowtotal/isolowtotal
@@ -166,7 +169,7 @@ def function (lamb,ctau,phot):
     background_alphaDown.SetBinError(background_alphaDown.GetNbinsX(),(background_alphaDown.GetBinError(background_alphaDown.GetNbinsX())+background_alphaDown.GetBinError(background_alphaDown.GetNbinsX()+1)))
 
     
-    output = TFile.Open("./simpleshapesv24/simple-shapes-TH1L"+lamb+"CT"+ctau+".root","recreate")
+    output = TFile.Open("./simpleshapesv24/histofile_L"+lamb+"CT"+ctau+".root","recreate")
 
     ttjet.Write()
     signal.Write()

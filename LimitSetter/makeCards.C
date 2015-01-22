@@ -196,14 +196,28 @@ void makeAllFiles(int Lambda, int ctau) {
 
 
 	  // Here we input the signal uncertainty (without stat since thats in the shape histo)
-	  // Set to 25% as an example 
 
 	  double sig_stat_err;
-      if (Lambda == 180 && ctau == 10 ) sig_stat_err = 0.25; 
-      if (Lambda == 180 && ctau == 50 ) sig_stat_err = 0.25; 
-      if (Lambda == 180 && ctau == 100 ) sig_stat_err = 0.25; 
+      if (Lambda == 180 && ctau == 10 ) sig_stat_err = 7.425; 
+      if (Lambda == 180 && ctau == 50 ) sig_stat_err = 7.425; 
+      if (Lambda == 180 && ctau == 250 ) sig_stat_err = 15.203; 
+      if (Lambda == 180 && ctau == 500 ) sig_stat_err = 21.146;      
+      if (Lambda == 180 && ctau == 2000 ) sig_stat_err = 47.065;
 
-	  double sig_err_percentage = sig_stat_err + 1.;
+      if (Lambda == 160 && ctau == 10 ) sig_stat_err = 7.425;
+      if (Lambda == 160 && ctau == 100 ) sig_stat_err = 7.425;
+      if (Lambda == 160 && ctau == 500 ) sig_stat_err = 28.109;
+      if (Lambda == 160 && ctau == 1000 ) sig_stat_err = 47.065;
+      if (Lambda == 160 && ctau == 2000 ) sig_stat_err = 47.065;
+
+      if (Lambda == 140 && ctau == 10 ) sig_stat_err = 7.425;
+      if (Lambda == 140 && ctau == 100 ) sig_stat_err = 7.425;
+      if (Lambda == 140 && ctau == 500 ) sig_stat_err = 28.109;
+      if (Lambda == 140 && ctau == 1000 ) sig_stat_err = 34.09;
+      if (Lambda == 140 && ctau == 2000 ) sig_stat_err = 34.09;
+      
+
+	  double sig_err_percentage = 0.01*sig_stat_err + 1.;
       makeCards(Lambda, ctau, ndata, nsignal, sig_err_percentage, nbkg);
 
       fout->cd();
