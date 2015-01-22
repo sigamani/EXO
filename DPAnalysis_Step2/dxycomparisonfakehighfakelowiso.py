@@ -20,6 +20,8 @@ def loop(vec,vechisto,flag):
                     dxytemp.append(fabs(event.dxyConv[i]))
             dxytemp = sorted(dxytemp)
 
+            if (event.Rsqrd < 0.035):
+                continue
             if (event.nPhot < 2):
                 continue
             if (event.sMinPhot[0] < 0.15 or event.sMinPhot[0] > 0.3):
@@ -47,7 +49,7 @@ def loop(vec,vechisto,flag):
 def function():
     listhigh = ["./v24/Run2012Afakehigh.root","./v24/Run2012Bfakehigh.root","./v24/Run2012C_1fakehigh.root","./v24/Run2012C_2fakehigh.root","./v24/Run2012C_3fakehigh.root","./v24/Run2012D_1fakehigh.root","./v24/Run2012D_2fakehigh.root","./v24/Run2012D_3fakehigh.root"]
     listlow = ["./v24/Run2012Afakelow.root","./v24/Run2012Bfakelow.root","./v24/Run2012C_1fakelow.root","./v24/Run2012C_2fakelow.root","./v24/Run2012C_3fakelow.root","./v24/Run2012D_1fakelow.root","./v24/Run2012D_2fakelow.root","./v24/Run2012D_3fakelow.root"]
-    listiso = ["./v24/Run2012Aisolow20.root","./v24/Run2012Bisolow20.root","./v24/Run2012C_1isolow20.root","./v24/Run2012C_2isolow20.root","./v24/Run2012C_3isolow20.root","./v24/Run2012D_1isolow20.root","./v24/Run2012D_2isolow20.root","./v24/Run2012D_3isolow20.root"]
+    listiso = ["./v24/Run2012Aisolow.root","./v24/Run2012Bisolow.root","./v24/Run2012C_1isolow.root","./v24/Run2012C_2isolow.root","./v24/Run2012C_3isolow.root","./v24/Run2012D_1isolow.root","./v24/Run2012D_2isolow.root","./v24/Run2012D_3isolow.root"]
 
     vecfileshigh = []
     for item in listhigh:
@@ -62,7 +64,8 @@ def function():
         temp = TFile.Open(item)
         vecfilesiso.append(temp)
 
-    xbins = array('d',[0.,0.3, 1., 3., 6.])
+    #xbins = array('d',[0.,0.3, 1., 3., 6.])
+    xbins = array('d',[0., 0.2, 1.5, 3., 6.])
 
     dxyhigh = TH1D("dXYhigh","",4,xbins)
     dxylow = TH1D("dXYlow","",4,xbins)

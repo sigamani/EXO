@@ -454,7 +454,7 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
       //                   Cut for isolated photons  
       /***********************************************************************/
        
-               
+      /*       
       if ( cHadIso[i] >= 2.6 ) continue ;  // chargedHadron
       if ( nHadIso[i] >= 3.5 + ( 0.04*phoP4.Pt()   ) ) photpt = false ;  // neutralHadron
       if ( nHadIso[i] >= 3.5 + ( 0.04*phoP4up.Pt()   ) ) photptup = false ;  // neutralHadron
@@ -462,15 +462,15 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
       if ( photIso[i] >= 1.3 + ( 0.005*phoP4.Pt() ) ) photpt = false ;  // photon
       if ( photIso[i] >= 1.3 + ( 0.005*phoP4up.Pt() ) ) photptup = false ;  // photon
       if ( photIso[i] >= 1.3 + ( 0.005*phoP4down.Pt() ) ) photptdown = false ;  // photon
-      
+      /*
 
       /***********************************************************************/
       //                   Cut for fake photons                                                                                                                                                          
       /***********************************************************************/
        
-      /*
+      
       if (!( cHadIso[i] >= 2.6 )  && (!( nHadIso[i] >= 3.5 + ( 0.04*phoP4.Pt()   ) )) && (!( photIso[i] >= 1.3 + ( 0.005*phoP4.Pt() ) ))  ) continue ;
-      */
+      
 
 	  if (phoMatchedEle[i] > 0) continue;
 	  if (conversionVeto[i] > 0) continue;
@@ -578,7 +578,7 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
     
                                           h000->Fill(1.);
     if (nGoodVtx < 0) continue;           h000->Fill(2.);
-    if (MET > 30) continue;               h000->Fill(3.);
+    if (MET < 30) continue;               h000->Fill(3.);
     if (nJet < 2) continue;               h000->Fill(4.);
     if (nPhot < 2) continue;              h000->Fill(5.);
 

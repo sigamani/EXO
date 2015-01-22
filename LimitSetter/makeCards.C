@@ -207,7 +207,7 @@ void makeAllFiles(int Lambda, int ctau) {
       makeCards(Lambda, ctau, ndata, nsignal, sig_err_percentage, nbkg);
 
       fout->cd();
-	  //datahist->Write();
+	  datahist->Write();
 	  signalhist->Write();
 	  bkg1hist->Write();
       fout->Write();
