@@ -20,8 +20,8 @@ def loop(vec, vechisto, flag, phot):
                 continue
             if (event.ptPhot[0] < 85):
                 continue
-            if (event.sMajPhot[0] > 1.35):
-                continue
+            #if (event.sMajPhot[0] > 1.35):
+            #    continue
             if (event.MET < 30):
                 continue
             #if (len(event.ptJet) < 2):

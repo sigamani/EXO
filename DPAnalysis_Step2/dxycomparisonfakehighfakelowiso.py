@@ -32,8 +32,8 @@ def loop(vec,vechisto,flag):
                 continue
             if (event.ptPhot[0] < 85):
                 continue
-            if (event.sMajPhot[0] > 1.35):
-                continue
+            #if (event.sMajPhot[0] > 1.35):
+            #    continue
 
             if(flag == 0):
                 lum = 19280.
@@ -66,10 +66,14 @@ def function():
 
     #xbins = array('d',[0.,0.3, 1., 3., 6.])
     xbins = array('d',[0., 0.2, 1.5, 3., 6.])
+    #xbins = array('d',[0., 0.2, 1.5, 6.])
 
-    dxyhigh = TH1D("dXYhigh","",4,xbins)
-    dxylow = TH1D("dXYlow","",4,xbins)
-    dxyiso = TH1D("dXYiso","",4,xbins)
+    nxbins = len(xbins) - 1
+
+
+    dxyhigh = TH1D("dXYhigh","",nxbins,xbins)
+    dxylow = TH1D("dXYlow","",nxbins,xbins)
+    dxyiso = TH1D("dXYiso","",nxbins,xbins)
 
     #dxyhigh = TH1D("dXYhigh","",25,0,2.5)
     #dxylow = TH1D("dXYlow","",25,0,2.5)
@@ -78,10 +82,6 @@ def function():
     dxyhigh = loop(vecfileshigh,dxyhigh,1)
     dxylow = loop(vecfileslow,dxylow,1)
     dxyiso = loop(vecfilesiso,dxyiso,1)
-
-    dxyhigh.SetBinContent(4,(dxyhigh.GetBinContent(5)))
-    dxylow.SetBinContent(4,(dxylow.GetBinContent(5)))
-    dxyiso.SetBinContent(4,(dxyiso.GetBinContent(5)))
     
     dxyhigh.SetBinContent(dxyhigh.GetNbinsX(),(dxyhigh.GetBinContent(dxyhigh.GetNbinsX())+dxyhigh.GetBinContent(dxyhigh.GetNbinsX()+1)))
     dxylow.SetBinContent(dxylow.GetNbinsX(),(dxylow.GetBinContent(dxylow.GetNbinsX())+dxylow.GetBinContent(dxylow.GetNbinsX()+1)))
@@ -138,7 +138,7 @@ def plot(dxy):
     CMS_lumi.lumi_7TeV = "4.8 fb^{-1}"
     CMS_lumi.lumi_8TeV = "19.3 fb^{-1}"
     CMS_lumi.writeExtraText = 1
-    CMS_lumi.extraText = "Simulation"
+    CMS_lumi.extraText = ""
 
     iPos = 11
     if( iPos==0 ): CMS_lumi.relPosX = 0.12

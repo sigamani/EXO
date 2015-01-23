@@ -34,8 +34,8 @@ def loop(vec, dxy, phot):
                 continue
             if (event.sigmaIetaPhot[0] < 0.006 or event.sigmaIetaPhot[0] > 0.012):
                 continue
-            if (event.sMajPhot[0] > 1.35):
-                continue
+            #if (event.sMajPhot[0] > 1.35):
+            #    continue
             for ding in event.ptPhot:
                 nPhot = nPhot + 1
             if (len(dxytemp) < 1):

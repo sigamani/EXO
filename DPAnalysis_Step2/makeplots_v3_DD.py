@@ -18,8 +18,8 @@ def loop(vec, vechisto, flag, phot):
                     dxytemp.append(fabs(event.dxyConv[i]))
             dxytemp = sorted(dxytemp)
 
-            if (event.Rsqrd < 0.035):
-                continue
+            #if (event.Rsqrd < 0.035):
+            #    continue
             if (event.nPhot < phot):
                 continue
             if (event.sMinPhot[0] < 0.15 or event.sMinPhot[0] > 0.3):
@@ -30,8 +30,8 @@ def loop(vec, vechisto, flag, phot):
                 continue
             if (event.ptPhot[0] < 85):
                 continue
-            if (event.sMajPhot[0] > 1.35):
-                continue
+            #if (event.sMajPhot[0] > 1.35):
+            #    continue
                 
             if(flag == 0):
                 #if (event.MET < 60):
@@ -163,14 +163,18 @@ def function (lamb,ctau1,ctau2,phot):
         vecfilessig2.append(temp)
 
     xbins = array('d',[0., 0.2, 1.5, 3., 6.])
+    #xbins = array('d',[0., 0.2, 1.5, 6.])
+    
     #xbins = array('d',[0., 0.2, 1.5, 7, 12])
     #xbins = array('d',[0.,0.3, 1., 3., 6.])
+
+    nxbins = len(xbins) - 1
 
     ptpholeadttjet = TH1D("PtPhotonleadingTTJet","",24,0,500)
     ptphosubleadttjet = TH1D("PtPhotonsubleadingTTJet","",12,0,500)
     ptjetleadttjet = TH1D("PtJetleadingTTJet","",12,0,500)
     ptjetsubleadttjet = TH1D("PtJetsubleadingTTJet","",12,0,500)
-    dxyttjet = TH1D("DxyTTJet","",4,xbins)
+    dxyttjet = TH1D("DxyTTJet","",nxbins,xbins)
     #dxyttjet = TH1D("DxyTTJet","",100,0,2)
     metttjet = TH1D("METTTJet","",50,0,1000)
     njetsttjet = TH1D("nJetsTTJet","",15,0,15)
@@ -197,7 +201,7 @@ def function (lamb,ctau1,ctau2,phot):
     ptphosubleadsig1 = TH1D("PtPhotonsubleadingSignal1","",12,0,500)
     ptjetleadsig1 = TH1D("PtJetleadingSignal1","",12,0,500)
     ptjetsubleadsig1 = TH1D("PtJetsubleadingSignal1","",12,0,500)
-    dxysig1 = TH1D("DxySignal1","",4,xbins)
+    dxysig1 = TH1D("DxySignal1","",nxbins,xbins)
     #dxysig1 = TH1D("DxySignal1","",100,0,2)
     metsig1 = TH1D("METSignal1","",50,0,1000)
     njetssig1 = TH1D("nJetsSignal1","",15,0,15)
@@ -223,7 +227,7 @@ def function (lamb,ctau1,ctau2,phot):
     ptphosubleadsig2 = TH1D("PtPhotonsubleadingSignal2","",12,0,500)
     ptjetleadsig2 = TH1D("PtJetleadingSignal2","",12,0,500)
     ptjetsubleadsig2 = TH1D("PtJetsubleadingSignal2","",12,0,500)
-    dxysig2 = TH1D("DxySignal2","",4,xbins)
+    dxysig2 = TH1D("DxySignal2","",nxbins,xbins)
     #dxysig2 = TH1D("DxySignal2","",100,0,2)
     metsig2 = TH1D("METSignal2","",50,0,1000)
     njetssig2 = TH1D("nJetsSignal2","",15,0,15)
@@ -250,7 +254,7 @@ def function (lamb,ctau1,ctau2,phot):
     ptphosublead = TH1D("PtPhotonsubleading","",12,0,500)
     ptjetlead = TH1D("PtJetleading","",12,0,500)
     ptjetsublead = TH1D("PtJetsubleading","",12,0,500)
-    dxy = TH1D("Dxy","",4,xbins)
+    dxy = TH1D("Dxy","",nxbins,xbins)
     #dxy = TH1D("Dxy","",100,0,2)
     met = TH1D("MET","",50,0,1000)
     njets = TH1D("nJets","",15,0,15)
@@ -277,7 +281,7 @@ def function (lamb,ctau1,ctau2,phot):
     ptphosubleadisolow = TH1D("PtPhotonsubleadingisolow","",12,0,500)
     ptjetleadisolow = TH1D("PtJetleadingisolow","",12,0,500)
     ptjetsubleadisolow = TH1D("PtJetsubleadingisolow","",12,0,500)
-    dxyisolow = TH1D("Dxyisolow","",4,xbins)
+    dxyisolow = TH1D("Dxyisolow","",nxbins,xbins)
     #dxyisolow = TH1D("Dxyisolow","",100,0,2)
     metisolow = TH1D("METisolow","",50,0,1000)
     njetsisolow = TH1D("nJetsisolow","",15,0,15)
@@ -300,7 +304,7 @@ def function (lamb,ctau1,ctau2,phot):
     vechisisolow = loop(vecfilesdataisolow, vechisisolow, 2, phot)
 
     
-    dxy.SetBinContent(dxy.GetNbinsX(),(dxy.GetBinContent(dxy.GetNbinsX())+dxy.GetBinContent(dxy.GetNbinsX()+1)))
+    vechis[4].SetBinContent(vechis[4].GetNbinsX(),(vechis[4].GetBinContent(vechis[4].GetNbinsX())+vechis[4].GetBinContent(vechis[4].GetNbinsX()+1)))
     dxysig1.SetBinContent(dxysig1.GetNbinsX(),(dxysig1.GetBinContent(dxysig1.GetNbinsX())+dxysig1.GetBinContent(dxysig1.GetNbinsX()+1)))
     dxysig2.SetBinContent(dxysig2.GetNbinsX(),(dxysig2.GetBinContent(dxysig2.GetNbinsX())+dxysig2.GetBinContent(dxysig2.GetNbinsX()+1)))
     dxyttjet.SetBinContent(dxyttjet.GetNbinsX(),(dxyttjet.GetBinContent(dxyttjet.GetNbinsX())+dxyttjet.GetBinContent(dxyttjet.GetNbinsX()+1)))

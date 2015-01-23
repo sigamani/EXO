@@ -17,8 +17,8 @@ def loop(vec, dxy, flag, phot):
                     dxytemp.append(fabs(event.dxyConv[i]))
             dxytemp = sorted(dxytemp)
 
-            if (event.Rsqrd < 0.035):
-                continue
+            #if (event.Rsqrd < 0.035):
+            #    continue
             if (event.nPhot < phot):
                 continue
             if (event.sMinPhot[0] < 0.15 or event.sMinPhot[0] > 0.3):
@@ -34,14 +34,14 @@ def loop(vec, dxy, flag, phot):
             
             if(flag == 0):
                 lum = 19280.
-                #if(event.MET < 60):
-                #    continue
+                if(event.MET < 80):
+                    continue
                 if(len(dxytemp) > 0):
                     dxy.Fill( dxytemp[-1], (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors))    
 
             if (flag == 1):
-                #if(event.MET < 60):
-                #    continue
+                if(event.MET < 80):
+                    continue
                 if(len(dxytemp) > 0):
                     dxy.Fill( dxytemp[-1], 1./event.EfficiencyScaleFactors)
                     if(dxytemp[-1] > 6):
@@ -87,30 +87,33 @@ def function (lamb,ctau,phot):
         vecfilessig.append(temp)
     
 
-    #xbins = array('d',[0.,0.3, 1., 3., 6.])
-    xbins = array('d',[0., 0.2, 1.5, 3., 6.])
+    xbins = array('d',[0.,0.3, 1., 3., 6.])
+    #xbins = array('d',[0., 0.2, 1.5, 3., 6.])
+    #xbins = array('d',[0., 0.2, 1.5, 6.])
 
-    ttjet = TH1F("TTJet","",4,xbins)
+    nxbins = len(xbins) - 1
+
+    ttjet = TH1F("TTJet","",nxbins,xbins)
     ttjet.Sumw2()
     ttjet = loop(vecfilesttjets,ttjet,0,phot)
 
-    signal = TH1F("signal","",4,xbins)
+    signal = TH1F("signal","",nxbins,xbins)
     signal.Sumw2()
     signal = loop(vecfilessig, signal, 0, phot)
     signal_sigmaUp = signal.Clone("signal_sigmaUp")
     signal_sigmaDown = signal.Clone("signal_sigmaDown")
 
-    data_obs = TH1F("data_obs","",4,xbins)
+    data_obs = TH1F("data_obs","",nxbins,xbins)
     data_obs.Sumw2()
     data_obs = loop(vecfilesdata, data_obs, 1, phot)
 
-    background = TH1F("background","",4,xbins)
+    background = TH1F("background","",nxbins,xbins)
     background.Sumw2()
     background = loop(vecfilesdataisolow, background, 2, phot)
 
     background.Add(ttjet)
 
-    background_alphaUp = TH1F("background_alphaUp","",4,xbins)
+    background_alphaUp = TH1F("background_alphaUp","",nxbins,xbins)
     background_alphaUp = loop(vecfilesfakehigh,background_alphaUp, 2, phot)
     
     #background_alphaUp = loop(vecfilesfakelow,background_alphaUp, 2, phot)
@@ -191,12 +194,12 @@ def main():
     # function("140","1000",2)
     # function("140","2000",2)
 
-    # function("160","10",2)
-    # #function("160","50",2)
-    # function("160","100",2)
-    # function("160","500",2)
-    # function("160","1000",2)
-    # function("160","2000",2)
+    function("160","10",2)
+    #function("160","50",2)
+    function("160","100",2)
+    function("160","500",2)
+    function("160","1000",2)
+    function("160","2000",2)
 
     function("180","10",2)
     function("180","50",2)
