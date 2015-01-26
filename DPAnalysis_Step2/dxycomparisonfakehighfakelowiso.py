@@ -30,13 +30,17 @@ def loop(vec,vechisto,flag):
                 continue
             if (event.sigmaIetaPhot[0] < 0.006 or event.sigmaIetaPhot[0] > 0.012):
                 continue
-            if (event.ptPhot[0] < 85):
-                continue
+
+            if (flag == 1 and len(dxytemp) > 0 and dxytemp[-1] > 1.5 and dxytemp[-1] < 3.):
+                print dxytemp[-1]
+                print event.ptPhot[0]
+            #if (event.ptPhot[0] < 85):
+            #    continue
             #if (event.sMajPhot[0] > 1.35):
             #    continue
 
             if(flag == 0):
-                lum = 19280.
+                lum = 19700.
                 if(len(dxytemp) > 0):
                     vechisto.Fill( dxytemp[-1], (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors))
             else:
@@ -91,6 +95,10 @@ def function():
     dxylow.SetBinError(dxylow.GetNbinsX(),(dxylow.GetBinError(dxylow.GetNbinsX())+dxylow.GetBinError(dxylow.GetNbinsX()+1)))
     dxyiso.SetBinError(dxyiso.GetNbinsX(),(dxyiso.GetBinError(dxyiso.GetNbinsX())+dxyiso.GetBinError(dxyiso.GetNbinsX()+1)))
 
+    for i in range(nxbins):
+        print "fakehigh: bin " + str(i+1) + " : " + str(dxyhigh.GetBinContent(i+1))
+        print "fakelow: bin " + str(i+1) + " : " + str(dxylow.GetBinContent(i+1))
+        print "iso: bin " + str(i+1) + " : " + str(dxyiso.GetBinContent(i+1))
 
 
     """
@@ -127,7 +135,7 @@ def plot(dxy):
 
     dxy[1].GetXaxis().SetTitle("Conversion d_{XY} (cm)")
     dxy[1].GetYaxis().SetTitle("Events")
-    dxy[1].GetYaxis().SetRangeUser(0.01,100)
+    dxy[1].GetYaxis().SetRangeUser(0.01,1000)
     dxy[1].GetYaxis().SetTitleSize(0.05)
     dxy[1].GetXaxis().SetTitleSize(0.05)
 
@@ -136,7 +144,7 @@ def plot(dxy):
     #change the CMS_lumi variables (see CMS_lumi.py)
 
     CMS_lumi.lumi_7TeV = "4.8 fb^{-1}"
-    CMS_lumi.lumi_8TeV = "19.3 fb^{-1}"
+    CMS_lumi.lumi_8TeV = "19.7 fb^{-1}"
     CMS_lumi.writeExtraText = 1
     CMS_lumi.extraText = ""
 

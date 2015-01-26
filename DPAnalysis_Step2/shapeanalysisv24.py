@@ -29,18 +29,18 @@ def loop(vec, dxy, flag, phot):
                 continue
             if (event.ptPhot[0] < 85):
                 continue
-            if (event.sMajPhot[0] > 1.35):
-                continue
+            #if (event.sMajPhot[0] > 1.35):
+            #    continue
             
             if(flag == 0):
                 lum = 19280.
-                if(event.MET < 80):
+                if(event.MET < 160):
                     continue
                 if(len(dxytemp) > 0):
                     dxy.Fill( dxytemp[-1], (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors))    
 
             if (flag == 1):
-                if(event.MET < 80):
+                if(event.MET < 160):
                     continue
                 if(len(dxytemp) > 0):
                     dxy.Fill( dxytemp[-1], 1./event.EfficiencyScaleFactors)
@@ -87,9 +87,8 @@ def function (lamb,ctau,phot):
         vecfilessig.append(temp)
     
 
-    xbins = array('d',[0.,0.3, 1., 3., 6.])
     #xbins = array('d',[0., 0.2, 1.5, 3., 6.])
-    #xbins = array('d',[0., 0.2, 1.5, 6.])
+    xbins = array('d',[0., 0.2, 1.5, 6.])
 
     nxbins = len(xbins) - 1
 
