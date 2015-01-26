@@ -577,7 +577,7 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
 
     
                                           h000->Fill(1.);
-    if (nGoodVtx < 0) continue;           h000->Fill(2.);
+    if (nGoodVtx < 1) continue;           h000->Fill(2.);
     if (MET < 30) continue;               h000->Fill(3.);
     if (nJet < 2) continue;               h000->Fill(4.);
     if (nPhot < 2) continue;              h000->Fill(5.);
