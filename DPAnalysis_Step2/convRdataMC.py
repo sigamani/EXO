@@ -226,6 +226,7 @@ def main():
     frame = canvas1.GetFrame()
     frame.Draw()
 
+    canvas1.SaveAs("./Tetn.png")
     canvas1.SaveAs("./convRdata.png")
 
 if __name__ == "__main__":

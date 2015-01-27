@@ -13,7 +13,7 @@ def loop(vec,histo, phot):
         entr = tree.GetEntries()
         print 'total events ' + str(entr)
         for event in tree:
-            if (event.met < 30):
+            if (event.met > 30):
                continue
             if (event.nJets < 2):
                continue
@@ -21,14 +21,13 @@ def loop(vec,histo, phot):
                continue
             if (event.nVertices < 0): 
                continue
-             
-
+            
             if (len(event.convDxy) < 1):
                 continue 
             for each in range(len(event.convR)):
                 if (event.convChi2[each] > 0.01 and abs(event.convDxy[each]) < 0.3 ):
-                    histo.Fill(event.convR[each])
-   
+                    histo.Fill(event.convR[each])    
+ 
     return histo
 
 def function (phot):
@@ -138,7 +137,8 @@ def main():
     errhist.Draw("2 sames")
 
     CMS_lumi.extraText = ""
-    #draw the lumi text on the canvas                                                                                                                                                                                                          
+    #draw the lumi text on the canvas
+
     CMS_lumi.CMS_lumi(canvas1, 2, iPos)
 
     canvas1.cd()
@@ -147,7 +147,7 @@ def main():
     frame = canvas1.GetFrame()
     frame.Draw()
 
-    canvas1.SaveAs("./convRdatastep1.png")
+    canvas1.SaveAs("./convRbkgdatastep1.png")
 
 if __name__ == "__main__":
     main()

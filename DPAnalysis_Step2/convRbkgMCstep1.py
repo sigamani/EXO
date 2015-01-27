@@ -21,19 +21,18 @@ def loop(vec,histo, phot):
                continue
             if (event.nVertices < 0): 
                continue
-             
-
+            
             if (len(event.convDxy) < 1):
                 continue 
             for each in range(len(event.convR)):
                 if (event.convChi2[each] > 0.01 and abs(event.convDxy[each]) < 0.3 ):
-                    histo.Fill(event.convR[each])
-   
+                    histo.Fill(event.convR[each])    
+ 
     return histo
 
 def function (phot):
 
-    listdata = ["../DPAnalysis/test/v24/Run2012A.root","../DPAnalysis/test/v24/Run2012B.root","../DPAnalysis/test/v24/Run2012C_1.root","../DPAnalysis/test/v24/Run2012C_2.root","../DPAnalysis/test/v24/Run2012C_3.root","../DPAnalysis/test/v24/Run2012D_1.root","../DPAnalysis/test/v24/Run2012D_2.root","../DPAnalysis/test/v24/Run2012D_3.root"]
+    listdata = ["../DPAnalysis/test/v24/TTJets.root","../DPAnalysis/test/v24/QCD_Pt-80to120.root","../DPAnalysis/test/v24/QCD_Pt-120to170.root","../DPAnalysis/test/v24/QCD_Pt-170to300.root","../DPAnalysis/test/v24/QCD_Pt-470to600.root","../DPAnalysis/test/v24/QCD_Pt-600to800.root","../DPAnalysis/test/v24/QCD_Pt-800to1000.root","../DPAnalysis/test/v24/QCD_Pt-1000to1400.root","../DPAnalysis/test/v24/G_Pt-50to80.root","../DPAnalysis/test/v24/G_Pt-80to120.root","../DPAnalysis/test/v24/G_Pt-120to170.root","../DPAnalysis/test/v24/G_Pt-170to300.root","../DPAnalysis/test/v24/G_Pt-300to470.root","../DPAnalysis/test/v24/G_Pt-470to800.root"]
     
     vecfiles = []
     for item in listdata:
@@ -138,7 +137,8 @@ def main():
     errhist.Draw("2 sames")
 
     CMS_lumi.extraText = ""
-    #draw the lumi text on the canvas                                                                                                                                                                                                          
+    #draw the lumi text on the canvas
+
     CMS_lumi.CMS_lumi(canvas1, 2, iPos)
 
     canvas1.cd()
@@ -147,7 +147,7 @@ def main():
     frame = canvas1.GetFrame()
     frame.Draw()
 
-    canvas1.SaveAs("./convRdatastep1.png")
+    canvas1.SaveAs("./convRbkgMCstep1.png")
 
 if __name__ == "__main__":
     main()
