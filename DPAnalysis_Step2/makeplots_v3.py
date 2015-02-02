@@ -20,11 +20,13 @@ def loop(vec, vechisto, flag, phot):
                 continue
             if (event.ptPhot[0] < 85):
                 continue
-            if (event.sMajPhot[0] > 1.35):
-                continue
+            #if (event.sMajPhot[0] > 1.35):
+            #    continue
             
             if(flag == 0):
-                lum = 19280.
+                if (event.MET < 60):
+                    continue
+                lum = 19700.
                 vechisto[0].Fill( event.ptPhot[0], (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors) )
                 if (event.ptPhot.size() > phot):
                     vechisto[1].Fill( event.ptPhot[1], (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors) )
@@ -48,6 +50,8 @@ def loop(vec, vechisto, flag, phot):
                 vechisto[15].Fill( event.photiso[0], (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors))
                 vechisto[16].Fill( event.phohovere[0], (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors))
             else:
+                if (event.MET < 60):
+                    continue
                 vechisto[0].Fill( event.ptPhot[0], 1./event.EfficiencyScaleFactors )
                 if (event.ptPhot.size() > phot):
                     vechisto[1].Fill( event.ptPhot[1], 1./event.EfficiencyScaleFactors )
@@ -74,12 +78,12 @@ def loop(vec, vechisto, flag, phot):
 
 def function (lamb,ctau1,ctau2,phot):
 
-    listgpt = ["./v21/G_Pt-50to80.root","./v21/G_Pt-80to120.root","./v21/G_Pt-120to170.root","./v21/G_Pt-170to300.root","./v21/G_Pt-300to470.root","./v21/G_Pt-470to800.root"]
-    listqcd = ["./v21/QCD_Pt-80to120.root","./v21/QCD_Pt-120to170.root","./v21/QCD_Pt-170to300.root","./v21/QCD_Pt-470to600.root","./v21/QCD_Pt-600to800.root","./v21/QCD_Pt-800to1000.root","./v21/QCD_Pt-1000to1400.root"]
-    listttjets = ["./v21/TTJets.root"]
-    listsig1 = ["./v21/GMSB_L"+lamb+"-CTAU"+ctau1+".root"]
-    listsig2 = ["./v21/GMSB_L"+lamb+"-CTAU"+ctau2+".root"]
-    listdata = ["./v21/Run2012A.root","./v21/Run2012B.root","./v21/Run2012C_1.root","./v21/Run2012C_2.root","./v21/Run2012C_3.root","./v21/Run2012D_1.root","./v21/Run2012D_2.root","./v21/Run2012D_3.root"]
+    listgpt = ["./v24/G_Pt-50to80.root","./v24/G_Pt-80to120.root","./v24/G_Pt-120to170.root","./v24/G_Pt-170to300.root","./v24/G_Pt-300to470.root","./v24/G_Pt-470to800.root"]
+    listqcd = ["./v24/QCD_Pt-80to120.root","./v24/QCD_Pt-120to170.root","./v24/QCD_Pt-170to300.root","./v24/QCD_Pt-470to600.root","./v24/QCD_Pt-600to800.root","./v24/QCD_Pt-800to1000.root","./v24/QCD_Pt-1000to1400.root"]
+    listttjets = ["./v24/TTJets.root"]
+    listsig1 = ["./v24/GMSB_L"+lamb+"-CTAU"+ctau1+".root"]
+    listsig2 = ["./v24/GMSB_L"+lamb+"-CTAU"+ctau2+".root"]
+    listdata = ["./v24/Run2012A.root","./v24/Run2012B.root","./v24/Run2012C_1.root","./v24/Run2012C_2.root","./v24/Run2012C_3.root","./v24/Run2012D_1.root","./v24/Run2012D_2.root","./v24/Run2012D_3.root"]
     
     vecfilesgpt = []
     for item in listgpt:
@@ -107,13 +111,17 @@ def function (lamb,ctau1,ctau2,phot):
         vecfilessig2.append(temp)
 
 
-    xbins = array('d',[0.,0.3, 1., 3., 6.])
+    #xbins = array('d',[0.,0.3, 1., 3., 6.])
+
+    xbins = array('d',[0., 0.2, 1.5, 3., 6.])
+
+    nxbins = len(xbins) - 1
 
     ptpholeadgpt = TH1D("PtPhotonleadingGPT","",24,0,500)
     ptphosubleadgpt = TH1D("PtPhotonsubleadingGPT","",12,0,500)
-    ptjetleadgpt = TH1D("PtJetleadingGPT","",12,0,500)
-    ptjetsubleadgpt = TH1D("PtJetsubleadingGPT","",12,0,500)
-    dxygpt = TH1D("DxyGPT","",4,xbins)
+    ptjetleadgpt = TH1D("PtJetleadingGPT","",30,0,525)
+    ptjetsubleadgpt = TH1D("PtJetsubleadingGPT","",30,0,525)
+    dxygpt = TH1D("DxyGPT","",nxbins,xbins)
     metgpt = TH1D("METGPT","",50,0,1000)
     njetsgpt = TH1D("nJetsGPT","",15,0,15)
     nphotgpt = TH1D("nPhotGPT","",15,0,15)
@@ -135,9 +143,9 @@ def function (lamb,ctau1,ctau2,phot):
 
     ptpholeadqcd = TH1D("PtPhotonleadingQCD","",24,0,500)
     ptphosubleadqcd = TH1D("PtPhotonsubleadingQCD","",12,0,500)
-    ptjetleadqcd = TH1D("PtJetleadingQCD","",12,0,500)
-    ptjetsubleadqcd = TH1D("PtJetsubleadingQCD","",12,0,500)
-    dxyqcd = TH1D("DxyQCD","",4,xbins)
+    ptjetleadqcd = TH1D("PtJetleadingQCD","",30,0,525)
+    ptjetsubleadqcd = TH1D("PtJetsubleadingQCD","",30,0,525)
+    dxyqcd = TH1D("DxyQCD","",nxbins,xbins)
     metqcd = TH1D("METQCD","",50,0,1000)
     njetsqcd = TH1D("nJetsQCD","",15,0,15)
     nphotqcd = TH1D("nPhotQCD","",15,0,15)
@@ -159,9 +167,9 @@ def function (lamb,ctau1,ctau2,phot):
 
     ptpholeadttjet = TH1D("PtPhotonleadingTTJet","",24,0,500)
     ptphosubleadttjet = TH1D("PtPhotonsubleadingTTJet","",12,0,500)
-    ptjetleadttjet = TH1D("PtJetleadingTTJet","",12,0,500)
-    ptjetsubleadttjet = TH1D("PtJetsubleadingTTJet","",12,0,500)
-    dxyttjet = TH1D("DxyTTJet","",4,xbins)
+    ptjetleadttjet = TH1D("PtJetleadingTTJet","",30,0,525)
+    ptjetsubleadttjet = TH1D("PtJetsubleadingTTJet","",30,0,525)
+    dxyttjet = TH1D("DxyTTJet","",nxbins,xbins)
     metttjet = TH1D("METTTJet","",50,0,1000)
     njetsttjet = TH1D("nJetsTTJet","",15,0,15)
     nphotttjet = TH1D("nPhotTTJet","",15,0,15)
@@ -183,9 +191,9 @@ def function (lamb,ctau1,ctau2,phot):
 
     ptpholeadsig1 = TH1D("PtPhotonleadingSignal1","",24,0,500)
     ptphosubleadsig1 = TH1D("PtPhotonsubleadingSignal1","",12,0,500)
-    ptjetleadsig1 = TH1D("PtJetleadingSignal1","",12,0,500)
-    ptjetsubleadsig1 = TH1D("PtJetsubleadingSignal1","",12,0,500)
-    dxysig1 = TH1D("DxySignal1","",4,xbins)
+    ptjetleadsig1 = TH1D("PtJetleadingSignal1","",30,0,525)
+    ptjetsubleadsig1 = TH1D("PtJetsubleadingSignal1","",30,0,525)
+    dxysig1 = TH1D("DxySignal1","",nxbins,xbins)
     metsig1 = TH1D("METSignal1","",50,0,1000)
     njetssig1 = TH1D("nJetsSignal1","",15,0,15)
     nphotsig1 = TH1D("nPhotSignal1","",15,0,15)
@@ -207,9 +215,9 @@ def function (lamb,ctau1,ctau2,phot):
 
     ptpholeadsig2 = TH1D("PtPhotonleadingSignal2","",24,0,500)
     ptphosubleadsig2 = TH1D("PtPhotonsubleadingSignal2","",12,0,500)
-    ptjetleadsig2 = TH1D("PtJetleadingSignal2","",12,0,500)
-    ptjetsubleadsig2 = TH1D("PtJetsubleadingSignal2","",12,0,500)
-    dxysig2 = TH1D("DxySignal2","",4,xbins)
+    ptjetleadsig2 = TH1D("PtJetleadingSignal2","",30,0,525)
+    ptjetsubleadsig2 = TH1D("PtJetsubleadingSignal2","",30,0,525)
+    dxysig2 = TH1D("DxySignal2","",nxbins,xbins)
     metsig2 = TH1D("METSignal2","",50,0,1000)
     njetssig2 = TH1D("nJetsSignal2","",15,0,15)
     nphotsig2 = TH1D("nPhotSignal2","",15,0,15)
@@ -231,9 +239,9 @@ def function (lamb,ctau1,ctau2,phot):
 
     ptpholead = TH1D("PtPhotonleading","",24,0,500)
     ptphosublead = TH1D("PtPhotonsubleading","",12,0,500)
-    ptjetlead = TH1D("PtJetleading","",12,0,500)
-    ptjetsublead = TH1D("PtJetsubleading","",12,0,500)
-    dxy = TH1D("Dxy","",4,xbins)
+    ptjetlead = TH1D("PtJetleading","",30,0,525)
+    ptjetsublead = TH1D("PtJetsubleading","",30,0,525)
+    dxy = TH1D("Dxy","",nxbins,xbins)
     met = TH1D("MET","",50,0,1000)
     njets = TH1D("nJets","",15,0,15)
     nphot = TH1D("nPhot","",15,0,15)
@@ -253,7 +261,22 @@ def function (lamb,ctau1,ctau2,phot):
 
     vechis = loop(vecfilesdata, vechis, 1, phot)
             
-    output = TFile.Open("./ctau"+ctau1+"andctau"+ctau2+"lambda"+lamb+"/output"+str(phot)+".root","recreate")
+
+    vechis[4].SetBinContent(vechis[4].GetNbinsX(),(vechis[4].GetBinContent(vechis[4].GetNbinsX())+vechis[4].GetBinContent(vechis[4].GetNbinsX()+1)))
+    vechissig1[4].SetBinContent(vechissig1[4].GetNbinsX(),(vechissig1[4].GetBinContent(vechissig1[4].GetNbinsX())+vechissig1[4].GetBinContent(vechissig1[4].GetNbinsX()+1)))
+    vechissig2[4].SetBinContent(vechissig2[4].GetNbinsX(),(vechissig2[4].GetBinContent(vechissig2[4].GetNbinsX())+vechissig2[4].GetBinContent(vechissig2[4].GetNbinsX()+1)))
+    vechisttjet[4].SetBinContent(vechisttjet[4].GetNbinsX(),(vechisttjet[4].GetBinContent(vechisttjet[4].GetNbinsX())+vechisttjet[4].GetBinContent(vechisttjet[4].GetNbinsX()+1)))
+    vechisqcd[4].SetBinContent(vechisqcd[4].GetNbinsX(),(vechisqcd[4].GetBinContent(vechisqcd[4].GetNbinsX())+vechisqcd[4].GetBinContent(vechisqcd[4].GetNbinsX()+1)))
+    vechisgpt[4].SetBinContent(vechisgpt[4].GetNbinsX(),(vechisgpt[4].GetBinContent(vechisgpt[4].GetNbinsX())+vechisgpt[4].GetBinContent(vechisgpt[4].GetNbinsX()+1)))
+
+
+    vechis[4].SetBinError(vechis[4].GetNbinsX(),(vechis[4].GetBinError(vechis[4].GetNbinsX())+vechis[4].GetBinError(vechis[4].GetNbinsX()+1)))
+    vechissig1[4].SetBinError(vechissig1[4].GetNbinsX(),(vechissig1[4].GetBinError(vechissig1[4].GetNbinsX())+vechissig1[4].GetBinError(vechissig1[4].GetNbinsX()+1)))
+    vechissig2[4].SetBinError(vechissig2[4].GetNbinsX(),(vechissig2[4].GetBinError(vechissig2[4].GetNbinsX())+vechissig2[4].GetBinError(vechissig2[4].GetNbinsX()+1)))
+    vechisttjet[4].SetBinError(vechisttjet[4].GetNbinsX(),(vechisttjet[4].GetBinError(vechisttjet[4].GetNbinsX())+vechisttjet[4].GetBinError(vechisttjet[4].GetNbinsX()+1)))
+    vechisqcd[4].SetBinError(vechisqcd[4].GetNbinsX(),(vechisqcd[4].GetBinError(vechisqcd[4].GetNbinsX())+vechisqcd[4].GetBinError(vechisqcd[4].GetNbinsX()+1)))
+    vechisgpt[4].SetBinError(vechisgpt[4].GetNbinsX(),(vechisgpt[4].GetBinError(vechisgpt[4].GetNbinsX())+vechisgpt[4].GetBinError(vechisgpt[4].GetNbinsX()+1)))
+
 
     for i in range(len(vechis)):
         datatotal = vechis[i].Integral()
@@ -267,11 +290,11 @@ def function (lamb,ctau1,ctau2,phot):
         vechisqcd[i].Scale(ratio)
         vechisgpt[i].Scale(ratio)
 
-    
-    vechis[4].SetBinContent(3,0.)
-    vechis[4].SetBinContent(2,0.)
-    vechis[4].SetBinContent(4,0.)
-    vechis[4].SetBinContent(1,0.)
+    for i in range(nxbins):
+        #if (i != 0):
+        vechis[4].SetBinContent(i+1,0)
+
+    output = TFile.Open("./ctau"+ctau1+"andctau"+ctau2+"lambda"+lamb+"/output"+str(phot)+".root","recreate")
 
     for it in vechis:
         it.Write()

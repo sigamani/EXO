@@ -290,7 +290,7 @@ void plot_limit_mass(std::string LAMBDA){
 
   // integrated luminosity
   std::string s_lumi;
-  s_lumi = "19.3";
+  s_lumi = "19.7";
   std::string lint = "#intL = "+s_lumi+" fb^{-1}";
   TLatex l1;
   l1.SetTextAlign(12);

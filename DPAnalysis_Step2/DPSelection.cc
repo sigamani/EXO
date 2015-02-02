@@ -431,17 +431,14 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
       phoP4down = phoP4down * egScaledown;
        
       if ( fabs(fSpike[i]) > 0.001 ) continue ;
-      if ( phoP4.Pt() < 50. )  photpt = false ;
-      if ( phoP4up.Pt() < 50. )  photptup = false ;
-      if ( phoP4down.Pt() < 50. )  photptdown = false ;
-      if ( fabs(phoP4.Eta()) > 1.47 )  photpt = false ;
-      if ( fabs(phoP4up.Eta()) > 1.47 )  photptup = false ;
-      if ( fabs(phoP4down.Eta()) > 1.47 )  photptdown = false ;
-      if ( phoHoverE[i] > 0.05 ) continue ;
-      //if ( sMinPho[i] < 0.15 || sMinPho[i] > 0.3 )  continue ; WAS WEG
-      //if ( sMinPho[i] < 0.12 || sMinPho[i] > 0.38 )                continue ; WAS WEG
-      if ( sigmaIeta[i] >  0.012 ) continue ; 
-      //if ( dR_TrkPho[i] < 0.6 ) continue; WAS WEG
+      //if ( phoP4.Pt() < 50. )  photpt = false ; NMINONE
+      //if ( phoP4up.Pt() < 50. )  photptup = false ; NMINONE
+      //if ( phoP4down.Pt() < 50. )  photptdown = false ; NMINONE
+      //if ( fabs(phoP4.Eta()) > 1.47 )  photpt = false ; NMINONE
+      //if ( fabs(phoP4up.Eta()) > 1.47 )  photptup = false ; NMINONE
+      //if ( fabs(phoP4down.Eta()) > 1.47 )  photptdown = false ; NMINONE
+      //if ( phoHoverE[i] > 0.05 ) continue ; NMINONE
+      //if ( sigmaIeta[i] >  0.012 ) continue ;  NMINONE
       if ( phoP4.Eta() > -0.75 && phoP4.Eta() < -0.6 && phoP4.Phi() > -1. && phoP4.Phi() < -0.8 ) photpt = false ;
       if ( phoP4up.Eta() > -0.75 && phoP4up.Eta() < -0.6 && phoP4up.Phi() > -1. && phoP4up.Phi() < -0.8 ) photptup = false ;
       if ( phoP4down.Eta() > -0.75 && phoP4down.Eta() < -0.6 && phoP4down.Phi() > -1. && phoP4down.Phi() < -0.8 ) photptdown = false ;
@@ -454,7 +451,7 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
       //                   Cut for isolated photons  
       /***********************************************************************/
        
-      /*       
+      /*           
       if ( cHadIso[i] >= 2.6 ) continue ;  // chargedHadron
       if ( nHadIso[i] >= 3.5 + ( 0.04*phoP4.Pt()   ) ) photpt = false ;  // neutralHadron
       if ( nHadIso[i] >= 3.5 + ( 0.04*phoP4up.Pt()   ) ) photptup = false ;  // neutralHadron
@@ -462,7 +459,7 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
       if ( photIso[i] >= 1.3 + ( 0.005*phoP4.Pt() ) ) photpt = false ;  // photon
       if ( photIso[i] >= 1.3 + ( 0.005*phoP4up.Pt() ) ) photptup = false ;  // photon
       if ( photIso[i] >= 1.3 + ( 0.005*phoP4down.Pt() ) ) photptdown = false ;  // photon
-      /*
+      */
 
       /***********************************************************************/
       //                   Cut for fake photons                                                                                                                                                          
@@ -532,9 +529,9 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
       bool jetptup = true;
       bool jetptdown = true;
 
-      if ( jp4.Pt() < 30) jetpt == false;
-      if ( jp4up.Pt() < 30) jetptup == false;
-      if ( jp4down.Pt() < 30) jetptdown == false;
+      //if ( jp4.Pt() < 30) jetpt == false; NMINONE
+      //if ( jp4up.Pt() < 30) jetptup == false; NMINONE 
+      //if ( jp4down.Pt() < 30) jetptdown == false; NMINONE 
 
       if ( fabs(jp4.Eta()) > 2.4 ) jetpt == false ;
       if ( fabs(jp4up.Eta()) > 2.4 ) jetptup == false ;
@@ -577,11 +574,13 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
 
     
                                           h000->Fill(1.);
-    if (nGoodVtx < 0) continue;           h000->Fill(2.);
-    if (MET < 30) continue;               h000->Fill(3.);
-    if (nJet < 2) continue;               h000->Fill(4.);
-    if (nPhot < 2) continue;              h000->Fill(5.);
-
+    if (nGoodVtx < 1) continue;           h000->Fill(2.);
+    //if (MET < 30) continue;               h000->Fill(3.);
+    //if (nJet < 2) continue;               h000->Fill(4.);
+    //if (nPhot < 2) continue;              h000->Fill(5.);
+    if (MET < 0) continue;               h000->Fill(3.);
+    if (nJet < 1) continue;               h000->Fill(4.);
+    if (nPhot < 1) continue;              h000->Fill(5.);
 
     TVector3 MET( metPx, metPy, 0);  
 

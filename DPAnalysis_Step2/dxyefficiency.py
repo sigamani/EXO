@@ -29,8 +29,6 @@ def loop(vec, photpt, phot):
                 continue
             if (event.sigmaIetaPhot[0] < 0.006 or event.sigmaIetaPhot[0] > 0.012):
                 continue
-            if (event.sMajPhot[0] > 1.35):
-                continue
             for ding in event.ptPhot:
                 nPhot = nPhot + 1
             for ding in event.dxyConv:
@@ -98,17 +96,17 @@ def main():
     # CTAU500 = function("180","500",2)
     # CTAU2000 = function("180","2000",2)
 
-    # CTAU10 = function("160","10",2)
-    # CTAU100 = function("160","100",2)
-    # CTAU1000 = function("160","1000",2)
-    # CTAU2000 = function("160","2000",2)
-    # CTAU500 = function("160","500",2)
+    CTAU10 = function("160","10",2)
+    CTAU100 = function("160","100",2)
+    CTAU1000 = function("160","1000",2)
+    CTAU2000 = function("160","2000",2)
+    CTAU500 = function("160","500",2)
 
-    CTAU10 = function("140","10",2)                                                                                                                                                                                                         
-    CTAU100 = function("140","100",2)                                                                                                                                                                                                       
-    CTAU1000 = function("140","1000",2)                                                                                                                                                                                                     
-    CTAU2000 = function("140","2000",2)                                                                                                                                                                                                     
-    CTAU500 = function("140","500",2) 
+    # CTAU10 = function("140","10",2)                                                                                                                                                                                                         
+    # CTAU100 = function("140","100",2)                                                                                                                                                                                                       
+    # CTAU1000 = function("140","1000",2)                                                                                                                                                                                                     
+    # CTAU2000 = function("140","2000",2)                                                                                                                                                                                                     
+    # CTAU500 = function("140","500",2) 
 
     CTAU10.SetMarkerColor(1)
     #CTAU50.SetMarkerColor(2)
@@ -128,24 +126,24 @@ def main():
     # leg.AddEntry(CTAU50, "GMSB(180 TeV, 5 cm)","p")
     # leg.AddEntry(CTAU250, "GMSB(180 TeV, 25 cm)","p")
     # leg.AddEntry(CTAU500, "GMSB(180 TeV, 50 cm)","p")
-    # leg.AddEntry(CTAU2000, "GMSB(180 TeV, 200 cm)","p")
+    # #leg.AddEntry(CTAU2000, "GMSB(180 TeV, 200 cm)","p")
 
-    # leg.AddEntry(CTAU10, "GMSB(160 GeV, 1 cm)","p")
-    # leg.AddEntry(CTAU100, "GMSB(160 GeV, 10 cm)","p")
-    # leg.AddEntry(CTAU1000, "GMSB(160 GeV, 100 cm)","p")
-    # leg.AddEntry(CTAU500, "GMSB(160 GeV, 50 cm)","p")
-    # leg.AddEntry(CTAU2000, "GMSB(160 TeV, 200 cm)","p")
+    leg.AddEntry(CTAU10, "GMSB(160 GeV, 1 cm)","p")
+    leg.AddEntry(CTAU100, "GMSB(160 GeV, 10 cm)","p")
+    leg.AddEntry(CTAU1000, "GMSB(160 GeV, 100 cm)","p")
+    leg.AddEntry(CTAU500, "GMSB(160 GeV, 50 cm)","p")
+    #leg.AddEntry(CTAU2000, "GMSB(160 TeV, 200 cm)","p")
 
-    leg.AddEntry(CTAU10, "GMSB(140 GeV, 1 cm)","p")                                                                                                                                                                                         
-    leg.AddEntry(CTAU100, "GMSB(140 GeV, 10 cm)","p")                                                                                                                                                                                       
-    leg.AddEntry(CTAU1000, "GMSB(140 GeV, 100 cm)","p")                                                                                                                                                                                     
-    leg.AddEntry(CTAU500, "GMSB(140 GeV, 50 cm)","p")                                                                                                                                                                                       
-    leg.AddEntry(CTAU2000, "GMSB(140 TeV, 200 cm)","p")
+    # leg.AddEntry(CTAU10, "GMSB(140 GeV, 1 cm)","p")                                                                                                                                                                                         
+    # leg.AddEntry(CTAU100, "GMSB(140 GeV, 10 cm)","p")                                                                                                                                                                                       
+    # leg.AddEntry(CTAU1000, "GMSB(140 GeV, 100 cm)","p")                                                                                                                                                                                     
+    # leg.AddEntry(CTAU500, "GMSB(140 GeV, 50 cm)","p")                                                                                                                                                                                       
+    # leg.AddEntry(CTAU2000, "GMSB(140 TeV, 200 cm)","p")
 
     CTAU10.GetYaxis().SetRangeUser(0.,0.2)
     CTAU10.GetYaxis().SetTitleSize(0.05)
     CTAU10.GetYaxis().SetTitleOffset(1.2)
-    CTAU10.GetYaxis().SetTitle("Conversion Reconstruction Efficiency")
+    CTAU10.GetYaxis().SetTitle("Reconstruction Eff. x Conversion prob.")
     CTAU10.GetXaxis().SetTitle("Photon p_{T} (GeV)")
     CTAU10.GetXaxis().SetTitleSize(0.05)
     CTAU10.GetXaxis().SetTitleOffset(1.)
@@ -156,7 +154,7 @@ def main():
     #change the CMS_lumi variables (see CMS_lumi.py)
 
     CMS_lumi.lumi_7TeV = "4.8 fb^{-1}"
-    CMS_lumi.lumi_8TeV = "19.3 fb^{-1}"
+    CMS_lumi.lumi_8TeV = "19.7 fb^{-1}"
     CMS_lumi.writeExtraText = 1
     CMS_lumi.extraText = "Simulation"
 
@@ -199,7 +197,7 @@ def main():
     #CTAU250.Draw("PEsame")
     CTAU100.Draw("PEsame")
     CTAU1000.Draw("PEsame")
-    CTAU2000.Draw("PEsame")
+    #CTAU2000.Draw("PEsame")
     CTAU500.Draw("PEsame")
     leg.Draw("same")
 
@@ -214,8 +212,8 @@ def main():
     frame.Draw()
   
     #canvas.SaveAs("./dxyefficiencyL180.png")
-    #canvas.SaveAs("./dxyefficiencyL160.png")
-    canvas.SaveAs("./dxyefficiencyL140.png")
+    canvas.SaveAs("./dxyefficiencyL160.png")
+    #canvas.SaveAs("./dxyefficiencyL140.png")
 
 
 if __name__ == "__main__":

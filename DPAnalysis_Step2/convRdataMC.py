@@ -15,18 +15,16 @@ def loop(vec,histo, phot):
         j=0
         print 'total events ' + str(entr)
         for event in tree:
-            if (event.ptPhot[0] < 85):
-                continue
-            if (event.nPhot < phot):
-                continue
-            if (event.sMinPhot[0] < 0.15 or event.sMinPhot[0] > 0.3):
-                continue
-            if (event.ptJet[0] < 35):
-                continue
-            if (event.sigmaIetaPhot[0] < 0.006 or event.sigmaIetaPhot[0] > 0.012):
-                continue
-            if (event.sMajPhot[0] > 1.35):
-                continue
+            #if (event.ptPhot[0] < 85):
+            #    continue
+            #if (event.nPhot < phot):
+            #    continue
+            #if (event.sMinPhot[0] < 0.15 or event.sMinPhot[0] > 0.3):
+            #    continue
+            #if (event.ptJet[0] < 35):
+            #    continue
+            #if (event.sigmaIetaPhot[0] < 0.006 or event.sigmaIetaPhot[0] > 0.012):
+            #    continue
             if (len(event.dxyConv) < 1):
                 continue 
             for each in range(len(event.conversionR)):
@@ -41,6 +39,7 @@ def function (lamb,ctau,phot):
     listsig = ["./v24/GMSB_L"+lamb+"-CTAU"+ctau+".root"]
     listdata = ["./v24/Run2012A.root","./v24/Run2012B.root","./v24/Run2012C_1.root","./v24/Run2012C_2.root","./v24/Run2012C_3.root","./v24/Run2012D_1.root","./v24/Run2012D_2.root","./v24/Run2012D_3.root"]
     
+    
     vecfilessig = []
     for item in listsig:
         temp = TFile.Open(item)
@@ -50,8 +49,8 @@ def function (lamb,ctau,phot):
         temp = TFile.Open(item)
         vecfiles.append(temp)
 
-    convrsig = TH1D("ConvRsig","",13,0,120)
-    convr = TH1D("ConvR","",13,0,120)
+    convrsig = TH1D("ConvRsig","",50,0,100)
+    convr = TH1D("ConvR","",50,0,100)
 
     convrsig.Sumw2()
     convr.Sumw2()
@@ -63,7 +62,7 @@ def function (lamb,ctau,phot):
 
 def main():
 
-    CTAU10 = function("160","10",2)
+    CTAU10 = function("160","10",0)
     
     CTAU10[0].SetMarkerColor(2)
     CTAU10[0].SetLineColor(2)
@@ -88,7 +87,7 @@ def main():
     leg1.AddEntry(CTAU10[1], "data","")
 
 
-    CTAU10[0].GetYaxis().SetRangeUser(0.,4000)
+    CTAU10[0].GetYaxis().SetRangeUser(0.,1500)
     CTAU10[0].GetYaxis().SetTitleSize(0.05)
     CTAU10[0].GetYaxis().SetTitleOffset(1.2)
     CTAU10[0].GetYaxis().SetTitle("Events")
@@ -109,7 +108,7 @@ def main():
     #change the CMS_lumi variables (see CMS_lumi.py)
 
     CMS_lumi.lumi_7TeV = "4.8 fb^{-1}"
-    CMS_lumi.lumi_8TeV = "19.3 fb^{-1}"
+    CMS_lumi.lumi_8TeV = "19.7 fb^{-1}"
     CMS_lumi.writeExtraText = 1
     CMS_lumi.extraText = "Simulation"
 
@@ -227,6 +226,7 @@ def main():
     frame = canvas1.GetFrame()
     frame.Draw()
 
+    canvas1.SaveAs("./Tetn.png")
     canvas1.SaveAs("./convRdata.png")
 
 if __name__ == "__main__":

@@ -19,7 +19,7 @@ def loop(vec,vechist):
 
 def function():
 
-    files = ["./v22/GMSB_L180-CTAU10.root","./v22/GMSB_L180-CTAU50.root","./v22/GMSB_L180-CTAU250.root","./v22/GMSB_L180-CTAU500.root"]
+    files = ["./v24/GMSB_L180-CTAU10.root","./v24/GMSB_L180-CTAU50.root","./v24/GMSB_L180-CTAU250.root","./v24/GMSB_L180-CTAU500.root"]
     vecfiles = []
     
     for item in files:
@@ -65,10 +65,10 @@ def plot(dxy):
 
     gStyle.SetOptStat(0)
 
-    #change the CMS_lumi variables (see CMS_lumi.py)                                                                                                                                                                                           
+    #change the CMS_lumi variables (see CMS_lumi.py)
 
     CMS_lumi.lumi_7TeV = "4.8 fb^{-1}"
-    CMS_lumi.lumi_8TeV = "19.3 fb^{-1}"
+    CMS_lumi.lumi_8TeV = "19.7 fb^{-1}"
     CMS_lumi.writeExtraText = 1
     CMS_lumi.extraText = "Simulation"
 

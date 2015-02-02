@@ -34,8 +34,8 @@ def loop(vec, dxy, phot):
                 continue
             if (event.sigmaIetaPhot[0] < 0.006 or event.sigmaIetaPhot[0] > 0.012):
                 continue
-            if (event.sMajPhot[0] > 1.35):
-                continue
+            #if (event.sMajPhot[0] > 1.35):
+            #    continue
             for ding in event.ptPhot:
                 nPhot = nPhot + 1
             if (len(dxytemp) < 1):
@@ -168,7 +168,7 @@ def main():
     #change the CMS_lumi variables (see CMS_lumi.py)
 
     CMS_lumi.lumi_7TeV = "4.8 fb^{-1}"
-    CMS_lumi.lumi_8TeV = "19.3 fb^{-1}"
+    CMS_lumi.lumi_8TeV = "19.7 fb^{-1}"
     CMS_lumi.writeExtraText = 1
     CMS_lumi.extraText = "Simulation"
 

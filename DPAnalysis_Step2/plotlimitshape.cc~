@@ -24,11 +24,11 @@ void rootlogon();
 TString savedir = "./img_fit/";
 TString extra = "";
 
-TFile* file_CT10L180 = new TFile(("./exclusionfilesv21/higgsCombineL180CTau10shapedata"+extra+".Asymptotic.mH120.root"), "READ");
-TFile* file_CT50L180 = new TFile(("./exclusionfilesv21/higgsCombineL180CTau50shapedata"+extra+".Asymptotic.mH120.root"), "READ");
-TFile* file_CT250L180 = new TFile(("./exclusionfilesv21/higgsCombineL180CTau250shapedata"+extra+".Asymptotic.mH120.root"), "READ");
-TFile* file_CT500L180 = new TFile(("./exclusionfilesv21/higgsCombineL180CTau500shapedata"+extra+".Asymptotic.mH120.root"), "READ");
-TFile* file_CT2000L180 = new TFile(("./exclusionfilesv21/higgsCombineL180CTau2000shapedata"+extra+".Asymptotic.mH120.root"), "READ");
+TFile* file_CT10L180 = new TFile(("./exclusionfiles/higgsCombineL180CTau10shapedata"+extra+".Asymptotic.mH120.root"), "READ");
+TFile* file_CT50L180 = new TFile(("./exclusionfiles/higgsCombineL180CTau50shapedata"+extra+".Asymptotic.mH120.root"), "READ");
+TFile* file_CT250L180 = new TFile(("./exclusionfiles/higgsCombineL180CTau250shapedata"+extra+".Asymptotic.mH120.root"), "READ");
+TFile* file_CT500L180 = new TFile(("./exclusionfiles/higgsCombineL180CTau500shapedata"+extra+".Asymptotic.mH120.root"), "READ");
+TFile* file_CT2000L180 = new TFile(("./exclusionfiles/higgsCombineL180CTau2000shapedata"+extra+".Asymptotic.mH120.root"), "READ");
 
 
 void plot_limit_mass(std::string LAMBDA){
@@ -266,7 +266,7 @@ void plot_limit_mass(std::string LAMBDA){
 
   // integrated luminosity
   std::string s_lumi;
-  s_lumi = "19.3";
+  s_lumi = "19.7";
   std::string lint = "#intL = "+s_lumi+" fb^{-1}";
   TLatex l1;
   l1.SetTextAlign(12);

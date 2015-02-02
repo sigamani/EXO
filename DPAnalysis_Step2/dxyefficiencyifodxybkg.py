@@ -34,8 +34,8 @@ def loop(vec, dxy, phot):
                 continue
             if (event.sigmaIetaPhot[0] < 0.006 or event.sigmaIetaPhot[0] > 0.012):
                 continue
-            if (event.sMajPhot[0] > 1.35):
-                continue
+            #if (event.sMajPhot[0] > 1.35):
+            #    continue
             for ding in event.ptPhot:
                 nPhot = nPhot + 1
             if (len(dxytemp) < 1):
@@ -54,7 +54,7 @@ def loop(vec, dxy, phot):
 def function (phot):
 
     listMC = ["./v24/G_Pt-50to80.root","./v24/G_Pt-80to120.root","./v24/G_Pt-120to170.root","./v24/G_Pt-170to300.root","./v24/G_Pt-300to470.root","./v24/G_Pt-470to800.root", "./v24/QCD_Pt-80to120.root","./v24/QCD_Pt-120to170.root","./v24/QCD_Pt-170to300.root","./v24/QCD_Pt-470to600.root","./v24/QCD_Pt-600to800.root","./v24/QCD_Pt-800to1000.root","./v24/QCD_Pt-1000to1400.root", "./v24/TTJets.root"]
-    listdata = ["./v24/Run2012Aisolow20.root","./v24/Run2012Bisolow20.root","./v24/Run2012C_1isolow20.root","./v24/Run2012C_2isolow20.root","./v24/Run2012C_3isolow20.root","./v24/Run2012D_1isolow20.root","./v24/Run2012D_2isolow20.root","./v24/Run2012D_3isolow20.root"]
+    listdata = ["./v24/Run2012Aisolow.root","./v24/Run2012Bisolow.root","./v24/Run2012C_1isolow.root","./v24/Run2012C_2isolow.root","./v24/Run2012C_3isolow.root","./v24/Run2012D_1isolow.root","./v24/Run2012D_2isolow.root","./v24/Run2012D_3isolow.root"]
 
     vecfilesMC = []
     for item in listMC:
@@ -201,16 +201,17 @@ def main():
     leg.SetTextFont(42)
     leg.SetBorderSize(0)
 
-    leg.AddEntry(MC, "MC","p")
+    leg.AddEntry(MC, "MC bkg","p")
     leg.AddEntry(data, "DD bkg","p")
    
-    MC.GetYaxis().SetRangeUser(0.0001,0.2)
+    MC.GetYaxis().SetRangeUser(0.000,0.16)
     MC.GetYaxis().SetTitleSize(0.05)
     MC.GetYaxis().SetTitleOffset(1.2)
     MC.GetYaxis().SetTitle("Efficiency")
     MC.GetXaxis().SetTitle("Conversion d_{XY} (cm)")
     MC.GetXaxis().SetTitleSize(0.05)
     MC.GetXaxis().SetTitleOffset(1.)
+    MC.GetXaxis().SetRangeUser(0,3.)
 
 
     gStyle.SetOptStat(0)
@@ -218,9 +219,9 @@ def main():
     #change the CMS_lumi variables (see CMS_lumi.py)
 
     CMS_lumi.lumi_7TeV = "4.8 fb^{-1}"
-    CMS_lumi.lumi_8TeV = "19.3 fb^{-1}"
+    CMS_lumi.lumi_8TeV = "19.7 fb^{-1}"
     CMS_lumi.writeExtraText = 1
-    CMS_lumi.extraText = "Simulation"
+    CMS_lumi.extraText = ""
 
     iPos = 11
     if( iPos==0 ): CMS_lumi.relPosX = 0.12

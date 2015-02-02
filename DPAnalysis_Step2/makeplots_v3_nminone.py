@@ -20,15 +20,15 @@ def loop(vec, vechisto, flag, phot):
                 continue
             if (event.ptPhot[0] < 85):
                 continue
-            if (event.sMajPhot[0] > 1.35):
-                continue
+            #if (event.sMajPhot[0] > 1.35):
+            #    continue
             if (event.MET < 30):
                 continue
             #if (len(event.ptJet) < 2):
             #    continue
             
             if(flag == 0):
-                lum = 19280.
+                lum = 19700.
                 vechisto[0].Fill( event.ptPhot[0], (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors) )
                 if (event.ptPhot.size() > phot):
                     vechisto[1].Fill( event.ptPhot[1], (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors) )

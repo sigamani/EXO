@@ -16,8 +16,6 @@ def loop(vec, dxy, flag, phot):
                     dxytemp.append(fabs(event.dxyConv[i]))
             dxytemp = sorted(dxytemp)
 
-            if (event.Rsqrd < 0.035):
-                continue
             if (event.nPhot < phot):
                 continue
             if (event.sMinPhot[0] < 0.15 or event.sMinPhot[0] > 0.3):
@@ -49,7 +47,7 @@ def loop(vec, dxy, flag, phot):
 def function (lamb,ctau,phot):
 
     listttjets = ["./v21/TTJets.root"]
-    listsig = ["./v22/GMSB_L"+lamb+"-CTAU"+ctau+".root"]
+    listsig = ["./v21/GMSB_L"+lamb+"-CTAU"+ctau+".root"]
     listdata = ["./v21/Run2012A.root","./v21/Run2012B.root","./v21/Run2012C_1.root","./v21/Run2012C_2.root","./v21/Run2012C_3.root","./v21/Run2012D_1.root","./v21/Run2012D_2.root","./v21/Run2012D_3.root"]
     listdataisolow = ["./v21/Run2012Aisolow.root","./v21/Run2012Bisolow.root","./v21/Run2012C_1isolow.root","./v21/Run2012C_2isolow.root","./v21/Run2012C_3isolow.root","./v21/Run2012D_1isolow.root","./v21/Run2012D_2isolow.root","./v21/Run2012D_3isolow.root"]
     listfakehigh = ["./v21/Run2012Afakehigh.root","./v21/Run2012Bfakehigh.root","./v21/Run2012C_1fakehigh.root","./v21/Run2012C_2fakehigh.root","./v21/Run2012C_3fakehigh.root","./v21/Run2012D_1fakehigh.root","./v21/Run2012D_2fakehigh.root","./v21/Run2012D_3fakehigh.root"]
@@ -161,11 +159,11 @@ def function (lamb,ctau,phot):
 
 
 def main():   
-    # function("180","10",2)
-    # function("180","50",2)
-    # function("180","250",2)
-    # function("180","500",2)
-    function("180","2000",2)
+    function("180","10",2)
+    function("180","50",2)
+    function("180","250",2)
+    function("180","500",2)
+    #function("180","2000",2)
 
 if __name__ == "__main__":
     main()
