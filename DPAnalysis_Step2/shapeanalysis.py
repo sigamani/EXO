@@ -23,7 +23,7 @@ def loop(vec, dxy, flag, phot):
                 continue
             if (event.sMinPhot[0] < 0.15 or event.sMinPhot[0] > 0.3):
                 continue
-            if (event.ptJet[0] < 35):
+            if (event.ptJet[0] < 30): #!!!!!!!!!!!!!!!!!!!!!
                 continue
             if (event.sigmaIetaPhot[0] < 0.006 or event.sigmaIetaPhot[0] > 0.012):
                 continue
@@ -31,22 +31,27 @@ def loop(vec, dxy, flag, phot):
                 continue
             #if (event.sMajPhot[0] > 1.35):
             #    continue
-            
+
+            #MC
             if(flag == 0):
                 lum = 19280.
-                if(event.MET < 160):
+                if (event.ptJet[0] < 35): #!!!!!!!!!!!!!!!!!!!!!
+                    continue
+                if(event.MET < 60):
                     continue
                 if(len(dxytemp) > 0):
                     dxy.Fill( dxytemp[-1], (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors))    
-
+            #data
             if (flag == 1):
-                if(event.MET < 160):
+                if (event.ptJet[0] < 35): #!!!!!!!!!!!!!!!!!!!!!
+                    continue
+                if(event.MET < 60):
                     continue
                 if(len(dxytemp) > 0):
                     dxy.Fill( dxytemp[-1], 1./event.EfficiencyScaleFactors)
                     if(dxytemp[-1] > 6):
                         print dxytemp[-1]
-
+            #bkg
             if (flag == 2):
                 if(len(dxytemp) > 0):
                     dxy.Fill( dxytemp[-1], 1./event.EfficiencyScaleFactors)
@@ -87,8 +92,11 @@ def function (lamb,ctau,phot):
         vecfilessig.append(temp)
     
 
-    #xbins = array('d',[0., 0.2, 1.5, 3., 6.])
-    xbins = array('d',[0., 0.2, 1.5, 6.])
+    xbins = array('d',[0., 0.2, 1.5, 3., 6.])
+    #xbins = array('d',[0., 0.2, 1.5, 6.])
+    
+    #dit is v21
+    #xbins = array('d',[0.,0.3, 1., 3., 6.])
 
     nxbins = len(xbins) - 1
 
@@ -113,11 +121,10 @@ def function (lamb,ctau,phot):
     background.Add(ttjet)
 
     background_alphaUp = TH1F("background_alphaUp","",nxbins,xbins)
-    background_alphaUp = loop(vecfilesfakehigh,background_alphaUp, 2, phot)
+    #background_alphaUp = loop(vecfilesfakehigh,background_alphaUp, 2, phot)
     
-    #background_alphaUp = loop(vecfilesfakelow,background_alphaUp, 2, phot)
+    background_alphaUp = loop(vecfilesfakelow,background_alphaUp, 2, phot)
     
-    #background_alphaUp = background.Clone("background_alphaUp")
     background_alphaDown = background.Clone("background_alphaDown")
     
     datatotal = data_obs.GetBinContent(1)
@@ -187,11 +194,11 @@ def function (lamb,ctau,phot):
 
 
 def main():
-    # function("140","10",2)
-    # function("140","100",2)
-    # function("140","500",2)
-    # function("140","1000",2)
-    # function("140","2000",2)
+    function("140","10",2)
+    function("140","100",2)
+    function("140","500",2)
+    function("140","1000",2)
+    function("140","2000",2)
 
     function("160","10",2)
     #function("160","50",2)

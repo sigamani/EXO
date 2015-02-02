@@ -6,7 +6,7 @@ import CMS_lumi, tdrstyle
 #set the tdr style 
 tdrstyle.setTDRStyle()
 
-def loop(vec,histo, phot):
+def loop(vec,histo):
 
     for i in vec:                            
         tree = i.Get("DPAnalysis")
@@ -30,39 +30,63 @@ def loop(vec,histo, phot):
  
     return histo
 
-def function (phot):
+def function ():
 
-    listdata = ["../DPAnalysis/test/v24/TTJets.root","../DPAnalysis/test/v24/QCD_Pt-80to120.root","../DPAnalysis/test/v24/QCD_Pt-120to170.root","../DPAnalysis/test/v24/QCD_Pt-170to300.root","../DPAnalysis/test/v24/QCD_Pt-470to600.root","../DPAnalysis/test/v24/QCD_Pt-600to800.root","../DPAnalysis/test/v24/QCD_Pt-800to1000.root","../DPAnalysis/test/v24/QCD_Pt-1000to1400.root","../DPAnalysis/test/v24/G_Pt-50to80.root","../DPAnalysis/test/v24/G_Pt-80to120.root","../DPAnalysis/test/v24/G_Pt-120to170.root","../DPAnalysis/test/v24/G_Pt-170to300.root","../DPAnalysis/test/v24/G_Pt-300to470.root","../DPAnalysis/test/v24/G_Pt-470to800.root"]
+    listdata = ["../DPAnalysis/test/v24/Run2012A.root","../DPAnalysis/test/v24/Run2012B.root","../DPAnalysis/test/v24/Run2012C_1.root","../DPAnalysis/test/v24/Run2012C_2.root","../DPAnalysis/test/v24/Run2012C_3.root","../DPAnalysis/test/v24/Run2012D_1.root","../DPAnalysis/test/v24/Run2012D_2.root","../DPAnalysis/test/v24/Run2012D_3.root"]
+    listMC = ["../DPAnalysis/test/v24/TTJets.root","../DPAnalysis/test/v24/QCD_Pt-80to120.root","../DPAnalysis/test/v24/QCD_Pt-120to170.root","../DPAnalysis/test/v24/QCD_Pt-170to300.root","../DPAnalysis/test/v24/QCD_Pt-470to600.root","../DPAnalysis/test/v24/QCD_Pt-600to800.root","../DPAnalysis/test/v24/QCD_Pt-800to1000.root","../DPAnalysis/test/v24/QCD_Pt-1000to1400.root","../DPAnalysis/test/v24/G_Pt-50to80.root","../DPAnalysis/test/v24/G_Pt-80to120.root","../DPAnalysis/test/v24/G_Pt-120to170.root","../DPAnalysis/test/v24/G_Pt-170to300.root","../DPAnalysis/test/v24/G_Pt-300to470.root","../DPAnalysis/test/v24/G_Pt-470to800.root"]
     
     vecfiles = []
     for item in listdata:
         temp = TFile.Open(item)
         vecfiles.append(temp)
 
-    convr = TH1D("ConvR","",50,0,100)
+    vecfilesMC = []
+    for item in listMC:
+        temp = TFile.Open(item)
+        vecfilesMC.append(temp)
 
-    convr.Sumw2()
+    convrdata = TH1D("ConvRdata","",50,0,100)
+    convrMC = TH1D("ConvRMC","",50,0,100)
 
-    convr = loop(vecfiles, convr, phot)
+    convrdata.Sumw2()
+    convrMC.Sumw2()
+
+    convrdata = loop(vecfiles, convrdata)
+    convrMC = loop(vecfilesMC,convrMC)
+
+    convrMC.Scale(convrdata.Integral()/convrMC.Integral())
+
+    output = TFile.Open("convRbkgMCstep1.root","recreate")
+
+    convrdata.Write()
+    convrMC.Write()
     
-    return convr
+    output.Close()
+
+    return [convrdata,convrMC]
 
 def main():
 
-    data = function(0)
-    
+    ding = function()
+    data = ding[0]
+    MC = ding[1]
+
     data.SetMarkerColor(1)
     data.SetLineColor(1)
     data.SetMarkerStyle(8)
+    MC.SetMarkerColor(2)
+    MC.SetLineColor(2)
+    MC.SetMarkerStyle(8)
     
-    leg1 = TLegend(0.55,0.75,0.94,0.89)
-    leg1.SetFillColor(kWhite)
-    leg1.SetTextSize(0.038)
-    leg1.SetTextFont(42)
-    leg1.SetBorderSize(0)
+    
+    leg = TLegend(0.55,0.75,0.94,0.89)
+    leg.SetFillColor(kWhite)
+    leg.SetTextSize(0.038)
+    leg.SetTextFont(42)
+    leg.SetBorderSize(0)
 
-    leg1.AddEntry(data, "data","")
-
+    leg.AddEntry(data, "Data","p")
+    leg.AddEntry(MC, "MC background", "p")
 
     data.GetYaxis().SetRangeUser(0.,800)
     data.GetYaxis().SetTitleSize(0.05)
@@ -115,25 +139,26 @@ def main():
     canvas1.SetTicky(0)
     #canvas1.SetLogy()
 
-    n = data.GetNbinsX()
+    n = MC.GetNbinsX()
     x = array('d',[])
     y = array('d',[])
     ex = array('d',[])
     ey = array('d',[])
 
     for km in range(n):
-        x.append(float(data.GetBinCenter(km+1)))
-        y.append(float(data.GetBinContent(km+1)))
-        ex.append(float(data.GetBinWidth(km+1)/2))
-        ey.append(float(data.GetBinError(km+1)))
+        x.append(float(MC.GetBinCenter(km+1)))
+        y.append(float(MC.GetBinContent(km+1)))
+        ex.append(float(MC.GetBinWidth(km+1)/2))
+        ey.append(float(MC.GetBinError(km+1)))
 
     errhist = TGraphErrors(n,x,y,ex,ey)
-    errhist.SetFillColor(1)
+    errhist.SetFillColor(2)
     errhist.SetLineWidth(3)
     errhist.SetFillStyle(3005)
 
-    data.Draw("HIST")
-    leg1.Draw("same")
+    data.Draw("PE")
+    MC.Draw("HISTsame")
+    leg.Draw("same")
     errhist.Draw("2 sames")
 
     CMS_lumi.extraText = ""

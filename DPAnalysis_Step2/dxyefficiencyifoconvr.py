@@ -28,10 +28,10 @@ def loop(vec, convr, phot):
                 continue
             if (event.sigmaIetaPhot[0] < 0.006 or event.sigmaIetaPhot[0] > 0.012):
                 continue
-            if (event.sMajPhot[0] > 1.35):
-                continue
-            #for ding in event.ptPhot:
-            #    nPhot = nPhot + 1
+            #if (event.sMajPhot[0] > 1.35):
+            #    continue
+            for ding in event.ptPhot:
+                nPhot = nPhot + 1
             if (len(event.dxyConv) < 1):
                 continue 
             if (event.conversionR[0] < convr or event.conversionR[0] > (convr+10)):

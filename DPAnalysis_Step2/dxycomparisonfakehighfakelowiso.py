@@ -26,24 +26,31 @@ def loop(vec,vechisto,flag):
                 continue
             if (event.sMinPhot[0] < 0.15 or event.sMinPhot[0] > 0.3):
                 continue
-            if (event.ptJet[0] < 35):
+            if (event.ptJet[0] < 30): #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 continue
             if (event.sigmaIetaPhot[0] < 0.006 or event.sigmaIetaPhot[0] > 0.012):
                 continue
-
-            if (flag == 1 and len(dxytemp) > 0 and dxytemp[-1] > 1.5 and dxytemp[-1] < 3.):
-                print dxytemp[-1]
-                print event.ptPhot[0]
-            #if (event.ptPhot[0] < 85):
-            #    continue
+            if (event.ptPhot[0] < 85):
+                continue
             #if (event.sMajPhot[0] > 1.35):
             #    continue
 
+            #fakehigh
             if(flag == 0):
-                lum = 19700.
+                if(event.MET < 60):
+                    continue
+                if (event.ptJet[0] < 35): #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    continue
                 if(len(dxytemp) > 0):
-                    vechisto.Fill( dxytemp[-1], (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors))
-            else:
+                    vechisto.Fill( dxytemp[-1], 1./event.EfficiencyScaleFactors )
+            #fakelow
+            if(flag == 1):
+                if(len(dxytemp) > 0):
+                    vechisto.Fill( dxytemp[-1], 1./event.EfficiencyScaleFactors )
+            #isolow
+            if(flag == 2):
+                if (event.ptJet[0] < 35): #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    continue
                 if(len(dxytemp) > 0):
                     vechisto.Fill( dxytemp[-1], 1./event.EfficiencyScaleFactors )
 
@@ -51,9 +58,9 @@ def loop(vec,vechisto,flag):
 
 
 def function():
-    listhigh = ["./v24/Run2012Afakehigh.root","./v24/Run2012Bfakehigh.root","./v24/Run2012C_1fakehigh.root","./v24/Run2012C_2fakehigh.root","./v24/Run2012C_3fakehigh.root","./v24/Run2012D_1fakehigh.root","./v24/Run2012D_2fakehigh.root","./v24/Run2012D_3fakehigh.root"]
-    listlow = ["./v24/Run2012Afakelow.root","./v24/Run2012Bfakelow.root","./v24/Run2012C_1fakelow.root","./v24/Run2012C_2fakelow.root","./v24/Run2012C_3fakelow.root","./v24/Run2012D_1fakelow.root","./v24/Run2012D_2fakelow.root","./v24/Run2012D_3fakelow.root"]
-    listiso = ["./v24/Run2012Aisolow.root","./v24/Run2012Bisolow.root","./v24/Run2012C_1isolow.root","./v24/Run2012C_2isolow.root","./v24/Run2012C_3isolow.root","./v24/Run2012D_1isolow.root","./v24/Run2012D_2isolow.root","./v24/Run2012D_3isolow.root"]
+    listhigh = ["./v24new/Run2012Afakehigh.root","./v24new/Run2012Bfakehigh.root","./v24new/Run2012C_1fakehigh.root","./v24new/Run2012C_2fakehigh.root","./v24new/Run2012C_3fakehigh.root","./v24new/Run2012D_1fakehigh.root","./v24new/Run2012D_2fakehigh.root","./v24new/Run2012D_3fakehigh.root"]
+    listlow = ["./v24new/Run2012Afakelow.root","./v24new/Run2012Bfakelow.root","./v24new/Run2012C_1fakelow.root","./v24new/Run2012C_2fakelow.root","./v24new/Run2012C_3fakelow.root","./v24new/Run2012D_1fakelow.root","./v24new/Run2012D_2fakelow.root","./v24new/Run2012D_3fakelow.root"]
+    listiso = ["./v24new/Run2012Aisolow.root","./v24new/Run2012Bisolow.root","./v24new/Run2012C_1isolow.root","./v24new/Run2012C_2isolow.root","./v24new/Run2012C_3isolow.root","./v24new/Run2012D_1isolow.root","./v24new/Run2012D_2isolow.root","./v24new/Run2012D_3isolow.root"]
 
     vecfileshigh = []
     for item in listhigh:
@@ -72,6 +79,8 @@ def function():
     xbins = array('d',[0., 0.2, 1.5, 3., 6.])
     #xbins = array('d',[0., 0.2, 1.5, 6.])
 
+    #xbins = array('d',[0.,0.1,0.2,0.3,0.4, 0.5, 1., 1.5, 2.,3.,3.5,4,4.5,5,5.5,6,6.5,7,7.5,8,8.5,9,9.5,10,10.5,11])
+
     nxbins = len(xbins) - 1
 
 
@@ -83,9 +92,9 @@ def function():
     #dxylow = TH1D("dXYlow","",25,0,2.5)
     #dxyiso = TH1D("dXYiso","",25,0,2.5)
 
-    dxyhigh = loop(vecfileshigh,dxyhigh,1)
+    dxyhigh = loop(vecfileshigh,dxyhigh,0)
     dxylow = loop(vecfileslow,dxylow,1)
-    dxyiso = loop(vecfilesiso,dxyiso,1)
+    dxyiso = loop(vecfilesiso,dxyiso,2)
     
     dxyhigh.SetBinContent(dxyhigh.GetNbinsX(),(dxyhigh.GetBinContent(dxyhigh.GetNbinsX())+dxyhigh.GetBinContent(dxyhigh.GetNbinsX()+1)))
     dxylow.SetBinContent(dxylow.GetNbinsX(),(dxylow.GetBinContent(dxylow.GetNbinsX())+dxylow.GetBinContent(dxylow.GetNbinsX()+1)))

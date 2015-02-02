@@ -33,8 +33,9 @@ def loop(vec, vechisto, flag, phot):
             #if (event.sMajPhot[0] > 1.35):
             #    continue
                 
+            #ttjets bkg and signal
             if(flag == 0):
-                if (event.MET < 160):
+                if (event.MET < 60):
                     continue
                 lum = 19700.
                 vechisto[0].Fill( event.ptPhot[0], (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors) )
@@ -61,8 +62,9 @@ def loop(vec, vechisto, flag, phot):
                 vechisto[16].Fill( event.phohovere[0], (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors))
                 vechisto[17].Fill( event.Rsqrd, (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors))
                 
+            #data
             if (flag == 1):
-                if (event.MET < 160):
+                if (event.MET < 60):
                     continue
                 vechisto[0].Fill( event.ptPhot[0], 1./event.EfficiencyScaleFactors )
                 if (event.ptPhot.size() > phot):
@@ -99,7 +101,8 @@ def loop(vec, vechisto, flag, phot):
                 vechisto[15].Fill( event.photiso[0], 1./(event.EfficiencyScaleFactors))
                 vechisto[16].Fill( event.phohovere[0], 1./(event.EfficiencyScaleFactors))
                 vechisto[17].Fill( event.Rsqrd, 1./(event.EfficiencyScaleFactors))
-                    
+                
+            #DD bkg
             if (flag == 2):
                 #if (event.MET > 20):
                 #    continue
@@ -172,8 +175,8 @@ def function (lamb,ctau1,ctau2,phot):
 
     ptpholeadttjet = TH1D("PtPhotonleadingTTJet","",24,0,500)
     ptphosubleadttjet = TH1D("PtPhotonsubleadingTTJet","",12,0,500)
-    ptjetleadttjet = TH1D("PtJetleadingTTJet","",12,0,500)
-    ptjetsubleadttjet = TH1D("PtJetsubleadingTTJet","",12,0,500)
+    ptjetleadttjet = TH1D("PtJetleadingTTJet","",30,0,525)
+    ptjetsubleadttjet = TH1D("PtJetsubleadingTTJet","",30,0,525)
     dxyttjet = TH1D("DxyTTJet","",nxbins,xbins)
     #dxyttjet = TH1D("DxyTTJet","",100,0,2)
     metttjet = TH1D("METTTJet","",50,0,1000)
@@ -199,8 +202,8 @@ def function (lamb,ctau1,ctau2,phot):
 
     ptpholeadsig1 = TH1D("PtPhotonleadingSignal1","",24,0,500)
     ptphosubleadsig1 = TH1D("PtPhotonsubleadingSignal1","",12,0,500)
-    ptjetleadsig1 = TH1D("PtJetleadingSignal1","",12,0,500)
-    ptjetsubleadsig1 = TH1D("PtJetsubleadingSignal1","",12,0,500)
+    ptjetleadsig1 = TH1D("PtJetleadingSignal1","",30,0,525)
+    ptjetsubleadsig1 = TH1D("PtJetsubleadingSignal1","",30,0,525)
     dxysig1 = TH1D("DxySignal1","",nxbins,xbins)
     #dxysig1 = TH1D("DxySignal1","",100,0,2)
     metsig1 = TH1D("METSignal1","",50,0,1000)
@@ -225,8 +228,8 @@ def function (lamb,ctau1,ctau2,phot):
 
     ptpholeadsig2 = TH1D("PtPhotonleadingSignal2","",24,0,500)
     ptphosubleadsig2 = TH1D("PtPhotonsubleadingSignal2","",12,0,500)
-    ptjetleadsig2 = TH1D("PtJetleadingSignal2","",12,0,500)
-    ptjetsubleadsig2 = TH1D("PtJetsubleadingSignal2","",12,0,500)
+    ptjetleadsig2 = TH1D("PtJetleadingSignal2","",30,0,525)
+    ptjetsubleadsig2 = TH1D("PtJetsubleadingSignal2","",30,0,525)
     dxysig2 = TH1D("DxySignal2","",nxbins,xbins)
     #dxysig2 = TH1D("DxySignal2","",100,0,2)
     metsig2 = TH1D("METSignal2","",50,0,1000)
@@ -252,8 +255,8 @@ def function (lamb,ctau1,ctau2,phot):
 
     ptpholead = TH1D("PtPhotonleading","",24,0,500)
     ptphosublead = TH1D("PtPhotonsubleading","",12,0,500)
-    ptjetlead = TH1D("PtJetleading","",12,0,500)
-    ptjetsublead = TH1D("PtJetsubleading","",12,0,500)
+    ptjetlead = TH1D("PtJetleading","",30,0,525)
+    ptjetsublead = TH1D("PtJetsubleading","",30,0,525)
     dxy = TH1D("Dxy","",nxbins,xbins)
     #dxy = TH1D("Dxy","",100,0,2)
     met = TH1D("MET","",50,0,1000)
@@ -279,8 +282,8 @@ def function (lamb,ctau1,ctau2,phot):
 
     ptpholeadisolow = TH1D("PtPhotonleadingisolow","",24,0,500)
     ptphosubleadisolow = TH1D("PtPhotonsubleadingisolow","",12,0,500)
-    ptjetleadisolow = TH1D("PtJetleadingisolow","",12,0,500)
-    ptjetsubleadisolow = TH1D("PtJetsubleadingisolow","",12,0,500)
+    ptjetleadisolow = TH1D("PtJetleadingisolow","",30,0,525)
+    ptjetsubleadisolow = TH1D("PtJetsubleadingisolow","",30,0,525)
     dxyisolow = TH1D("Dxyisolow","",nxbins,xbins)
     #dxyisolow = TH1D("Dxyisolow","",100,0,2)
     metisolow = TH1D("METisolow","",50,0,1000)
@@ -339,16 +342,16 @@ def function (lamb,ctau1,ctau2,phot):
         ratio = 1.
     vechisisolow[4].Scale(ratio)
   
-    """ 
-    vechis[4].SetBinContent(3,0.)
-    vechis[4].SetBinContent(2,0.)
-    vechissig[4].SetBinContent(1,0.)
-    vechissig[4].SetBinContent(2,0.)
-    vechisttjet[4].SetBinContent(1,0.)
-    vechisttjet[4].SetBinContent(2,0.)
-    vechisisolow[4].SetBinContent(1,0.)
-    vechisisolow[4].SetBinContent(2,0.)
-    """
+    for i in range(nxbins):
+        if (i != 0):
+            vechis[4].SetBinContent(i+1,0)
+
+    totalbkg = vechisttjet[4].Clone()
+    totalbkg.Add(vechisisolow[4])
+
+    ratio = vechis[4].Clone()
+    ratio.SetName("Ratio")
+    ratio.Divide(totalbkg)
 
     output = TFile.Open("./ctau"+ctau1+"andctau"+ctau2+"lambda"+lamb+"/output"+str(phot)+".root","recreate")
 
@@ -362,6 +365,7 @@ def function (lamb,ctau1,ctau2,phot):
         it.Write()
     for it in vechisisolow:
         it.Write()
+    ratio.Write()
 
     output.Close()
 

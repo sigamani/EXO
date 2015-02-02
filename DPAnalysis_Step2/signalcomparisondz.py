@@ -19,7 +19,7 @@ def loop(vec,vechist):
 
 def function():
 
-    files = ["./v22/GMSB_L180-CTAU10.root","./v22/GMSB_L180-CTAU50.root","./v22/GMSB_L180-CTAU250.root","./v22/GMSB_L180-CTAU500.root"]
+    files = ["./v24/GMSB_L180-CTAU10.root","./v24/GMSB_L180-CTAU50.root","./v24/GMSB_L180-CTAU250.root","./v24/GMSB_L180-CTAU500.root"]
     vecfiles = []
     
     for item in files:
