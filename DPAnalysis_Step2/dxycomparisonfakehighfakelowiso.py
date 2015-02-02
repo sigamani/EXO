@@ -58,9 +58,9 @@ def loop(vec,vechisto,flag):
 
 
 def function():
-    listhigh = ["./v24new/Run2012Afakehigh.root","./v24new/Run2012Bfakehigh.root","./v24new/Run2012C_1fakehigh.root","./v24new/Run2012C_2fakehigh.root","./v24new/Run2012C_3fakehigh.root","./v24new/Run2012D_1fakehigh.root","./v24new/Run2012D_2fakehigh.root","./v24new/Run2012D_3fakehigh.root"]
-    listlow = ["./v24new/Run2012Afakelow.root","./v24new/Run2012Bfakelow.root","./v24new/Run2012C_1fakelow.root","./v24new/Run2012C_2fakelow.root","./v24new/Run2012C_3fakelow.root","./v24new/Run2012D_1fakelow.root","./v24new/Run2012D_2fakelow.root","./v24new/Run2012D_3fakelow.root"]
-    listiso = ["./v24new/Run2012Aisolow.root","./v24new/Run2012Bisolow.root","./v24new/Run2012C_1isolow.root","./v24new/Run2012C_2isolow.root","./v24new/Run2012C_3isolow.root","./v24new/Run2012D_1isolow.root","./v24new/Run2012D_2isolow.root","./v24new/Run2012D_3isolow.root"]
+    listhigh = ["./v24/Run2012Afakehigh.root","./v24/Run2012Bfakehigh.root","./v24/Run2012C_1fakehigh.root","./v24/Run2012C_2fakehigh.root","./v24/Run2012C_3fakehigh.root","./v24/Run2012D_1fakehigh.root","./v24/Run2012D_2fakehigh.root","./v24/Run2012D_3fakehigh.root"]
+    listlow = ["./v24/Run2012Afakelow.root","./v24/Run2012Bfakelow.root","./v24/Run2012C_1fakelow.root","./v24/Run2012C_2fakelow.root","./v24/Run2012C_3fakelow.root","./v24/Run2012D_1fakelow.root","./v24/Run2012D_2fakelow.root","./v24/Run2012D_3fakelow.root"]
+    listiso = ["./v24/Run2012Aisolow.root","./v24/Run2012Bisolow.root","./v24/Run2012C_1isolow.root","./v24/Run2012C_2isolow.root","./v24/Run2012C_3isolow.root","./v24/Run2012D_1isolow.root","./v24/Run2012D_2isolow.root","./v24/Run2012D_3isolow.root"]
 
     vecfileshigh = []
     for item in listhigh:
@@ -132,6 +132,57 @@ def plot(dxy):
     dxy[0].SetLineColor(kBlack)
     dxy[1].SetLineColor(kRed)
     dxy[2].SetFillColor(kOrange)
+
+    n = dxy[0].GetNbinsX()
+    x0 = array('d',[])
+    y0 = array('d',[])
+    ex0 = array('d',[])
+    ey0 = array('d',[])
+
+    x1 = array('d',[])
+    y1 = array('d',[])
+    ex1 = array('d',[])
+    ey1 = array('d',[])
+
+    x2 = array('d',[])
+    y2 = array('d',[])
+    ex2 = array('d',[])
+    ey2 = array('d',[])
+
+    for km in range(n):
+        conte0 = sqrt(dxy[0].GetBinContent(km+1))
+        conte1 = sqrt(dxy[1].GetBinContent(km+1))
+        conte2 = sqrt(dxy[2].GetBinContent(km+1))
+
+        x0.append(float(dxy[0].GetBinCenter(km+1)))
+        y0.append(float(dxy[0].GetBinContent(km+1)))
+        ex0.append(float(dxy[0].GetBinWidth(km+1)/2))
+        ey0.append(float(conte0))
+
+        x1.append(float(dxy[1].GetBinCenter(km+1)))
+        y1.append(float(dxy[1].GetBinContent(km+1)))
+        ex1.append(float(dxy[1].GetBinWidth(km+1)/2))
+        ey1.append(float(conte1))
+        
+        x2.append(float(dxy[2].GetBinCenter(km+1)))
+        y2.append(float(dxy[2].GetBinContent(km+1)))
+        ex2.append(float(dxy[2].GetBinWidth(km+1)/2))
+        ey2.append(float(conte2))
+
+    errhist0 = TGraphErrors(n,x0,y0,ex0,ey0)
+    errhist0.SetFillColor(kBlack)
+    errhist0.SetLineWidth(3)
+    errhist0.SetFillStyle(3005)
+
+    errhist1 = TGraphErrors(n,x1,y1,ex1,ey1)
+    errhist1.SetFillColor(kRed)
+    errhist1.SetLineWidth(3)
+    errhist1.SetFillStyle(3005)
+
+    errhist2 = TGraphErrors(n,x2,y2,ex2,ey2)
+    errhist2.SetFillColor(kOrange)
+    errhist2.SetLineWidth(3)
+    errhist2.SetFillStyle(3005)
     
     leg = TLegend(0.65,0.75,0.89,0.89)
     leg.SetFillColor(kWhite)
@@ -168,7 +219,8 @@ def plot(dxy):
     #
     # Simple example of macro: plot with CMS name and lumi text
     #  (this script does not pretend to work in all configurations)
-    # iPeriod = 1*(0/1 7 TeV) + 2*(0/1 8 TeV)  + 4*(0/1 13 TeV)                                                                                                                                                                                
+    # iPeriod = 1*(0/1 7 TeV) + 2*(0/1 8 TeV)  + 4*(0/1 13 TeV)
+ 
     # For instance:
     #               iPeriod = 3 means: 7 TeV + 8 TeV
     #               iPeriod = 7 means: 7 TeV + 8 TeV + 13 TeV
@@ -198,7 +250,9 @@ def plot(dxy):
     dxy[1].Draw("HISTsame")
     dxy[0].Draw("HISTsame")
     leg.Draw("same")
-
+    errhist0.Draw("same")
+    errhist1.Draw("2 sames")
+    errhist2.Draw("2 sames")
 
     #draw the lumi text on the canvas
     CMS_lumi.CMS_lumi(canvas, 2, iPos)
