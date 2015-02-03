@@ -157,7 +157,7 @@ def main():
     CTAU10.GetYaxis().SetRangeUser(0.00001,0.1)
     CTAU10.GetYaxis().SetTitleSize(0.05)
     CTAU10.GetYaxis().SetTitleOffset(1.2)
-    CTAU10.GetYaxis().SetTitle("Efficiency")
+    CTAU10.GetYaxis().SetTitle("Ratio")
     CTAU10.GetXaxis().SetTitle("Conversion d_{XY} (cm)")
     CTAU10.GetXaxis().SetTitleSize(0.05)
     CTAU10.GetXaxis().SetTitleOffset(1.)

@@ -24,12 +24,12 @@ void rootlogon();
 TString savedir = "./img_fit/";
 TString extra = "";
 
-TFile* file_CT10L160 = new TFile(("./exclusionfiles/higgsCombineL160CTau10shapedata"+extra+".Asymptotic.mH120.root"), "READ");
-//TFile* file_CT50L160 = new TFile(("./exclusionfiles/higgsCombineL160CTau50shapedata"+extra+".Asymptotic.mH120.root"), "READ");
-TFile* file_CT100L160 = new TFile(("./exclusionfiles/higgsCombineL160CTau100shapedata"+extra+".Asymptotic.mH120.root"), "READ");
-TFile* file_CT500L160 = new TFile(("./exclusionfiles/higgsCombineL160CTau500shapedata"+extra+".Asymptotic.mH120.root"), "READ");
-TFile* file_CT1000L160 = new TFile(("./exclusionfiles/higgsCombineL160CTau1000shapedata"+extra+".Asymptotic.mH120.root"), "READ");
-TFile* file_CT2000L160 = new TFile(("./exclusionfiles/higgsCombineL160CTau2000shapedata"+extra+".Asymptotic.mH120.root"), "READ");
+TFile* file_CT10L140 = new TFile(("./exclusionfiles/higgsCombineL140CTau10shapedata"+extra+".Asymptotic.mH120.root"), "READ");
+//TFile* file_CT50L140 = new TFile(("./exclusionfiles/higgsCombineL140CTau50shapedata"+extra+".Asymptotic.mH120.root"), "READ");
+TFile* file_CT100L140 = new TFile(("./exclusionfiles/higgsCombineL140CTau100shapedata"+extra+".Asymptotic.mH120.root"), "READ");
+TFile* file_CT500L140 = new TFile(("./exclusionfiles/higgsCombineL140CTau500shapedata"+extra+".Asymptotic.mH120.root"), "READ");
+TFile* file_CT1000L140 = new TFile(("./exclusionfiles/higgsCombineL140CTau1000shapedata"+extra+".Asymptotic.mH120.root"), "READ");
+TFile* file_CT2000L140 = new TFile(("./exclusionfiles/higgsCombineL140CTau2000shapedata"+extra+".Asymptotic.mH120.root"), "READ");
 
 void plot_limit_mass(std::string LAMBDA){
 
@@ -37,14 +37,14 @@ void plot_limit_mass(std::string LAMBDA){
   
   double xsec;
 
-  if ( LAMBDA=="160" ) {
-    xsec = 0.0277;
-    TTree * CT10 = (TTree*)file_CT10L160->Get("limit");
-    //TTree * CT50 = (TTree*)file_CT50L160->Get("limit");
-    TTree * CT100 = (TTree*)file_CT100L160->Get("limit");
-    TTree * CT500 = (TTree*)file_CT500L160->Get("limit");
-    TTree * CT1000 = (TTree*)file_CT1000L160->Get("limit");
-    TTree * CT2000 = (TTree*)file_CT2000L160->Get("limit");
+  if ( LAMBDA=="140" ) {
+    xsec = 0.0574;
+    TTree * CT10 = (TTree*)file_CT10L140->Get("limit");
+    //TTree * CT50 = (TTree*)file_CT50L140->Get("limit");
+    TTree * CT100 = (TTree*)file_CT100L140->Get("limit");
+    TTree * CT500 = (TTree*)file_CT500L140->Get("limit");
+    TTree * CT1000 = (TTree*)file_CT1000L140->Get("limit");
+    TTree * CT2000 = (TTree*)file_CT2000L140->Get("limit");
   }
 
   Double_t obs_lim[5]= {0.};
@@ -249,13 +249,13 @@ void plot_limit_mass(std::string LAMBDA){
   TMultiGraph* mg = new TMultiGraph;
  
   mg->Add(exp_lim_graph);
-  mg->Add(ul_lim_graph);
+  //mg->Add(ul_lim_graph);
 
 
   TCanvas* c0 = new TCanvas("exclusion limit", "exclusion limit", 1);
   c0->cd();
   c0->SetLogy();
-  c0->SetLogx();
+  //c0->SetLogx();
   c0->Range(83.19049,-3.60972,185.6367,1.040413);
   c0->SetFillColor(0);
   c0->SetBorderMode(0);
@@ -274,7 +274,7 @@ void plot_limit_mass(std::string LAMBDA){
   exp_lim_graph->Draw("LA");
   Twosig_graph->Draw("Fsame");
   Onesig_graph->Draw("Fsame");
-  ul_lim_graph->Draw("Lsame");
+  //ul_lim_graph->Draw("Lsame");
   exp_lim_graph->Draw("Lsame");
 
   exp_lim_graph->GetXaxis()->SetTitle("c#tau_{#tilde{#chi^{0}_{1}}} (cm)");
@@ -286,11 +286,11 @@ void plot_limit_mass(std::string LAMBDA){
   exp_lim_graph->GetYaxis()->SetTitleSize(0.048);
   exp_lim_graph->GetYaxis()->SetTitleOffset(1.6);
 
-  ul_lim_graph->Draw("same");
+  //ul_lim_graph->Draw("same");
 
   // integrated luminosity
   std::string s_lumi;
-  s_lumi = "19.3";
+  s_lumi = "19.7";
   std::string lint = "#intL = "+s_lumi+" fb^{-1}";
   TLatex l1;
   l1.SetTextAlign(12);
@@ -317,20 +317,21 @@ void plot_limit_mass(std::string LAMBDA){
 
   TString massLeg;
 
-  if ( LAMBDA=="160" ) { massLeg = "#Lambda = 160: M_{#tilde{#chi}^{0}_{1}} =  227.6 GeV/c^{2}";}
+  if ( LAMBDA=="140" ) { massLeg = "#Lambda = 140: M_{#tilde{#chi}^{0}_{1}} =  198 GeV/c^{2}";}
   if ( LAMBDA=="180" ) { massLeg = "#Lambda = 180: M_{#tilde{#chi}^{0}_{1}} =  256.8 GeV/c^{2}";}
  
   leg->SetHeader(massLeg);
   leg->SetTextFont(22);
   leg->AddEntry(xsTh_vs_m,"Theoretical LO cross-section","L");
-  leg->AddEntry(ul_lim_graph, "Observed  95% CL upper limit", "L");
+  //leg->AddEntry(ul_lim_graph, "Observed  95% CL upper limit", "L");
   leg->AddEntry(exp_lim_graph, "Expected 95% CL upper limit", "L");
   leg->AddEntry(Onesig_graph, "#pm 1 #sigma Expected", "F");
   leg->AddEntry(Twosig_graph, "#pm 2 #sigma Expected", "F");
   leg->Draw("same");
 
-  c0->SaveAs("exclusion_limit_L160"+extra+".pdf");
-
+  c0->SaveAs("exclusion_limit_L140"+extra+".pdf");
+  c0->SaveAs("exclusion_limit_L140"+extra+".png");
+  
 }
 
 void rootlogon() {

@@ -194,18 +194,18 @@ def function (lamb,ctau,phot):
 
 
 def main():
-    function("140","10",2)
-    function("140","100",2)
-    function("140","500",2)
-    function("140","1000",2)
-    function("140","2000",2)
+    # function("140","10",2)
+    # function("140","100",2)
+    # function("140","500",2)
+    # function("140","1000",2)
+    # function("140","2000",2)
 
-    function("160","10",2)
-    #function("160","50",2)
-    function("160","100",2)
-    function("160","500",2)
-    function("160","1000",2)
-    function("160","2000",2)
+    # function("160","10",2)
+    # #function("160","50",2)
+    # function("160","100",2)
+    # function("160","500",2)
+    # function("160","1000",2)
+    # function("160","2000",2)
 
     function("180","10",2)
     function("180","50",2)

@@ -127,11 +127,17 @@ def function():
 
 def plot(dxy):
     dxy[2].SetFillStyle(3001)
+    dxy[0].SetMarkerStyle(22)
+    dxy[1].SetMarkerStyle(21)
+    dxy[0].SetMarkerSize(1.5)
+    dxy[1].SetMarkerSize(1.5)
     dxy[0].SetLineWidth(2)
     dxy[1].SetLineWidth(2)
     dxy[0].SetLineColor(kBlack)
     dxy[1].SetLineColor(kRed)
     dxy[2].SetFillColor(kOrange)
+
+    print dxy[2].Integral()
 
     n = dxy[0].GetNbinsX()
     x0 = array('d',[])
@@ -180,7 +186,7 @@ def plot(dxy):
     errhist1.SetFillStyle(3005)
 
     errhist2 = TGraphErrors(n,x2,y2,ex2,ey2)
-    errhist2.SetFillColor(kOrange)
+    errhist2.SetFillColor(kBlack)
     errhist2.SetLineWidth(3)
     errhist2.SetFillStyle(3005)
     
@@ -244,14 +250,14 @@ def plot(dxy):
     canvas.SetTicky(0)
     canvas.SetLogy()
 
-    dxy[1].Draw("HIST")
-    dxy[0].Draw("HISTsame")
-    dxy[2].Draw("HISTsame")
-    dxy[1].Draw("HISTsame")
-    dxy[0].Draw("HISTsame")
+    dxy[1].Draw("eHIST")
+    dxy[0].Draw("eHISTsame")
+    dxy[2].Draw("eHISTsame")
+    dxy[1].Draw("eHISTsame")
+    dxy[0].Draw("eHISTsame")
     leg.Draw("same")
-    errhist0.Draw("same")
-    errhist1.Draw("2 sames")
+    #errhist0.Draw("2 sames")
+    #errhist1.Draw("2 sames")
     errhist2.Draw("2 sames")
 
     #draw the lumi text on the canvas

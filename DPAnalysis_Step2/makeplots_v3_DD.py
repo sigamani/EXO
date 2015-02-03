@@ -330,6 +330,8 @@ def function (lamb,ctau1,ctau2,phot):
         else:
             ratio = 1.
         vechisisolow[i].Scale(ratio)
+
+    print vechis[6].Integral(),vechisisolow[6].Integral(),vechisttjet[6].Integral()
       
     datatotal = vechis[4].GetBinContent(1)
     ttjettotal = vechisttjet[4].GetBinContent(1)
