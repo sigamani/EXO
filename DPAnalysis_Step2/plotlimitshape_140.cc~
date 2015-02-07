@@ -255,7 +255,7 @@ void plot_limit_mass(std::string LAMBDA){
   TCanvas* c0 = new TCanvas("exclusion limit", "exclusion limit", 1);
   c0->cd();
   c0->SetLogy();
-  //c0->SetLogx();
+  c0->SetLogx();
   c0->Range(83.19049,-3.60972,185.6367,1.040413);
   c0->SetFillColor(0);
   c0->SetBorderMode(0);

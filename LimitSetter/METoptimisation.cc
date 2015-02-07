@@ -22,7 +22,7 @@ using namespace std;
 
 
 
-void plot_limit_mass(){
+void plot_limit_mass(std::string LAMBDA){
 
   gStyle->SetCanvasColor(0);
   gStyle->SetPadColor(0);
@@ -32,18 +32,44 @@ void plot_limit_mass(){
   gStyle->SetTextFont(42);
   gStyle->SetMarkerColor(37);
 
- 
-  // L180
-  Double_t gev30[4] = {};
-  Double_t gev50[4] = {4.5,8.,8.,4.5};
-  Double_t gev60[4] = {1.,70.,70.,1.};
-  Double_t gev80[4] = {1.,70.,70.,1.};
-  Double_t gev100[4] = {1.,70.,70.,1.};
-  Double_t gev140[4] = {1.,50.,50.,1.};  
-  Double_t gev160[4] = {1.,40.,40.,1.};
-  Double_t gev170[4] = {2.,30.,30.,2.};
-  Double_t gev180[4] = {};
+  if ( LAMBDA=="180" ) {
+    // L180
+    Double_t gev30[4] = {};
+    Double_t gev50[4] = {4.5,8.,8.,4.5};
+    Double_t gev60[4] = {1.,70.,70.,1.};
+    Double_t gev80[4] = {1.,70.,70.,1.};
+    Double_t gev100[4] = {1.,70.,70.,1.};
+    Double_t gev140[4] = {1.,50.,50.,1.};  
+    Double_t gev160[4] = {1.,40.,40.,1.};
+    Double_t gev170[4] = {2.,30.,30.,2.};
+    Double_t gev180[4] = {};
+  }
 
+  if ( LAMBDA=="160" ) {
+    // L160
+    Double_t gev30[4] = {};
+    Double_t gev50[4] = {1.,60.,60.,1.};
+    Double_t gev60[4] = {1.,105.,105.,1.};
+    Double_t gev80[4] = {1.,100.,100.,1.};
+    Double_t gev100[4] = {1.,100.,100.,1.};
+    Double_t gev140[4] = {1.,75.,75.,1.};
+    Double_t gev160[4] = {1.,65.,65.,1.};
+    Double_t gev170[4] = {1.,55.,55.,1.};
+    Double_t gev180[4] = {};
+  }
+
+  if ( LAMBDA=="140" ) {
+    // L140 
+    Double_t gev30[4] = {};
+    Double_t gev50[4] = {1.,100.,100.,1.};
+    Double_t gev60[4] = {1.,180.,180.,1.};
+    Double_t gev80[4] = {1.,170.,170.,1.};
+    Double_t gev100[4] = {1.,170.,170.,1.};
+    Double_t gev140[4] = {1.,110.,110.,1.};
+    Double_t gev160[4] = {1.,100.,100.,1.};
+    Double_t gev170[4] = {1.,80.,80.,1.};
+    Double_t gev180[4] = {};
+  }
 
 
   Double_t mTh[7] = {50,60,80,100,140,160,170};
@@ -73,8 +99,8 @@ void plot_limit_mass(){
                              gev100[3],
                              gev140[3],
                              gev160[3],
-			     			 gev170[3],
-			     			 gev170[2],
+			     gev170[3],
+			     gev170[2],
                              gev160[2],
                              gev140[2],
                              gev100[2],

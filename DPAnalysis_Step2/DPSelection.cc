@@ -437,7 +437,7 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
       //if ( fabs(phoP4.Eta()) > 1.47 )  photpt = false ;
       //if ( fabs(phoP4up.Eta()) > 1.47 )  photptup = false ; 
       //if ( fabs(phoP4down.Eta()) > 1.47 )  photptdown = false ;
-      //if ( phoHoverE[i] > 0.05 ) continue ; 
+      if ( phoHoverE[i] > 0.05 ) continue ; 
       //if ( sigmaIeta[i] >  0.012 ) continue ;  
       if ( phoP4.Eta() > -0.75 && phoP4.Eta() < -0.6 && phoP4.Phi() > -1. && phoP4.Phi() < -0.8 ) photpt = false ;
       if ( phoP4up.Eta() > -0.75 && phoP4up.Eta() < -0.6 && phoP4up.Phi() > -1. && phoP4up.Phi() < -0.8 ) photptup = false ;
