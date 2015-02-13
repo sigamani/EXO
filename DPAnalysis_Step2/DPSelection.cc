@@ -107,9 +107,9 @@ double weightCrossSection(const char* outname) {
   
  
   
-  if (string(outname).find("GMSB_L140") != std::string::npos) weight = 0.0574;
-  if (string(outname).find("GMSB_L160") != std::string::npos) weight = 0.0277;
-  if (string(outname).find("GMSB_L180") != std::string::npos) weight = 0.0145;
+  if (string(outname).find("GMSB_Lambda-140") != std::string::npos) weight = 0.0574;
+  if (string(outname).find("GMSB_Lambda-160") != std::string::npos) weight = 0.0277;
+  if (string(outname).find("GMSB_Lambda-180") != std::string::npos) weight = 0.0145;
 
   if (TString(outname) == "TTJets") weight = 13.43;
  
@@ -170,22 +170,22 @@ int getsumcounterzero(const char* outname){
 */
   int entries; 
 
-  if (TString(outname) == "GMSB_L140-CTAU10") entries = 50112;
-  if (TString(outname) == "GMSB_L140-CTAU50") entries = 50112 ;
-  if (TString(outname) == "GMSB_L140-CTAU100") entries = 50112 ;
-  if (TString(outname) == "GMSB_L140-CTAU500") entries = 50112;
-  if (TString(outname) == "GMSB_L140-CTAU1000") entries = 50112 ;
-  if (TString(outname) == "GMSB_L140-CTAU2000") entries = 50112 ;
-  if (TString(outname) == "GMSB_L160-CTAU10") entries = 998272 ;
-  if (TString(outname) == "GMSB_L160-CTAU50") entries = 993664 ;
-  if (TString(outname) == "GMSB_L160-CTAU100") entries = 969984 ;
-  if (TString(outname) == "GMSB_L160-CTAU500") entries = 988576 ;
-  if (TString(outname) == "GMSB_L160-CTAU1000") entries = 50112 ;
-  if (TString(outname) == "GMSB_L160-CTAU2000") entries = 50112 ;
-  if (TString(outname) == "GMSB_L180-CTAU10") entries = 993376;
-  if (TString(outname) == "GMSB_L180-CTAU50") entries = 995392 ;
-  if (TString(outname) == "GMSB_L180-CTAU250") entries = 997120 ;
-  if (TString(outname) == "GMSB_L180-CTAU500") entries = 993000;
+  if (TString(outname) == "GMSB_Lambda-140-CTau10") entries = 50112;
+  if (TString(outname) == "GMSB_Lambda-140-CTau50") entries = 50112 ;
+  if (TString(outname) == "GMSB_Lambda-140-CTau100") entries = 50112 ;
+  if (TString(outname) == "GMSB_Lambda-140-CTau500") entries = 50112;
+  if (TString(outname) == "GMSB_Lambda-140-CTau1000") entries = 50112 ;
+  if (TString(outname) == "GMSB_Lambda-140-CTau2000") entries = 50112 ;
+  if (TString(outname) == "GMSB_Lambda-160-CTau10") entries = 998272 ;
+  if (TString(outname) == "GMSB_Lambda-160-CTau50") entries = 993664 ;
+  if (TString(outname) == "GMSB_Lambda-160-CTau100") entries = 969984 ;
+  if (TString(outname) == "GMSB_Lambda-160-CTau500") entries = 988576 ;
+  if (TString(outname) == "GMSB_Lambda-160-CTau1000") entries = 50112 ;
+  if (TString(outname) == "GMSB_Lambda-160-CTau2000") entries = 50112 ;
+  if (TString(outname) == "GMSB_Lambda-180-CTau10") entries = 993376;
+  if (TString(outname) == "GMSB_Lambda-180-CTau50") entries = 995392 ;
+  if (TString(outname) == "GMSB_Lambda-180-CTau250") entries = 997120 ;
+  if (TString(outname) == "GMSB_Lambda-180-CTau500") entries = 993000;
   if (TString(outname) == "GMSB_Lambda-180_CTau-2000") entries = 50112 ;
 
   if (TString(outname) == "TTJets") entries = 3.74644e+06;
