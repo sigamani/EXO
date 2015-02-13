@@ -33,7 +33,6 @@ void plot_limit_mass(std::string LAMBDA){
   gStyle->SetMarkerColor(37);
 
   if ( LAMBDA=="180" ) {
-    // L180
     Double_t gev30[4] = {};
     Double_t gev50[4] = {4.5,8.,8.,4.5};
     Double_t gev60[4] = {1.,70.,70.,1.};
@@ -46,7 +45,6 @@ void plot_limit_mass(std::string LAMBDA){
   }
 
   if ( LAMBDA=="160" ) {
-    // L160
     Double_t gev30[4] = {};
     Double_t gev50[4] = {1.,60.,60.,1.};
     Double_t gev60[4] = {1.,105.,105.,1.};
@@ -59,7 +57,6 @@ void plot_limit_mass(std::string LAMBDA){
   }
 
   if ( LAMBDA=="140" ) {
-    // L140 
     Double_t gev30[4] = {};
     Double_t gev50[4] = {1.,100.,100.,1.};
     Double_t gev60[4] = {1.,180.,180.,1.};
@@ -77,21 +74,21 @@ void plot_limit_mass(std::string LAMBDA){
   Double_t x_pdf[15] = {50,60,80,100,140,160,170,170,160,140,100,80,60,50,50};
 
   
-  Double_t y_pdf_exp[15] = { gev50[0],
-			     gev60[0],
-			     gev80[0],
-			     gev100[0],
-			     gev140[0],
-			     gev160[0],
-			     gev170[0],
-			     gev170[1],
-			     gev160[1],
-			     gev140[1],
-			     gev100[1],
-			     gev80[1],
-			     gev60[1],
-			     gev50[1],
-			     gev50[0]};
+  Double_t y_pdf_exp[15] = { 	gev50[0],
+								gev60[0],
+								gev80[0],
+								gev100[0],
+								gev140[0],
+								gev160[0],
+								gev170[0],
+								gev170[1],
+								gev160[1],
+								gev140[1],
+								gev100[1],
+								gev80[1],
+								gev60[1],
+								gev50[1],
+								gev50[0]};
 
   Double_t y_pdf_obs[15] = { gev50[3],
                              gev60[3],
@@ -99,8 +96,8 @@ void plot_limit_mass(std::string LAMBDA){
                              gev100[3],
                              gev140[3],
                              gev160[3],
-			     gev170[3],
-			     gev170[2],
+			     			 gev170[3],
+			     			 gev170[2],
                              gev160[2],
                              gev140[2],
                              gev100[2],

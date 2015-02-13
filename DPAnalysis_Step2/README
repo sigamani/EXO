@@ -1,2 +1,2 @@
-make						[to compile]
-rm run.sh; source run0.sh ; source run.sh ; 	[to send on batch]
+make							[to compile]
+python sendOnBatch.py			[to send on batch]

@@ -28,7 +28,7 @@ using namespace std;
 using std::vector;
 using std::cout; using std::endl;
 
-//test
+
 
 vector<TLorentzVector> CombineJets_R_no_seed(vector<TLorentzVector> ,TLorentzVector, TLorentzVector);
 double CalcMTR(TLorentzVector , TLorentzVector , TVector3 );
@@ -138,7 +138,10 @@ double weightCrossSection(const char* outname) {
 
 
 
-int getsumcounterzero(TString infile){
+int getsumcounterzero(const char* outname){
+//int getsumcounterzero(TString infile){
+
+/*
 
   TString dir = "/afs/cern.ch/work/w/wvandrie/public/EXO/CMSSW_7_1_8/src/EXO/DPAnalysis/test/v24/";
   TFile f(dir+infile+".root");
@@ -163,6 +166,48 @@ int getsumcounterzero(TString infile){
 
 
   }
+
+*/
+  int entries; 
+
+  if (TString(outname) == "GMSB_L140-CTAU10") entries = 50112;
+  if (TString(outname) == "GMSB_L140-CTAU50") entries = 50112 ;
+  if (TString(outname) == "GMSB_L140-CTAU100") entries = 50112 ;
+  if (TString(outname) == "GMSB_L140-CTAU500") entries = 50112;
+  if (TString(outname) == "GMSB_L140-CTAU1000") entries = 50112 ;
+  if (TString(outname) == "GMSB_L140-CTAU2000") entries = 50112 ;
+  if (TString(outname) == "GMSB_L160-CTAU10") entries = 998272 ;
+  if (TString(outname) == "GMSB_L160-CTAU50") entries = 993664 ;
+  if (TString(outname) == "GMSB_L160-CTAU100") entries = 969984 ;
+  if (TString(outname) == "GMSB_L160-CTAU500") entries = 988576 ;
+  if (TString(outname) == "GMSB_L160-CTAU1000") entries = 50112 ;
+  if (TString(outname) == "GMSB_L160-CTAU2000") entries = 50112 ;
+  if (TString(outname) == "GMSB_L180-CTAU10") entries = 993376;
+  if (TString(outname) == "GMSB_L180-CTAU50") entries = 995392 ;
+  if (TString(outname) == "GMSB_L180-CTAU250") entries = 997120 ;
+  if (TString(outname) == "GMSB_L180-CTAU500") entries = 993000;
+  if (TString(outname) == "GMSB_Lambda-180_CTau-2000") entries = 50112 ;
+
+  if (TString(outname) == "TTJets") entries = 3.74644e+06;
+
+  if (TString(outname) == "G_Pt-50to80") entries = 1.99506e+06;
+  if (TString(outname) == "G_Pt-80to120") entries = 1.99263e+06;
+  if (TString(outname) == "G_Pt-120to170") entries = 2.00004e+06;
+  if (TString(outname) == "G_Pt-170to300") entries = 2.00007e+06;
+  if (TString(outname) == "G_Pt-300to470") entries = 1.90665e+06;
+  if (TString(outname) == "G_Pt-470to800") entries = 1.67523e+06;
+
+  if (TString(outname) == "QCD_Pt-80to120") entries = 5.89486e+06;
+  if (TString(outname) == "QCD_Pt-120to170") entries = 5.93573e+06;
+  if (TString(outname) == "QCD_Pt-170to300") entries = 5.8144e+06;
+  if (TString(outname) == "QCD_Pt-300to470") entries = 1.5535e+06;
+  if (TString(outname) == "QCD_Pt-470to600") entries = 550000;
+  if (TString(outname) == "QCD_Pt-600to800") entries = 761448;
+  if (TString(outname) == "QCD_Pt-800to1000") entries = 2.4532e+06;
+  if (TString(outname) == "QCD_Pt-1000to1400") entries = 1.96409e+06;
+
+
+
   return entries;
 }
 
@@ -183,8 +228,8 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
   TFile *fout = new TFile(line,"RECREATE");
    
   int a = getsumcounterzero(outname);
-
   double entries = (double) a;
+
 
   TH1D* h000 = new TH1D("Entries","",9,0,9);
   h000->GetXaxis()->SetBinLabel(1,"All");
@@ -294,10 +339,9 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
     if (MC == 0 && !(triggered == 1 || triggered == 3)) continue;
     if (MC == 1 && triggered != 1) continue;
 
-	 //cout << "MC: "<< MC << endl;
-	 //cout << "Triggered: "<< triggered  << endl;
 
     int entries = getsumcounterzero(outname); 
+
 
     if ( MC == 0 ) {CrossSectionWeight  = 1.;}
     else CrossSectionWeight = weightCrossSection(outname) * 1. / double(entries);   
@@ -309,8 +353,6 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
 
       puweight = pile->GetBinContent( (PU_NumInter + 1) );
       PUScaleFactors = puweight;
-       
-      //cout << "weight: "<< puweight << endl;
     }
 
 
@@ -594,19 +636,16 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
 
    
     double mindPhi = smallest(dPhi1,dPhi2,dPhi3, dPhi4);
- 
-    // Fill Tree
     minDPhi = mindPhi;
+    
 
     // R^2 calculation
     vector<TLorentzVector> HEMIS = CombineJets_R_no_seed(jets, photons[0], photons[1]);
-
     double MTR = CalcMTR(HEMIS[0], HEMIS[1], MET);
     double MRSTAR = CalcGammaMRstar(HEMIS[0], HEMIS[1]);
-
     Rsqrd = pow(MTR/MRSTAR,2); 
-    // cout << Rsqrd << endl;
     
+     
     anaTree->Fill();
 
 
