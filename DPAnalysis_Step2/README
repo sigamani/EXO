@@ -1,2 +1,2 @@
-make							        [to compile]
-python sendOnBatch.py			[to send to batch]
+make                    [to compile]
+python sendOnBatch.py   [to send to batch]
