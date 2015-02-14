@@ -23,7 +23,7 @@ executable         	= "tmp/main"
 
 for z in range(len(dataset_name)):
 
-    inputlist = "list3/"+dataset_name[z]+".list"
+    inputlist = "list2/"+dataset_name[z]+".list"
     outputdir = pwd+"/ntuples/"+dataset_name[z] 
 
     os.system("rm -r "+outputdir)
