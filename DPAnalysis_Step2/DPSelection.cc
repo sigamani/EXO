@@ -170,22 +170,22 @@ int getsumcounterzero(const char* outname){
 */
   int entries; 
 
-  if (TString(outname) == "GMSB_Lambda-140-CTau10") entries = 50112;
-  if (TString(outname) == "GMSB_Lambda-140-CTau50") entries = 50112 ;
-  if (TString(outname) == "GMSB_Lambda-140-CTau100") entries = 50112 ;
-  if (TString(outname) == "GMSB_Lambda-140-CTau500") entries = 50112;
-  if (TString(outname) == "GMSB_Lambda-140-CTau1000") entries = 50112 ;
-  if (TString(outname) == "GMSB_Lambda-140-CTau2000") entries = 50112 ;
-  if (TString(outname) == "GMSB_Lambda-160-CTau10") entries = 998272 ;
-  if (TString(outname) == "GMSB_Lambda-160-CTau50") entries = 993664 ;
-  if (TString(outname) == "GMSB_Lambda-160-CTau100") entries = 969984 ;
-  if (TString(outname) == "GMSB_Lambda-160-CTau500") entries = 988576 ;
-  if (TString(outname) == "GMSB_Lambda-160-CTau1000") entries = 50112 ;
-  if (TString(outname) == "GMSB_Lambda-160-CTau2000") entries = 50112 ;
-  if (TString(outname) == "GMSB_Lambda-180-CTau10") entries = 993376;
-  if (TString(outname) == "GMSB_Lambda-180-CTau50") entries = 995392 ;
-  if (TString(outname) == "GMSB_Lambda-180-CTau250") entries = 997120 ;
-  if (TString(outname) == "GMSB_Lambda-180-CTau500") entries = 993000;
+  if (TString(outname) == "GMSB_Lambda-140-CTau-10") entries = 50112;
+  if (TString(outname) == "GMSB_Lambda-140-CTau-50") entries = 50112 ;
+  if (TString(outname) == "GMSB_Lambda-140-CTau-100") entries = 50112 ;
+  if (TString(outname) == "GMSB_Lambda-140-CTau-500") entries = 50112;
+  if (TString(outname) == "GMSB_Lambda-140-CTau-1000") entries = 50112 ;
+  if (TString(outname) == "GMSB_Lambda-140-CTau-2000") entries = 50112 ;
+  if (TString(outname) == "GMSB_Lambda-160-CTau-10") entries = 998272 ;
+  if (TString(outname) == "GMSB_Lambda-160-CTau-50") entries = 993664 ;
+  if (TString(outname) == "GMSB_Lambda-160-CTau-100") entries = 969984 ;
+  if (TString(outname) == "GMSB_Lambda-160-CTau-500") entries = 988576 ;
+  if (TString(outname) == "GMSB_Lambda-160-CTau-1000") entries = 50112 ;
+  if (TString(outname) == "GMSB_Lambda-160-CTau-2000") entries = 50112 ;
+  if (TString(outname) == "GMSB_Lambda-180-CTau-10") entries = 993376;
+  if (TString(outname) == "GMSB_Lambda-180-CTau-50") entries = 995392 ;
+  if (TString(outname) == "GMSB_Lambda-180-CTau-250") entries = 997120 ;
+  if (TString(outname) == "GMSB_Lambda-180-CTau-500") entries = 993000;
   if (TString(outname) == "GMSB_Lambda-180_CTau-2000") entries = 50112 ;
 
   if (TString(outname) == "TTJets") entries = 3.74644e+06;
@@ -346,6 +346,12 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
     if ( MC == 0 ) {CrossSectionWeight  = 1.;}
     else CrossSectionWeight = weightCrossSection(outname) * 1. / double(entries);   
 
+    std::cout << "Outname: " << outname << std::endl;
+
+    std::cout << "Entries: " << entries << std::endl;
+
+    std::cout << "x-section: " << CrossSectionWeight << std::endl;
+
     double puweight = 1.;
 
 
@@ -473,14 +479,14 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
       phoP4down = phoP4down * egScaledown;
        
       if ( fabs(fSpike[i]) > 0.001 ) continue ;
-      //if ( phoP4.Pt() < 50. )  photpt = false ;
-      //if ( phoP4up.Pt() < 50. )  photptup = false ;
-      //if ( phoP4down.Pt() < 50. )  photptdown = false ;
-      //if ( fabs(phoP4.Eta()) > 1.47 )  photpt = false ;
-      //if ( fabs(phoP4up.Eta()) > 1.47 )  photptup = false ; 
-      //if ( fabs(phoP4down.Eta()) > 1.47 )  photptdown = false ;
+      if ( phoP4.Pt() < 50. )  photpt = false ;
+      if ( phoP4up.Pt() < 50. )  photptup = false ;
+      if ( phoP4down.Pt() < 50. )  photptdown = false ;
+      if ( fabs(phoP4.Eta()) > 1.47 )  photpt = false ;
+      if ( fabs(phoP4up.Eta()) > 1.47 )  photptup = false ; 
+      if ( fabs(phoP4down.Eta()) > 1.47 )  photptdown = false ;
       if ( phoHoverE[i] > 0.05 ) continue ; 
-      //if ( sigmaIeta[i] >  0.012 ) continue ;  
+      if ( sigmaIeta[i] >  0.012 ) continue ;  
       if ( phoP4.Eta() > -0.75 && phoP4.Eta() < -0.6 && phoP4.Phi() > -1. && phoP4.Phi() < -0.8 ) photpt = false ;
       if ( phoP4up.Eta() > -0.75 && phoP4up.Eta() < -0.6 && phoP4up.Phi() > -1. && phoP4up.Phi() < -0.8 ) photptup = false ;
       if ( phoP4down.Eta() > -0.75 && phoP4down.Eta() < -0.6 && phoP4down.Phi() > -1. && phoP4down.Phi() < -0.8 ) photptdown = false ;
@@ -617,13 +623,9 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
     
                                           h000->Fill(1.);
     if (nGoodVtx < 1) continue;           h000->Fill(2.);
-    //if (MET > 30) continue;               h000->Fill(3.);
-    //if (nJet < 2) continue;               h000->Fill(4.);
-    //if (nPhot < 2) continue;              h000->Fill(5.);
-
-    if (MET < 0) continue;               h000->Fill(3.);
-    if (nJet < 1) continue;               h000->Fill(4.);
-    if (nPhot < 1) continue;              h000->Fill(5.);
+    if (MET < 30) continue;               h000->Fill(3.);
+    if (nJet < 2) continue;               h000->Fill(4.);
+    if (nPhot < 2) continue;              h000->Fill(5.);
 
     TVector3 MET( metPx, metPy, 0);  
 

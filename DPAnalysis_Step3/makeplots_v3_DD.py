@@ -39,6 +39,7 @@ def loop(vec, vechisto, flag, phot):
                     continue
                 lum = 19700.
                 vechisto[0].Fill( event.ptPhot[0], (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors) )
+                print event.CrossSectionWeight
                 if (event.ptPhot.size() > phot):
                     vechisto[1].Fill( event.ptPhot[1], (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors) )
                 if(event.ptJet.size() > 0):
@@ -139,10 +140,16 @@ def loop(vec, vechisto, flag, phot):
 def function (lamb,ctau1,ctau2,phot):
 
     listttjets = ["./v24/TTJets.root"]
-    listsig1 = ["./v24/GMSB_L"+lamb+"-CTAU"+ctau1+".root"]
-    listsig2 = ["./v24/GMSB_L"+lamb+"-CTAU"+ctau2+".root"]
-    listdata = ["./v24/Run2012A.root","./v24/Run2012B.root","./v24/Run2012C_1.root","./v24/Run2012C_2.root","./v24/Run2012C_3.root","./v24/Run2012D_1.root","./v24/Run2012D_2.root","./v24/Run2012D_3.root"]
-    listdataisolow = ["./v24/Run2012Aisolow.root","./v24/Run2012Bisolow.root","./v24/Run2012C_1isolow.root","./v24/Run2012C_2isolow.root","./v24/Run2012C_3isolow.root","./v24/Run2012D_1isolow.root","./v24/Run2012D_2isolow.root","./v24/Run2012D_3isolow.root"]
+    listsig1 = ["./v24/GMSB_Lambda-"+lamb+"_CTau-"+ctau1+".root"]
+    listsig2 = ["./v24/GMSB_Lambda-"+lamb+"_CTau-"+ctau2+".root"]
+    listdata = ["./v24/Run2012A.root",
+                "./v24/Run2012B_1.root","./v24/Run2012B_2.root","./v24/Run2012B_3.root","./v24/Run2012B_4.root",
+                "./v24/Run2012C_1.root","./v24/Run2012C_2.root","./v24/Run2012C_3.root","./v24/Run2012C_4.root","./v24/Run2012C_5.root",
+                "./v24/Run2012D_1.root","./v24/Run2012D_2.root","./v24/Run2012D_3.root","./v24/Run2012D_4.root","./v24/Run2012D_5.root"]
+    listdataisolow = ["./v24/Run2012Aisolow.root",
+                      "./v24/Run2012B_1isolow.root","./v24/Run2012B_2isolow.root","./v24/Run2012B_3isolow.root","./v24/Run2012B_4isolow.root",
+                      "./v24/Run2012C_1isolow.root","./v24/Run2012C_2isolow.root","./v24/Run2012C_3isolow.root","./v24/Run2012C_4isolow.root","./v24/Run2012C_5isolow.root",
+                      "./v24/Run2012D_1isolow.root","./v24/Run2012D_2isolow.root","./v24/Run2012D_3isolow.root","./v24/Run2012D_4isolow.root","./v24/Run2012D_5isolow.root"]
 
     vecfilesttjets = []
     for item in listttjets:

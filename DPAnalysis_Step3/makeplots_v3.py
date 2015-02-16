@@ -83,7 +83,10 @@ def function (lamb,ctau1,ctau2,phot):
     listttjets = ["./v24/TTJets.root"]
     listsig1 = ["./v24/GMSB_L"+lamb+"-CTAU"+ctau1+".root"]
     listsig2 = ["./v24/GMSB_L"+lamb+"-CTAU"+ctau2+".root"]
-    listdata = ["./v24/Run2012A.root","./v24/Run2012B.root","./v24/Run2012C_1.root","./v24/Run2012C_2.root","./v24/Run2012C_3.root","./v24/Run2012D_1.root","./v24/Run2012D_2.root","./v24/Run2012D_3.root"]
+    listdata = ["./v24/Run2012A.root",
+                "./v24/Run2012B_1.root","./v24/Run2012B_2.root","./v24/Run2012B_3.root","./v24/Run2012B_4.root",
+                "./v24/Run2012C_1.root","./v24/Run2012C_2.root","./v24/Run2012C_3.root","./v24/Run2012C_4.root","./v24/Run2012C_5.root",
+                "./v24/Run2012D_1.root","./v24/Run2012D_2.root","./v24/Run2012D_3.root","./v24/Run2012D_4.root","./v24/Run2012D_5.root"]
     
     vecfilesgpt = []
     for item in listgpt:
