@@ -79,10 +79,11 @@ def loop(vec, vechisto, flag, phot):
 def function (lamb,ctau1,ctau2,phot):
 
     listgpt = ["./v24/G_Pt-50to80.root","./v24/G_Pt-80to120.root","./v24/G_Pt-120to170.root","./v24/G_Pt-170to300.root","./v24/G_Pt-300to470.root","./v24/G_Pt-470to800.root"]
+    
     listqcd = ["./v24/QCD_Pt-80to120.root","./v24/QCD_Pt-120to170.root","./v24/QCD_Pt-170to300.root","./v24/QCD_Pt-470to600.root","./v24/QCD_Pt-600to800.root","./v24/QCD_Pt-800to1000.root","./v24/QCD_Pt-1000to1400.root"]
     listttjets = ["./v24/TTJets.root"]
-    listsig1 = ["./v24/GMSB_L"+lamb+"-CTAU"+ctau1+".root"]
-    listsig2 = ["./v24/GMSB_L"+lamb+"-CTAU"+ctau2+".root"]
+    listsig1 = ["./v24/GMSB_Lambda-"+lamb+"_CTau-"+ctau1+".root"]
+    listsig2 = ["./v24/GMSB_Lambda-"+lamb+"_CTau-"+ctau2+".root"]
     listdata = ["./v24/Run2012A.root",
                 "./v24/Run2012B_1.root","./v24/Run2012B_2.root","./v24/Run2012B_3.root","./v24/Run2012B_4.root",
                 "./v24/Run2012C_1.root","./v24/Run2012C_2.root","./v24/Run2012C_3.root","./v24/Run2012C_4.root","./v24/Run2012C_5.root",
