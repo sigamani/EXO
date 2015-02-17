@@ -170,22 +170,22 @@ int getsumcounterzero(const char* outname){
 */
   int entries; 
 
-  if (TString(outname) == "GMSB_Lambda-140-CTau-10") entries = 50112;
-  if (TString(outname) == "GMSB_Lambda-140-CTau-50") entries = 50112 ;
-  if (TString(outname) == "GMSB_Lambda-140-CTau-100") entries = 50112 ;
-  if (TString(outname) == "GMSB_Lambda-140-CTau-500") entries = 50112;
-  if (TString(outname) == "GMSB_Lambda-140-CTau-1000") entries = 50112 ;
-  if (TString(outname) == "GMSB_Lambda-140-CTau-2000") entries = 50112 ;
-  if (TString(outname) == "GMSB_Lambda-160-CTau-10") entries = 998272 ;
-  if (TString(outname) == "GMSB_Lambda-160-CTau-50") entries = 993664 ;
-  if (TString(outname) == "GMSB_Lambda-160-CTau-100") entries = 969984 ;
-  if (TString(outname) == "GMSB_Lambda-160-CTau-500") entries = 988576 ;
-  if (TString(outname) == "GMSB_Lambda-160-CTau-1000") entries = 50112 ;
-  if (TString(outname) == "GMSB_Lambda-160-CTau-2000") entries = 50112 ;
-  if (TString(outname) == "GMSB_Lambda-180-CTau-10") entries = 993376;
-  if (TString(outname) == "GMSB_Lambda-180-CTau-50") entries = 995392 ;
-  if (TString(outname) == "GMSB_Lambda-180-CTau-250") entries = 997120 ;
-  if (TString(outname) == "GMSB_Lambda-180-CTau-500") entries = 993000;
+  if (TString(outname) == "GMSB_Lambda-140_CTau-10") entries = 50112;
+  if (TString(outname) == "GMSB_Lambda-140_CTau-50") entries = 50112 ;
+  if (TString(outname) == "GMSB_Lambda-140_CTau-100") entries = 50112 ;
+  if (TString(outname) == "GMSB_Lambda-140_CTau-500") entries = 50112;
+  if (TString(outname) == "GMSB_Lambda-140_CTau-1000") entries = 50112 ;
+  if (TString(outname) == "GMSB_Lambda-140_CTau-2000") entries = 50112 ;
+  if (TString(outname) == "GMSB_Lambda-160_CTau-10") entries = 998272 ;
+  if (TString(outname) == "GMSB_Lambda-160_CTau-50") entries = 993664 ;
+  if (TString(outname) == "GMSB_Lambda-160_CTau-100") entries = 969984 ;
+  if (TString(outname) == "GMSB_Lambda-160_CTau-500") entries = 988576 ;
+  if (TString(outname) == "GMSB_Lambda-160_CTau-1000") entries = 50112 ;
+  if (TString(outname) == "GMSB_Lambda-160_CTau-2000") entries = 50112 ;
+  if (TString(outname) == "GMSB_Lambda-180_CTau-10") entries = 993376;
+  if (TString(outname) == "GMSB_Lambda-180_CTau-50") entries = 995392 ;
+  if (TString(outname) == "GMSB_Lambda-180_CTau-250") entries = 997120 ;
+  if (TString(outname) == "GMSB_Lambda-180_CTau-500") entries = 993000;
   if (TString(outname) == "GMSB_Lambda-180_CTau-2000") entries = 50112 ;
 
   if (TString(outname) == "TTJets") entries = 3.74644e+06;
@@ -345,12 +345,6 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
 
     if ( MC == 0 ) {CrossSectionWeight  = 1.;}
     else CrossSectionWeight = weightCrossSection(outname) * 1. / double(entries);   
-
-    std::cout << "Outname: " << outname << std::endl;
-
-    std::cout << "Entries: " << entries << std::endl;
-
-    std::cout << "x-section: " << CrossSectionWeight << std::endl;
 
     double puweight = 1.;
 
@@ -620,12 +614,17 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
     METUP = met*1.01;
     METDOWN = met*0.99;
 
+    bool inverted = false;
+
+    if (string(outname).find("isolow") != std::string::npos) inverted = true;
+
     
-                                          h000->Fill(1.);
-    if (nGoodVtx < 1) continue;           h000->Fill(2.);
-    if (MET < 30) continue;               h000->Fill(3.);
-    if (nJet < 2) continue;               h000->Fill(4.);
-    if (nPhot < 2) continue;              h000->Fill(5.);
+                                               h000->Fill(1.);
+    if (nGoodVtx < 1) continue;                h000->Fill(2.);
+    if (!inverted && MET < 30) continue;       h000->Fill(3.);
+    if (inverted && MET > 30) continue;        h000->Fill(3.);
+    if (nJet < 2) continue;                    h000->Fill(4.);
+    if (nPhot < 2) continue;                   h000->Fill(5.);
 
     TVector3 MET( metPx, metPy, 0);  
 
