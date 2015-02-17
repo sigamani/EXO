@@ -39,7 +39,8 @@ for z in range(len(dataset_name)):
     outputfile.write('export SCRAM_ARCH=slc6_amd64_gcc472\n')
     outputfile.write('cd '+pwd+'; eval `scramv1 runtime -sh`; \n')
     outputfile.write("./"+executable+" "+inputlist+" "+dataset_name[z]+";")
-    outputfile.write("mv "+dataset_name[z]+".root "+outputdir+"/output/;") 
+    #outputfile.write("mv "+dataset_name[z]+".root "+outputdir+"/output/;") 
+    outputfile.write("mv "+dataset_name[z]+".root "+pwd+ "/v24")
     outputfile.close
     os.system("echo Submitting "+dataset_name[z]+" to batch queue")
     os.system("bsub -q 1nd -o "+outputdir+"/log/"+dataset_name[z]+".log source "+outputname)
