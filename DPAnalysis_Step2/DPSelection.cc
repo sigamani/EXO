@@ -489,30 +489,40 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
       if ( phoP4up.Eta() > 0.80 && phoP4up.Eta() < 0.95 && phoP4up.Phi() > -1.95 && phoP4up.Phi() < -1.8 ) photptup = false ;
       if ( phoP4down.Eta() > 0.80 && phoP4down.Eta() < 0.95 && phoP4down.Phi() > -1.95 && phoP4down.Phi() < -1.8 ) photptdown = false ;
        
-      /***********************************************************************/
-      //                   Cut for isolated photons  
-      /***********************************************************************/
+
+      bool fakephotons = false;
+
+      if (string(outname).find("fake") != std::string::npos) fakephotons = true;
+
+      if (!fakephotons){
+
+	/***********************************************************************/
+	//                   Cut for isolated photons  
+	/***********************************************************************/
        
-                 
-      if ( cHadIso[i] >= 2.6 ) continue ;  // chargedHadron
-      if ( nHadIso[i] >= 3.5 + ( 0.04*phoP4.Pt()   ) ) photpt = false ;  // neutralHadron
-      if ( nHadIso[i] >= 3.5 + ( 0.04*phoP4up.Pt()   ) ) photptup = false ;  // neutralHadron
-      if ( nHadIso[i] >= 3.5 + ( 0.04*phoP4down.Pt()   ) ) photptdown = false ;  // neutralHadron
-      if ( photIso[i] >= 1.3 + ( 0.005*phoP4.Pt() ) ) photpt = false ;  // photon
-      if ( photIso[i] >= 1.3 + ( 0.005*phoP4up.Pt() ) ) photptup = false ;  // photon
-      if ( photIso[i] >= 1.3 + ( 0.005*phoP4down.Pt() ) ) photptdown = false ;  // photon
+	
+	if ( cHadIso[i] >= 2.6 ) continue ;  // chargedHadron
+	if ( nHadIso[i] >= 3.5 + ( 0.04*phoP4.Pt()   ) ) photpt = false ;  // neutralHadron
+	if ( nHadIso[i] >= 3.5 + ( 0.04*phoP4up.Pt()   ) ) photptup = false ;  // neutralHadron
+	if ( nHadIso[i] >= 3.5 + ( 0.04*phoP4down.Pt()   ) ) photptdown = false ;  // neutralHadron
+	if ( photIso[i] >= 1.3 + ( 0.005*phoP4.Pt() ) ) photpt = false ;  // photon
+	if ( photIso[i] >= 1.3 + ( 0.005*phoP4up.Pt() ) ) photptup = false ;  // photon
+	if ( photIso[i] >= 1.3 + ( 0.005*phoP4down.Pt() ) ) photptdown = false ;  // photon
+      }
+
       
-
-      /***********************************************************************/
-      //                   Cut for fake photons                                                                                                                                        
-      /***********************************************************************/
-       
-      /*
-      if (!( cHadIso[i] >= 2.6 )  && (!( nHadIso[i] >= 3.5 + ( 0.04*phoP4.Pt()   ) )) && (!( photIso[i] >= 1.3 + ( 0.005*phoP4.Pt() ) ))  ) continue ;
-      */
-
-	  if (phoMatchedEle[i] > 0) continue;
-	  if (conversionVeto[i] > 0) continue;
+      if (fakephotons){
+	/***********************************************************************/
+	//                   Cut for fake photons                                                            
+	/***********************************************************************/
+	
+	      
+	if (!( cHadIso[i] >= 2.6 )  && (!( nHadIso[i] >= 3.5 + ( 0.04*phoP4.Pt()   ) )) && (!( photIso[i] >= 1.3 + ( 0.005*phoP4.Pt() ) ))  ) continue ;
+      
+      }
+      
+      if (phoMatchedEle[i] > 0) continue;
+      if (conversionVeto[i] > 0) continue;
 
       //cout <<"phoMatchedEle: " << phoMatchedEle[i] << endl; 
       //cout <<"conversionVeto: " << conversionVeto[i] << endl; 
@@ -571,9 +581,9 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
       bool jetptup = true;
       bool jetptdown = true;
 
-      //if ( jp4.Pt() < 30) jetpt == false; 
-      //if ( jp4up.Pt() < 30) jetptup == false;  
-      //if ( jp4down.Pt() < 30) jetptdown == false; 
+      if ( jp4.Pt() < 30) jetpt == false; 
+      if ( jp4up.Pt() < 30) jetptup == false;  
+      if ( jp4down.Pt() < 30) jetptdown == false; 
 
       if ( fabs(jp4.Eta()) > 2.4 ) jetpt == false ;
       if ( fabs(jp4up.Eta()) > 2.4 ) jetptup == false ;
@@ -616,7 +626,7 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
 
     bool inverted = false;
 
-    if (string(outname).find("isolow") != std::string::npos) inverted = true;
+    if (string(outname).find("low") != std::string::npos) inverted = true;
 
     
                                                h000->Fill(1.);

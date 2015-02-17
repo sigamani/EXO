@@ -51,7 +51,7 @@ for z in range(len(dataset_name)):
     os.system("echo Submitting "+dataset_name[z]+" to batch queue")
     os.system("bsub -q 1nd -o "+outputdir+"/log/"+dataset_name[z]+".log source "+outputname)
 
-
+#isolated photons, low met
 for z in range(len(dataset_name_inverted)):
 
     inputlist = "list2/"+dataset_name[z]+".list"
@@ -74,3 +74,51 @@ for z in range(len(dataset_name_inverted)):
     outputfile.close
     os.system("echo Submitting "+dataset_name[z]+"isolow to batch queue")
     os.system("bsub -q 1nd -o "+outputdir+"/log/"+dataset_name[z]+"isolow.log source "+outputname)
+
+#fake photons, high met
+for z in range(len(dataset_name_inverted)):
+
+    inputlist = "list2/"+dataset_name[z]+".list"
+    outputdir = pwd+"/ntuples/"+dataset_name[z]+"fakehigh"
+
+    os.system("rm -r "+outputdir)
+    os.system("mkdir -p "+outputdir)
+    os.system("mkdir -p "+outputdir+"/log/")
+    os.system("mkdir -p "+outputdir+"/input/")
+    os.system("mkdir -p "+outputdir+"/output/")
+    os.system("mkdir -p "+outputdir+"/src/")
+
+    outputname = outputdir+"/src/"+dataset_name[z]+"fakehigh.src"
+    outputfile = open(outputname,'w')
+    outputfile.write('#!/bin/bash\n')
+    outputfile.write('export SCRAM_ARCH=slc6_amd64_gcc472\n')
+    outputfile.write('cd '+pwd+'; eval `scramv1 runtime -sh`; \n')
+    outputfile.write("./"+executable+" "+inputlist+" "+dataset_name[z]+"fakehigh;")
+    outputfile.write("mv "+dataset_name[z]+"fakehigh.root "+pwd+ "/../DPAnalysis_Step3/v24")
+    outputfile.close
+    os.system("echo Submitting "+dataset_name[z]+"fakehigh to batch queue")
+    os.system("bsub -q 1nd -o "+outputdir+"/log/"+dataset_name[z]+"fakehigh.log source "+outputname)
+
+#fake photons, low met
+for z in range(len(dataset_name_inverted)):
+
+    inputlist = "list2/"+dataset_name[z]+".list"
+    outputdir = pwd+"/ntuples/"+dataset_name[z]+"fakelow"
+
+    os.system("rm -r "+outputdir)
+    os.system("mkdir -p "+outputdir)
+    os.system("mkdir -p "+outputdir+"/log/")
+    os.system("mkdir -p "+outputdir+"/input/")
+    os.system("mkdir -p "+outputdir+"/output/")
+    os.system("mkdir -p "+outputdir+"/src/")
+
+    outputname = outputdir+"/src/"+dataset_name[z]+"fakelow.src"
+    outputfile = open(outputname,'w')
+    outputfile.write('#!/bin/bash\n')
+    outputfile.write('export SCRAM_ARCH=slc6_amd64_gcc472\n')
+    outputfile.write('cd '+pwd+'; eval `scramv1 runtime -sh`; \n')
+    outputfile.write("./"+executable+" "+inputlist+" "+dataset_name[z]+"fakelow;")
+    outputfile.write("mv "+dataset_name[z]+"fakelow.root "+pwd+ "/../DPAnalysis_Step3/v24")
+    outputfile.close
+    os.system("echo Submitting "+dataset_name[z]+"fakelow to batch queue")
+    os.system("bsub -q 1nd -o "+outputdir+"/log/"+dataset_name[z]+"fakelow.log source "+outputname)

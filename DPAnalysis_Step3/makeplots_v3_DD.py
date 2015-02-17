@@ -26,7 +26,9 @@ def loop(vec, vechisto, flag, phot):
                 continue
             if (event.ptJet[0] < 35):
                 continue
-            if (event.sigmaIetaPhot[0] < 0.006 or event.sigmaIetaPhot[0] > 0.012):
+            #if (event.sigmaIetaPhot[0] < 0.006 or event.sigmaIetaPhot[0] > 0.012):
+            #    continue
+            if (event.sigmaIetaPhot[0] > 0.012):
                 continue
             if (event.ptPhot[0] < 85):
                 continue
@@ -39,7 +41,6 @@ def loop(vec, vechisto, flag, phot):
                     continue
                 lum = 19700.
                 vechisto[0].Fill( event.ptPhot[0], (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors) )
-                print event.CrossSectionWeight
                 if (event.ptPhot.size() > phot):
                     vechisto[1].Fill( event.ptPhot[1], (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors) )
                 if(event.ptJet.size() > 0):
@@ -313,6 +314,8 @@ def function (lamb,ctau1,ctau2,phot):
 
     vechisisolow = loop(vecfilesdataisolow, vechisisolow, 2, phot)
 
+    print vechisisolow[4].Integral()
+
     
     vechis[4].SetBinContent(vechis[4].GetNbinsX(),(vechis[4].GetBinContent(vechis[4].GetNbinsX())+vechis[4].GetBinContent(vechis[4].GetNbinsX()+1)))
     dxysig1.SetBinContent(dxysig1.GetNbinsX(),(dxysig1.GetBinContent(dxysig1.GetNbinsX())+dxysig1.GetBinContent(dxysig1.GetNbinsX()+1)))
@@ -351,9 +354,15 @@ def function (lamb,ctau1,ctau2,phot):
         ratio = 1.
     vechisisolow[4].Scale(ratio)
   
-    for i in range(nxbins):
-        if (i != 0):
-            vechis[4].SetBinContent(i+1,0)
+    #for i in range(nxbins):
+    #    if (i != 0):
+    #        vechis[4].SetBinContent(i+1,0)
+
+    print vechisisolow[4].Integral()
+    print vechis[4].Integral()
+    print vechissig1[4].Integral()
+    print vechissig2[4].Integral()
+    print vechisttjet[4].Integral()
 
     totalbkg = vechisttjet[4].Clone()
     totalbkg.Add(vechisisolow[4])

@@ -129,6 +129,8 @@ def plot(dxy):
     dxy[2].SetFillStyle(3001)
     dxy[0].SetMarkerStyle(22)
     dxy[1].SetMarkerStyle(21)
+    dxy[0].SetMarkerColor(kBlack)
+    dxy[1].SetMarkerColor(kRed)
     dxy[0].SetMarkerSize(1.5)
     dxy[1].SetMarkerSize(1.5)
     dxy[0].SetLineWidth(2)
