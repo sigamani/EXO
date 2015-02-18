@@ -26,10 +26,10 @@ def loop(vec, vechisto, flag, phot):
                 continue
             if (event.ptJet[0] < 35):
                 continue
-            #if (event.sigmaIetaPhot[0] < 0.006 or event.sigmaIetaPhot[0] > 0.012):
-            #    continue
-            if (event.sigmaIetaPhot[0] > 0.012):
+            if (event.sigmaIetaPhot[0] < 0.006 or event.sigmaIetaPhot[0] > 0.012):
                 continue
+            if (event.sigmaIetaPhot[0] > 0.012):
+               continue
             if (event.ptPhot[0] < 85):
                 continue
             #if (event.sMajPhot[0] > 1.35):

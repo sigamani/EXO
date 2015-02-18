@@ -129,8 +129,6 @@ double weightCrossSection(const char* outname) {
   if (TString(outname) == "QCD_Pt-800to1000") weight = 3.550036;
   if (TString(outname) == "QCD_Pt-1000to1400") weight = 0.737844;
 
-  //   cout << weight << endl;
-
  
   return weight;
 }
@@ -238,7 +236,8 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
   h000->GetXaxis()->SetBinLabel(4,"MET>30");
   h000->GetXaxis()->SetBinLabel(5,"nJet2");
   h000->GetXaxis()->SetBinLabel(6,"nPhot2");
-
+  
+  
   h000->Fill(0.,entries);
    
   Int_t nPhot;
@@ -248,6 +247,7 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
   Int_t nGoodVtx;
  
   Int_t isMC; 
+  Int_t triggeredvariable;
 
   Float_t MET;
   Float_t METUP;
@@ -301,8 +301,8 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
   anaTree->Branch("chadiso", &chadiso);
   anaTree->Branch("nhadiso", &nhadiso);
   anaTree->Branch("photiso", &photiso);
-
-
+  anaTree->Branch("triggeredvariable", &triggeredvariable, "triggeredvariable/I");
+                                                            
   Long64_t nentries = fChain->GetEntriesFast();
   Float_t N_events_w = (Float_t) fChain->GetEntries();
 
@@ -336,8 +336,8 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
     if (string(outname).find("Run2012") != std::string::npos)  { MC=0;} 
     else MC = 1;
     
-    if (MC == 0 && !(triggered == 1 || triggered == 3)) continue;
-    if (MC == 1 && triggered != 1) continue;
+    //if (MC == 0 && !(triggered == 1 || triggered == 3)) continue;
+    //if (MC == 1 && triggered != 1) continue;
 
 
     int entries = getsumcounterzero(outname); 
@@ -655,8 +655,9 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
     double MTR = CalcMTR(HEMIS[0], HEMIS[1], MET);
     double MRSTAR = CalcGammaMRstar(HEMIS[0], HEMIS[1]);
     Rsqrd = pow(MTR/MRSTAR,2); 
-    
-     
+
+    triggeredvariable = triggered;
+        
     anaTree->Fill();
 
 
