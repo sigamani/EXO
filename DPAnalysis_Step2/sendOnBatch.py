@@ -35,7 +35,7 @@ dataset_name_inverted = ['Run2012A', 'Run2012B_1', 'Run2012B_2', 'Run2012B_3', '
 queue              	= "1nh" 
 executable         	= "tmp/main" 
 
-destinationfolder       = "/../DPAnalysis_Step3/v24/"
+destinationfolder       = "/../DPAnalysis_Step3/v24triggered/"
 
 for z in range(len(dataset_name)):
 

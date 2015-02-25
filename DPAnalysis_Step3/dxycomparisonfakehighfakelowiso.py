@@ -202,7 +202,7 @@ def plot(dxy):
     leg.AddEntry(dxy[0], "Control region 3","l")
 
     dxy[1].GetXaxis().SetTitle("Conversion d_{XY} (cm)")
-    dxy[1].GetYaxis().SetTitle("Events")
+    dxy[1].GetYaxis().SetTitle("Events / bin")
     dxy[1].GetYaxis().SetRangeUser(0.01,1000)
     dxy[1].GetYaxis().SetTitleSize(0.05)
     dxy[1].GetXaxis().SetTitleSize(0.05)

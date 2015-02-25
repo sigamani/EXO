@@ -336,8 +336,8 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
     if (string(outname).find("Run2012") != std::string::npos)  { MC=0;} 
     else MC = 1;
     
-    if (MC == 0 && !(triggered == 1 || triggered == 3)) continue;
-    if (MC == 1 && triggered != 1) continue;
+    //if (MC == 0 && !(triggered == 1 || triggered == 3)) continue;
+    //if (MC == 1 && triggered != 1) continue;
 
 
     int entries = getsumcounterzero(outname); 
@@ -474,21 +474,12 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
        
       if ( fabs(fSpike[i]) > 0.001 ) continue ;
       if ( phoP4.Pt() < 50. )  continue ; //N-1!!!!!!!!!!!!!!!!!!!!!!!
-      //if ( phoP4up.Pt() < 50. )  photptup = false ;
-      //if ( phoP4down.Pt() < 50. )  photptdown = false ;
       if ( fabs(phoP4.Eta()) > 1.47 )  continue ; //N-1!!!!!!!!!!!!!!!!!!!
-      //if ( fabs(phoP4up.Eta()) > 1.47 )  photptup = false ; 
-      //if ( fabs(phoP4down.Eta()) > 1.47 )  photptdown = false ;
       if ( phoHoverE[i] > 0.05 ) continue ; //PHOTONISOLATION
       if ( sigmaIeta[i] >  0.012 ) continue ; //N-1!!!!!!!!!!!!!!!!!1  
       if ( phoP4.Eta() > -0.75 && phoP4.Eta() < -0.6 && phoP4.Phi() > -1. && phoP4.Phi() < -0.8 ) continue ;
-      //if ( phoP4up.Eta() > -0.75 && phoP4up.Eta() < -0.6 && phoP4up.Phi() > -1. && phoP4up.Phi() < -0.8 ) photptup = false ;
-      //if ( phoP4down.Eta() > -0.75 && phoP4down.Eta() < -0.6 && phoP4down.Phi() > -1. && phoP4down.Phi() < -0.8 ) photptdown = false ;
 
-      if ( phoP4.Eta() > 0.80 && phoP4.Eta() < 0.95 && phoP4.Phi() > -1.95 && phoP4.Phi() < -1.8 ) continue ;
-      //if ( phoP4up.Eta() > 0.80 && phoP4up.Eta() < 0.95 && phoP4up.Phi() > -1.95 && phoP4up.Phi() < -1.8 ) photptup = false ;
-      //if ( phoP4down.Eta() > 0.80 && phoP4down.Eta() < 0.95 && phoP4down.Phi() > -1.95 && phoP4down.Phi() < -1.8 ) photptdown = false ;
-       
+      if ( phoP4.Eta() > 0.80 && phoP4.Eta() < 0.95 && phoP4.Phi() > -1.95 && phoP4.Phi() < -1.8 ) continue ; 
 
       bool fakephotons = false;
 
@@ -503,13 +494,8 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
 	
 	if ( cHadIso[i] >= 2.6 ) continue ;  // chargedHadron PHOTONISOLATION
 	if ( nHadIso[i] >= 3.5 + ( 0.04*phoP4.Pt()   ) ) continue ;   // neutralHadron PHOTONISOLATION
-	//if ( nHadIso[i] >= 3.5 + ( 0.04*phoP4up.Pt()   ) ) photptup = false ;  // neutralHadron
-	//if ( nHadIso[i] >= 3.5 + ( 0.04*phoP4down.Pt()   ) ) photptdown = false ;  // neutralHadron
 	if ( photIso[i] >= 1.3 + ( 0.005*phoP4.Pt() ) ) continue ;  // photon PHOTONISOLATION
-	//if ( photIso[i] >= 1.3 + ( 0.005*phoP4up.Pt() ) ) photptup = false ;  // photon
-	//if ( photIso[i] >= 1.3 + ( 0.005*phoP4down.Pt() ) ) photptdown = false ;  // photon
-      }
-
+	
       
       if (fakephotons){
 	/***********************************************************************/
@@ -528,8 +514,6 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
       //cout <<"conversionVeto: " << conversionVeto[i] << endl; 
 
       ptPhot.push_back(phoP4.Pt());
-      //if ( photptup ) ptPhotUp.push_back(phoP4up.Pt());
-      //if ( photptdown ) ptPhotDown.push_back(phoP4down.Pt());
       sort(ptPhot.begin(),ptPhot.end(),comp_pair);
       sort(ptPhotUp.begin(),ptPhotUp.end(),comp_pair);
       sort(ptPhotDown.begin(),ptPhotDown.end(),comp_pair);
@@ -582,24 +566,16 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
       bool jetptdown = true;
 
       if ( jp4.Pt() < 30) continue;  //N-1!!!!!!!!!!!!!!!!!11
-      //if ( jp4up.Pt() < 30) jetptup == false;  
-      //if ( jp4down.Pt() < 30) jetptdown == false; 
-
+      
       if ( fabs(jp4.Eta()) > 2.4 ) continue ; //N-1!!!!!!!!!!!!!!!!!!!!!
-      //if ( fabs(jp4up.Eta()) > 2.4 ) jetptup == false ;
-      //if ( fabs(jp4down.Eta()) > 2.4 ) jetptdown == false ;
        
       if ( jetNDau[j] < (double)   2 )  continue ;
       if ( jetCEF[j] >= (double)0.99 )  continue ;
       if ( jetNEF[j] >= (double)0.99 )  continue ;
       if ( jetNHF[j] >= (double)0.99 )  continue ;
       if ( fabs( jp4.Eta() ) < 2.4 && jetCM[j]  <= 0 ) continue ;
-      //if ( fabs( jp4up.Eta() ) < 2.4 && jetCM[j]  <= 0 ) jetptup == false ;
-      //if ( fabs( jp4down.Eta() ) < 2.4 && jetCM[j]  <= 0 ) jetptdown == false ;
       
       ptJet.push_back(jp4.Pt());
-      //if ( jetptup ) ptJetUp.push_back(jp4up.Pt());
-      //if ( jetptdown ) ptJetDown.push_back(jp4down.Pt());
       sort(ptJet.begin(),ptJet.end(),comp_pair);
       sort(ptJetUp.begin(), ptJetUp.end(),comp_pair);
       sort(ptJetDown.begin(), ptJetDown.end(), comp_pair);
@@ -635,6 +611,12 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
     if (inverted && MET > 30) continue;        h000->Fill(3.);
     if (nJet < 2) continue;                    h000->Fill(4.);
     if (nPhot < 2) continue;                   h000->Fill(5.);
+    
+    //N-1
+    //if (!inverted && MET < 0) continue;       h000->Fill(3.);
+    //if (inverted && MET > 30) continue;        h000->Fill(3.);
+    //if (nJet < 1) continue;                    h000->Fill(4.);
+    //if (nPhot < 1) continue;                   h000->Fill(5.);
 
     TVector3 MET( metPx, metPy, 0);  
 
