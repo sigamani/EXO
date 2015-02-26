@@ -137,7 +137,7 @@ def function (lamb,ctau1,ctau2,phot):
     chadisogpt = TH1D("cHadIsoGPT","",50,0,5)
     nhadisogpt = TH1D("nHadIsoGPT","",50,0,5)
     photisogpt = TH1D("photIsoGPT","",50,0,5)
-    phohoveregpt = TH1D("phoHoverEGPT","",50,0,5)
+    phohoveregpt = TH1D("phoHoverEGPT","",50,0,1)
     vechisgpt = [ptpholeadgpt,ptphosubleadgpt,ptjetleadgpt,ptjetsubleadgpt,dxygpt,metgpt,njetsgpt,nphotgpt,nvertgpt,smajgpt,smingpt,sigietagpt,etagpt,chadisogpt,nhadisogpt,photisogpt,phohoveregpt]
 
     for each in vechisgpt:
@@ -161,7 +161,7 @@ def function (lamb,ctau1,ctau2,phot):
     chadisoqcd = TH1D("cHadIsoQCD","",50,0,5)
     nhadisoqcd = TH1D("nHadIsoQCD","",50,0,5)
     photisoqcd = TH1D("photIsoQCD","",50,0,5)
-    phohovereqcd = TH1D("phoHoverEQCD","",50,0,5)
+    phohovereqcd = TH1D("phoHoverEQCD","",50,0,1)
     vechisqcd = [ptpholeadqcd,ptphosubleadqcd,ptjetleadqcd,ptjetsubleadqcd,dxyqcd,metqcd,njetsqcd,nphotqcd,nvertqcd,smajqcd,sminqcd,sigietaqcd,etaqcd,chadisoqcd,nhadisoqcd,photisoqcd,phohovereqcd]
 
     for each in vechisqcd:
@@ -185,7 +185,7 @@ def function (lamb,ctau1,ctau2,phot):
     chadisottjet = TH1D("cHadIsoTTJet","",50,0,5)
     nhadisottjet = TH1D("nHadIsoTTJet","",50,0,5)
     photisottjet = TH1D("photIsoTTJet","",50,0,5)
-    phohoverettjet = TH1D("phoHoverETTJet","",50,0,5)
+    phohoverettjet = TH1D("phoHoverETTJet","",50,0,1)
     vechisttjet = [ptpholeadttjet,ptphosubleadttjet,ptjetleadttjet,ptjetsubleadttjet,dxyttjet,metttjet,njetsttjet,nphotttjet,nvertttjet,smajttjet,sminttjet,sigietattjet,etattjet,chadisottjet,nhadisottjet,photisottjet,phohoverettjet]
 
     for each in vechisttjet:
@@ -209,7 +209,7 @@ def function (lamb,ctau1,ctau2,phot):
     chadisosig1 = TH1D("cHadIsoSignal1","",50,0,5)
     nhadisosig1 = TH1D("nHadIsoSignal1","",50,0,5)
     photisosig1 = TH1D("photIsoSignal1","",50,0,5)
-    phohoveresig1 = TH1D("phoHoverESignal1","",50,0,5)
+    phohoveresig1 = TH1D("phoHoverESignal1","",50,0,1)
     vechissig1 = [ptpholeadsig1,ptphosubleadsig1,ptjetleadsig1,ptjetsubleadsig1,dxysig1,metsig1,njetssig1,nphotsig1,nvertsig1,smajsig1,sminsig1,sigietasig1,etasig1,chadisosig1,nhadisosig1,photisosig1,phohoveresig1]
 
     for each in vechissig1:
@@ -233,7 +233,7 @@ def function (lamb,ctau1,ctau2,phot):
     chadisosig2 = TH1D("cHadIsoSignal2","",50,0,5)
     nhadisosig2 = TH1D("nHadIsoSignal2","",50,0,5)
     photisosig2 = TH1D("photIsoSignal2","",50,0,5)
-    phohoveresig2 = TH1D("phoHoverESignal2","",50,0,5)
+    phohoveresig2 = TH1D("phoHoverESignal2","",50,0,1)
     vechissig2 = [ptpholeadsig2,ptphosubleadsig2,ptjetleadsig2,ptjetsubleadsig2,dxysig2,metsig2,njetssig2,nphotsig2,nvertsig2,smajsig2,sminsig2,sigietasig2,etasig2,chadisosig2,nhadisosig2,photisosig2,phohoveresig2]
 
     for each in vechissig2:
@@ -257,7 +257,7 @@ def function (lamb,ctau1,ctau2,phot):
     chadiso = TH1D("cHadIso","",50,0,5)
     nhadiso = TH1D("nHadIso","",50,0,5)
     photiso = TH1D("photIso","",50,0,5)
-    phohovere = TH1D("phoHoverE","",50,0,5)
+    phohovere = TH1D("phoHoverE","",50,0,1)
     vechis = [ptpholead,ptphosublead,ptjetlead,ptjetsublead,dxy,met,njets,nphot,nvert,smaj,smin,sigieta,eta,chadiso,nhadiso,photiso,phohovere]
     
     for each in vechis:

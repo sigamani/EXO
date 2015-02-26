@@ -54,7 +54,10 @@ def loop(vec, dxy, phot):
 def function (phot):
 
     listMC = ["./v24/G_Pt-50to80.root","./v24/G_Pt-80to120.root","./v24/G_Pt-120to170.root","./v24/G_Pt-170to300.root","./v24/G_Pt-300to470.root","./v24/G_Pt-470to800.root", "./v24/QCD_Pt-80to120.root","./v24/QCD_Pt-120to170.root","./v24/QCD_Pt-170to300.root","./v24/QCD_Pt-470to600.root","./v24/QCD_Pt-600to800.root","./v24/QCD_Pt-800to1000.root","./v24/QCD_Pt-1000to1400.root", "./v24/TTJets.root"]
-    listdata = ["./v24/Run2012Aisolow.root","./v24/Run2012Bisolow.root","./v24/Run2012C_1isolow.root","./v24/Run2012C_2isolow.root","./v24/Run2012C_3isolow.root","./v24/Run2012D_1isolow.root","./v24/Run2012D_2isolow.root","./v24/Run2012D_3isolow.root"]
+    listdata = ["./v24/Run2012Aisolow.root",
+                      "./v24/Run2012B_1isolow.root","./v24/Run2012B_2isolow.root","./v24/Run2012B_3isolow.root","./v24/Run2012B_4isolow.root",
+                      "./v24/Run2012C_1isolow.root","./v24/Run2012C_2isolow.root","./v24/Run2012C_3isolow.root","./v24/Run2012C_4isolow.root","./v24/Run2012C_5isolow.root",
+                      "./v24/Run2012D_1isolow.root","./v24/Run2012D_2isolow.root","./v24/Run2012D_3isolow.root","./v24/Run2012D_4isolow.root","./v24/Run2012D_5isolow.root"]
 
     vecfilesMC = []
     for item in listMC:
@@ -161,7 +164,7 @@ def function (phot):
             EfficienciesMC[i] = 0
             ErrorsMC[i] = 0
 
-        #print Efficiencies[i]
+        print "MC: " + str(EfficienciesMC[i])
         EfficiencyHistMC.SetBinContent(i+1,EfficienciesMC[i])
         
         EfficiencyHistMC.SetBinError(i+1,ErrorsMC[i])
@@ -174,7 +177,7 @@ def function (phot):
             EfficienciesData[i] = 0
             ErrorsData[i] = 0
 
-        #print Efficiencies[i]
+        print "Data: " + str(EfficienciesData[i])
 
         EfficiencyHistData.SetBinContent(i+1,EfficienciesData[i])
 
