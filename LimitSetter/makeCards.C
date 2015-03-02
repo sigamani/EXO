@@ -225,7 +225,7 @@ void makeCards(int Lambda, int ctau, double ndata, double nsignal, double sig_er
 
   
   char datacardname[100];
-  sprintf(datacardname,"datacard-S%d-N%d.txt", Lambda, ctau);  
+  sprintf(datacardname,"datacard-L%d-CTAU%d.txt", Lambda, ctau);  
 
   ofstream  tablesFile(datacardname);
   tablesFile.setf(ios::fixed);
