@@ -6,28 +6,37 @@ import time
 
 
 pwd = os.environ['PWD']
+scram = os.environ['SCRAM_ARCH']
 
-decay_mode 		= ['S180-N10'] 
-#decay_mode 	= ['T2bw025'] 
+#change these two
+CLS_DIR = "/afs/cern.ch/work/s/sigamani/public/CMSSW_6_1_1/src/HiggsAnalysis/CombinedLimit/" 
+TMP_DIR = "/tmp/sigamani/"
 
-outputdir = pwd
-output = "datacard-"+str(decay_mode[0])
-outputname = outputdir+"/"+output+".src"
+signal_point 		= ['L140CT1000' , 'L140CT100'] 
 
-outputfile = open(outputname,'w')
-outputfile.write('#!/bin/bash\n')
-outputfile.write('export SCRAM_ARCH=slc6_amd64_gcc472\n')
-outputfile.write('cd '+outputdir+'; eval `scramv1 runtime -sh`; \n')
-#outputfile.write('cd /tmp/sigamani; \n')
-#outputfile.write('cp /afs/cern.ch/work/s/sigamani/public/CMSSW_6_1_1/bin/slc5_amd64_gcc472/combine .; \n')
-#outputfile.write('cp /afs/cern.ch/work/s/sigamani/public/CMSSW_6_1_1/src/HiggsAnalysis/CombinedLimit/limit_V2 .; \n')
-#outputfile.write('cp '+outputdir+'/'+output+'.txt . ; \n')
-outputfile.write('./limit_V2 '+output+'.txt ; \n') 
-outputfile.write('hadd -f '+outputdir+'/FULL_CLS_RESULT_'+str(decay_mode[0])+'.root higgsCombineTest.HybridNew.mH120.* ; \n') 
-outputfile.write('cp higgsCombineTest.Asymptotic.mH120.root '+outputdir+'/ASYMPTOTIC_CLS_RESULT_S'+str(decay_mode[0])+'.root; \n')
-outputfile.write('rm higgsCombineTest.HybridNew.mH120.* ; \n') 
-outputfile.write('cp datacard-'+str(decay_mode[0])+'.txt.result.txt '+outputdir+'/RESULT_S'+str(decay_mode[0])+'.txt; \n')
-outputfile.write('rm higgsCombine*root; \n')
-outputfile.close
-os.system("echo bsub -q 1nd -o "+outputdir+"/"+output+".log source "+outputname)
-os.system("bsub -q 1nd -o "+outputdir+"/"+output+".log source "+outputname)
+
+for z in range(len(signal_point)):
+
+
+        outputdir = pwd + "/DATACARDS/"
+        output = "datacard-"+str(signal_point[z])
+        outputname = outputdir+"/"+output+".src"
+
+        outputfile = open(outputname,'w')
+        outputfile.write('#!/bin/bash\n')
+        outputfile.write('export SCRAM_ARCH='+scram+'\n')
+        outputfile.write('cd '+CLS_DIR+'; eval `scramv1 runtime -sh`; \n')  
+        outputfile.write('cd '+TMP_DIR+'; \n') 
+        outputfile.write('cp '+CLS_DIR[:-32]+'/bin/'+scram+'/combine .; \n') 
+        outputfile.write('cp '+CLS_DIR+'/limit_V2 .; \n') 
+        outputfile.write('cp '+outputdir+'/'+output+'.txt . ; \n')
+        outputfile.write('cp '+outputdir+'/simple-shapes-TH1'+str(signal_point[z])+'.root . ; \n') 
+        outputfile.write('./limit_V2 '+output+'.txt ; \n') 
+        outputfile.write('hadd -f '+outputdir+'/FULL_CLS_RESULT_'+str(signal_point[z])+'.root higgsCombineTest.HybridNew.mH120.* ; \n') 
+        outputfile.write('cp higgsCombineTest.Asymptotic.mH120.root '+outputdir+'/ASYMPTOTIC_CLS_RESULT_'+str(signal_point[z])+'.root; \n')
+        outputfile.write('rm higgsCombineTest.HybridNew.mH120.* ; \n') 
+        outputfile.write('cp datacard-S'+str(signal_point[z])+'.txt.result.txt '+outputdir+'/RESULT_'+str(signal_point[z])+'.txt; \n')
+        outputfile.write('rm *root; \n')
+        outputfile.close
+        os.system("echo bsub -q 1nd -o "+outputdir+"/"+output+".log source "+outputname)
+        os.system("bsub -q 1nd -o "+outputdir+"/"+output+".log source "+outputname)
