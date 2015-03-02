@@ -25,7 +25,7 @@ def loop(vec, dxy, flag, phot):
                 continue
             if (event.ptJet[0] < 30): #!!!!!!!!!!!!!!!!!!!!!
                 continue
-            if (event.sigmaIetaPhot[0] < 0.006 or event.sigmaIetaPhot[0] > 0.012):
+            if (event.sigmaIetaPhot[0] > 0.012):
                 continue
             if (event.ptPhot[0] < 85):
                 continue
@@ -37,7 +37,7 @@ def loop(vec, dxy, flag, phot):
                 lum = 19280.
                 if (event.ptJet[0] < 35): #!!!!!!!!!!!!!!!!!!!!!
                     continue
-                if(event.MET < 170):
+                if(event.MET < 60):
                     continue
                 if(len(dxytemp) > 0):
                     dxy.Fill( dxytemp[-1], (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors))    
@@ -45,7 +45,7 @@ def loop(vec, dxy, flag, phot):
             if (flag == 1):
                 if (event.ptJet[0] < 35): #!!!!!!!!!!!!!!!!!!!!!
                     continue
-                if(event.MET < 170):
+                if(event.MET < 60):
                     continue
                 if(len(dxytemp) > 0):
                     dxy.Fill( dxytemp[-1], 1./event.EfficiencyScaleFactors)
@@ -61,10 +61,22 @@ def function (lamb,ctau,phot):
 
     listttjets = ["./v24/TTJets.root"]
     listsig = ["./v24/GMSB_L"+lamb+"-CTAU"+ctau+".root"]
-    listdata = ["./v24/Run2012A.root","./v24/Run2012B.root","./v24/Run2012C_1.root","./v24/Run2012C_2.root","./v24/Run2012C_3.root","./v24/Run2012D_1.root","./v24/Run2012D_2.root","./v24/Run2012D_3.root"]
-    listdataisolow = ["./v24/Run2012Aisolow.root","./v24/Run2012Bisolow.root","./v24/Run2012C_1isolow.root","./v24/Run2012C_2isolow.root","./v24/Run2012C_3isolow.root","./v24/Run2012D_1isolow.root","./v24/Run2012D_2isolow.root","./v24/Run2012D_3isolow.root"]
-    listfakehigh = ["./v24/Run2012Afakehigh.root","./v24/Run2012Bfakehigh.root","./v24/Run2012C_1fakehigh.root","./v24/Run2012C_2fakehigh.root","./v24/Run2012C_3fakehigh.root","./v24/Run2012D_1fakehigh.root","./v24/Run2012D_2fakehigh.root","./v24/Run2012D_3fakehigh.root"]
-    listfakelow = ["./v24/Run2012Afakelow.root","./v24/Run2012Bfakelow.root","./v24/Run2012C_1fakelow.root","./v24/Run2012C_2fakelow.root","./v24/Run2012C_3fakelow.root","./v24/Run2012D_1fakelow.root","./v24/Run2012D_2fakelow.root","./v24/Run2012D_3fakelow.root"]
+    listdata = ["./v24/Run2012A.root",
+                "./v24/Run2012B_1.root","./v24/Run2012B_2.root","./v24/Run2012B_3.root","./v24/Run2012B_4.root",
+                "./v24/Run2012C_1.root","./v24/Run2012C_2.root","./v24/Run2012C_3.root","./v24/Run2012C_4.root","./v24/Run2012C_5.root",
+                "./v24/Run2012D_1.root","./v24/Run2012D_2.root","./v24/Run2012D_3.root","./v24/Run2012D_4.root","./v24/Run2012D_5.root"]
+    listdataisolow = ["./v24/Run2012Aisolow.root",
+                      "./v24/Run2012B_1isolow.root","./v24/Run2012B_2isolow.root","./v24/Run2012B_3isolow.root","./v24/Run2012B_4isolow.root",
+                      "./v24/Run2012C_1isolow.root","./v24/Run2012C_2isolow.root","./v24/Run2012C_3isolow.root","./v24/Run2012C_4isolow.root","./v24/Run2012C_5isolow.root",
+                      "./v24/Run2012D_1isolow.root","./v24/Run2012D_2isolow.root","./v24/Run2012D_3isolow.root","./v24/Run2012D_4isolow.root","./v24/Run2012D_5isolow.root"]
+    listfakehigh = ["./v24/Run2012Afakehigh.root",
+                    "./v24/Run2012B_1fakehigh.root","./v24/Run2012B_2fakehigh.root","./v24/Run2012B_3fakehigh.root","./v24/Run2012B_4fakehigh.root",
+                    "./v24/Run2012C_1fakehigh.root","./v24/Run2012C_2fakehigh.root","./v24/Run2012C_3fakehigh.root","./v24/Run2012C_4fakehigh.root","./v24/Run2012C_5fakehigh.root",
+                    "./v24/Run2012D_1fakehigh.root","./v24/Run2012D_2fakehigh.root","./v24/Run2012D_3fakehigh.root","./v24/Run2012D_4fakehigh.root","./v24/Run2012D_5fakehigh.root"]
+    listfakelow = ["./v24/Run2012Afakelow.root",
+                   "./v24/Run2012B_1fakelow.root","./v24/Run2012B_2fakelow.root","./v24/Run2012B_3fakelow.root","./v24/Run2012B_4fakelow.root",
+                   "./v24/Run2012C_1fakelow.root","./v24/Run2012C_2fakelow.root","./v24/Run2012C_3fakelow.root","./v24/Run2012C_4fakelow.root","./v24/Run2012C_5fakelow.root",
+                   "./v24/Run2012D_1fakelow.root","./v24/Run2012D_2fakelow.root","./v24/Run2012D_3fakelow.root","./v24/Run2012D_4fakelow.root","./v24/Run2012D_5fakelow.root"]
     
     vecfilesttjets = []
     for item in listttjets:
@@ -178,7 +190,7 @@ def function (lamb,ctau,phot):
     background_alphaDown.SetBinError(background_alphaDown.GetNbinsX(),(background_alphaDown.GetBinError(background_alphaDown.GetNbinsX())+background_alphaDown.GetBinError(background_alphaDown.GetNbinsX()+1)))
 
     
-    output = TFile.Open("./simpleshapesv24/histofile_L"+lamb+"CT"+ctau+".root","recreate")
+    output = TFile.Open("./simpleshapes/histofile_L"+lamb+"CT"+ctau+".root","recreate")
 
     ttjet.Write()
     signal.Write()

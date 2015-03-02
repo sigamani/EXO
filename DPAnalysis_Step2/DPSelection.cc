@@ -495,7 +495,8 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
 	if ( cHadIso[i] >= 2.6 ) continue ;  // chargedHadron PHOTONISOLATION
 	if ( nHadIso[i] >= 3.5 + ( 0.04*phoP4.Pt()   ) ) continue ;   // neutralHadron PHOTONISOLATION
 	if ( photIso[i] >= 1.3 + ( 0.005*phoP4.Pt() ) ) continue ;  // photon PHOTONISOLATION
-	
+
+      }	
       
       if (fakephotons){
 	/***********************************************************************/
