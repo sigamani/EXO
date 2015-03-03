@@ -137,35 +137,35 @@ double weightCrossSection(const char* outname) {
 
 
 int getsumcounterzero(const char* outname){
-//int getsumcounterzero(TString infile){
-
-/*
-
-  TString dir = "/afs/cern.ch/work/w/wvandrie/public/EXO/CMSSW_7_1_8/src/EXO/DPAnalysis/test/v24/";
-  TFile f(dir+infile+".root");
+// int getsumcounterzero(TString infile){
 
 
-  TTree* ftree= (TTree*)f.Get("CutFlow");
+
+//   TString dir = "/afs/cern.ch/work/w/wvandrie/public/EXO/CMSSW_7_1_8/src/EXO/DPAnalysis/test/v24/";
+//   TFile f(dir+infile+".root");
+
+
+//   TTree* ftree= (TTree*)f.Get("CutFlow");
       
-  TH1D* hist = new TH1D("hist","",150000,0,150000);
+//   TH1D* hist = new TH1D("hist","",150000,0,150000);
 
-  ftree->Draw("counter[0]>>hist");
+//   ftree->Draw("counter[0]>>hist");
 
-  int nbins = hist->GetNbinsX();
-  double hmin = hist->GetXaxis()->GetBinLowEdge(1);
-  double hmax = hist->GetXaxis()->GetBinUpEdge(nbins);
+//   int nbins = hist->GetNbinsX();
+//   double hmin = hist->GetXaxis()->GetBinLowEdge(1);
+//   double hmax = hist->GetXaxis()->GetBinUpEdge(nbins);
 
-  int entries = 0;
-  for(int b=1; b<=nbins; ++b){
+//   int entries = 0;
+//   for(int b=1; b<=nbins; ++b){
 
-    if (hist->GetBinContent(b) > 0 ) {
-      entries += (hist->GetBinContent(b)) * hist->GetXaxis()->GetBinLowEdge(b);
-    }
+//     if (hist->GetBinContent(b) > 0 ) {
+//       entries += (hist->GetBinContent(b)) * hist->GetXaxis()->GetBinLowEdge(b);
+//     }
 
 
-  }
+//   }
 
-*/
+
   int entries; 
 
   if (TString(outname) == "GMSB_Lambda-140_CTau-10") entries = 50112;
@@ -204,7 +204,21 @@ int getsumcounterzero(const char* outname){
   if (TString(outname) == "QCD_Pt-800to1000") entries = 2.4532e+06;
   if (TString(outname) == "QCD_Pt-1000to1400") entries = 1.96409e+06;
 
-
+  if (TString(outname) == "Run2012A") entries = 1.423650e+06;
+  if (TString(outname) == "Run2012B_1") entries = 1.746522e+06;
+  if (TString(outname) == "Run2012B_2") entries = 1.783702e+06;
+  if (TString(outname) == "Run2012B_3") entries = 1.6859e+06;
+  if (TString(outname) == "Run2012B_4") entries = 1.56462e+06;
+  if (TString(outname) == "Run2012C_1") entries = 1.780056e+06;
+  if (TString(outname) == "Run2012C_2") entries = 1.868314e+06;
+  if (TString(outname) == "Run2012C_3") entries = 1.900796e+06;
+  if (TString(outname) == "Run2012C_4") entries = 1.933735e+06;
+  if (TString(outname) == "Run2012C_5") entries = 1.594005e+06;
+  if (TString(outname) == "Run2012D_1") entries = 1.934311e+06;
+  if (TString(outname) == "Run2012D_2") entries = 1.9866e+06;
+  if (TString(outname) == "Run2012D_3") entries = 1.915217e+06;
+  if (TString(outname) == "Run2012D_4") entries = 1.938768e+06;
+  if (TString(outname) == "Run2012D_5") entries = 1.365449e+06;
 
   return entries;
 }
@@ -233,7 +247,7 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
   h000->GetXaxis()->SetBinLabel(1,"All");
   h000->GetXaxis()->SetBinLabel(2,"Preselection");
   h000->GetXaxis()->SetBinLabel(3,"OneGoodVtx");
-  h000->GetXaxis()->SetBinLabel(4,"MET>30");
+  h000->GetXaxis()->SetBinLabel(4,"MET>60");
   h000->GetXaxis()->SetBinLabel(5,"nJet2");
   h000->GetXaxis()->SetBinLabel(6,"nPhot2");
   
@@ -316,6 +330,12 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
   TFile *pileup = TFile::Open("PUweights.root");
   TH1D *pile = (TH1D*)pileup->FindObjectAny("pileup");
 
+  //bool MCward = 0;
+
+  //if (string(outname).find("Run2012") != std::string::npos)  { MCward=0;}
+  //else MCward = 1;
+
+  //if (MCward == 0) {h000->SetBinContent(0.,0.);}
 
 
   for (jentry=0; jentry<nentries && jentry<nMaxEvents;jentry++) {
@@ -335,9 +355,11 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
   
     if (string(outname).find("Run2012") != std::string::npos)  { MC=0;} 
     else MC = 1;
+
+    //if (MC == 0) {h000->Fill(0.);}
     
-    //if (MC == 0 && !(triggered == 1 || triggered == 3)) continue;
-    //if (MC == 1 && triggered != 1) continue;
+    if (MC == 0 && !(triggered == 1 || triggered == 3)) continue;
+    if (MC == 1 && triggered != 1) continue;
 
 
     int entries = getsumcounterzero(outname); 
@@ -606,12 +628,20 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
     if (string(outname).find("low") != std::string::npos) inverted = true;
 
     
-                                               h000->Fill(1.);
-    if (nGoodVtx < 1) continue;                h000->Fill(2.);
-    if (!inverted && MET < 30) continue;       h000->Fill(3.);
-    if (inverted && MET > 30) continue;        h000->Fill(3.);
-    if (nJet < 2) continue;                    h000->Fill(4.);
-    if (nPhot < 2) continue;                   h000->Fill(5.);
+    //                                            h000->Fill(1.);
+    // if (nGoodVtx < 1) continue;                h000->Fill(2.);
+    // if (!inverted && MET < 60) continue;       h000->Fill(3.);
+    // if (inverted && MET > 30) continue;        h000->Fill(3.);
+    // if (nJet < 2) continue;                    h000->Fill(4.);
+    // if (nPhot < 2) continue;                   h000->Fill(5.);
+
+
+    //test
+                                                 h000->Fill(1.);
+    if (nGoodVtx < 1) continue;                  h000->Fill(2.);
+    if (!inverted && MET < 60) continue;         h000->Fill(3.);
+    if (nJet < 2 or ptJet[0] < 35) continue;     h000->Fill(4.);
+    if (nPhot < 2 or ptPhot[0] < 85) continue;   h000->Fill(5.);
     
     //N-1
     //if (!inverted && MET < 0) continue;       h000->Fill(3.);

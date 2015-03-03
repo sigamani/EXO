@@ -140,7 +140,7 @@ void makeAllFiles(int Lambda, int ctau) {
     char histname[100];
     char histname2[100];
     sprintf(histname,"histofile_L%dCT%d.root", Lambda, ctau);
-    sprintf(histname2,"simple-shapes-TH1L%dCT%d.root", Lambda, ctau);
+    sprintf(histname2,"./DATACARDS/simple-shapes-TH1L%dCT%d.root", Lambda, ctau);
 
 
       TFile histofile(histname); 
@@ -225,7 +225,7 @@ void makeCards(int Lambda, int ctau, double ndata, double nsignal, double sig_er
 
   
   char datacardname[100];
-  sprintf(datacardname,"datacard-L%d-CTAU%d.txt", Lambda, ctau);  
+  sprintf(datacardname,"./DATACARDS/datacard-L%dCT%d.txt", Lambda, ctau);  
 
   ofstream  tablesFile(datacardname);
   tablesFile.setf(ios::fixed);

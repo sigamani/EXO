@@ -60,7 +60,7 @@ def loop(vec, dxy, flag, phot):
 def function (lamb,ctau,phot):
 
     listttjets = ["./v24/TTJets.root"]
-    listsig = ["./v24/GMSB_L"+lamb+"-CTAU"+ctau+".root"]
+    listsig = ["./v24/GMSB_Lambda-"+lamb+"_CTau-"+ctau+".root"]
     listdata = ["./v24/Run2012A.root",
                 "./v24/Run2012B_1.root","./v24/Run2012B_2.root","./v24/Run2012B_3.root","./v24/Run2012B_4.root",
                 "./v24/Run2012C_1.root","./v24/Run2012C_2.root","./v24/Run2012C_3.root","./v24/Run2012C_4.root","./v24/Run2012C_5.root",

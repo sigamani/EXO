@@ -10,22 +10,29 @@ def loop(vec, vechisto, flag, phot):
         j=0
         print 'total events ' + str(entr)
         for event in tree:
+            
+            dxytemp = []
+
+            for i in range(len(event.dxyConv)):
+                if (event.ConvChi2[i] > 0.01):
+                    dxytemp.append(fabs(event.dxyConv[i]))
+            dxytemp = sorted(dxytemp)
+            
             if (event.nPhot < phot):
                 continue
             if (event.sMinPhot[0] < 0.15 or event.sMinPhot[0] > 0.3):
                 continue
             if (event.ptJet[0] < 35):
                 continue
-            if (event.sigmaIetaPhot[0] < 0.006 or event.sigmaIetaPhot[0] > 0.012):
+            if (event.sigmaIetaPhot[0] > 0.012):
                 continue
             if (event.ptPhot[0] < 85):
                 continue
-            #if (event.sMajPhot[0] > 1.35):
-            #    continue
+            if (event.MET < 60):
+                continue
             
+            #ttjets,gpt and QCD bkg and signal
             if(flag == 0):
-                if (event.MET < 60):
-                    continue
                 lum = 19700.
                 vechisto[0].Fill( event.ptPhot[0], (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors) )
                 if (event.ptPhot.size() > phot):
@@ -34,9 +41,9 @@ def loop(vec, vechisto, flag, phot):
                     vechisto[2].Fill( event.ptJet[0], (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors) )
                 if(event.ptJet.size() > 2):
                     vechisto[3].Fill( event.ptJet[1], (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors) )
-                for i in range(len(event.dxyConv)):
-                    if (event.ConvChi2[i] > 0.01):
-                        vechisto[4].Fill( abs(event.dxyConv[i]), (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors) )
+                if(len(dxytemp) > 0):
+                    vechisto[4].Fill( dxytemp[-1], (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors))
+
                 vechisto[5].Fill( event.MET, (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors) )
                 vechisto[6].Fill( event.nJet, (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors))
                 vechisto[7].Fill( event.nPhot, (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors))
@@ -49,9 +56,9 @@ def loop(vec, vechisto, flag, phot):
                 vechisto[14].Fill( event.nhadiso[0], (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors))
                 vechisto[15].Fill( event.photiso[0], (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors))
                 vechisto[16].Fill( event.phohovere[0], (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors))
+            
+            #data
             else:
-                if (event.MET < 60):
-                    continue
                 vechisto[0].Fill( event.ptPhot[0], 1./event.EfficiencyScaleFactors )
                 if (event.ptPhot.size() > phot):
                     vechisto[1].Fill( event.ptPhot[1], 1./event.EfficiencyScaleFactors )
@@ -59,9 +66,8 @@ def loop(vec, vechisto, flag, phot):
                     vechisto[2].Fill( event.ptJet[0], 1./event.EfficiencyScaleFactors )
                 if(event.ptJet.size() > 2):
                     vechisto[3].Fill( event.ptJet[1], 1./event.EfficiencyScaleFactors )
-                for i in range(len(event.dxyConv)):
-                    if (abs(event.ConvChi2[i] > 0.01)):
-                        vechisto[4].Fill( abs(event.dxyConv[i]), 1./event.EfficiencyScaleFactors )
+                if(len(dxytemp) > 0):
+                    vechisto[4].Fill( dxytemp[-1], 1./event.EfficiencyScaleFactors )
                 vechisto[5].Fill( event.MET, 1./event.EfficiencyScaleFactors )
                 vechisto[6].Fill( event.nJet, 1./event.EfficiencyScaleFactors )
                 vechisto[7].Fill( event.nPhot, 1./event.EfficiencyScaleFactors )
@@ -294,9 +300,9 @@ def function (lamb,ctau1,ctau2,phot):
         vechisqcd[i].Scale(ratio)
         vechisgpt[i].Scale(ratio)
 
-    for i in range(nxbins):
-        #if (i != 0):
-        vechis[4].SetBinContent(i+1,0)
+    # for i in range(nxbins):
+    #     #if (i != 0):
+    #     vechis[4].SetBinContent(i+1,0)
 
     output = TFile.Open("./ctau"+ctau1+"andctau"+ctau2+"lambda"+lamb+"/output"+str(phot)+".root","recreate")
 

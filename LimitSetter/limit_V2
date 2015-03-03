@@ -1,7 +1,7 @@
 #!/bin/bash
 
-STEPS=1
-SCANSTEPS=1
+STEPS=30
+SCANSTEPS=30
 PL_STEPS=300
 EXE=combine
 MODEL="${1##*/}"

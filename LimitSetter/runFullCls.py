@@ -8,11 +8,12 @@ import time
 pwd = os.environ['PWD']
 scram = os.environ['SCRAM_ARCH']
 
-#change these two
-CLS_DIR = "/afs/cern.ch/work/s/sigamani/public/CMSSW_6_1_1/src/HiggsAnalysis/CombinedLimit/" 
-TMP_DIR = "/tmp/sigamani/"
+CLS_DIR = "/afs/cern.ch/work/w/wvandrie/public/EXO/CMSSW_7_1_5/src/HiggsAnalysis/CombinedLimit/" 
+TMP_DIR = "/tmp/wvandrie/"
 
-signal_point 		= ['L140CT1000' , 'L140CT100'] 
+signal_point 		= ['L180CT10', 'L180CT50','L180CT250','L180CT500','L180CT2000',
+			   'L160CT10', 'L160CT100','L160CT500','L160CT1000','L160CT2000',
+			   'L140CT10', 'L140CT100','L140CT500','L140CT1000','L140CT2000'] 
 
 
 for z in range(len(signal_point)):
@@ -35,7 +36,7 @@ for z in range(len(signal_point)):
         outputfile.write('hadd -f '+outputdir+'/FULL_CLS_RESULT_'+str(signal_point[z])+'.root higgsCombineTest.HybridNew.mH120.* ; \n') 
         outputfile.write('cp higgsCombineTest.Asymptotic.mH120.root '+outputdir+'/ASYMPTOTIC_CLS_RESULT_'+str(signal_point[z])+'.root; \n')
         outputfile.write('rm higgsCombineTest.HybridNew.mH120.* ; \n') 
-        outputfile.write('cp datacard-S'+str(signal_point[z])+'.txt.result.txt '+outputdir+'/RESULT_'+str(signal_point[z])+'.txt; \n')
+        outputfile.write('cp datacard-'+str(signal_point[z])+'.txt.result.txt '+outputdir+'/RESULT_'+str(signal_point[z])+'.txt; \n')
         outputfile.write('rm *root; \n')
         outputfile.close
         os.system("echo bsub -q 1nd -o "+outputdir+"/"+output+".log source "+outputname)
