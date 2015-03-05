@@ -15,16 +15,16 @@ def loop(vec,histo, phot):
         j=0
         print 'total events ' + str(entr)
         for event in tree:
-            #if (event.ptPhot[0] < 85):
-            #    continue
-            #if (event.nPhot < phot):
-            #    continue
-            #if (event.sMinPhot[0] < 0.15 or event.sMinPhot[0] > 0.3):
-            #    continue
-            #if (event.ptJet[0] < 35):
-            #    continue
-            #if (event.sigmaIetaPhot[0] < 0.006 or event.sigmaIetaPhot[0] > 0.012):
-            #    continue
+            if (event.ptPhot[0] < 85):
+               continue
+            if (event.nPhot < phot):
+               continue
+            if (event.sMinPhot[0] < 0.15 or event.sMinPhot[0] > 0.3):
+               continue
+            if (event.ptJet[0] < 35):
+               continue
+            if (event.sigmaIetaPhot[0] > 0.012):
+               continue
             if (len(event.dxyConv) < 1):
                 continue 
             for each in range(len(event.conversionR)):
@@ -36,9 +36,11 @@ def loop(vec,histo, phot):
 
 def function (lamb,ctau,phot):
 
-    listsig = ["./v24/GMSB_L"+lamb+"-CTAU"+ctau+".root"]
-    listdata = ["./v24/Run2012A.root","./v24/Run2012B.root","./v24/Run2012C_1.root","./v24/Run2012C_2.root","./v24/Run2012C_3.root","./v24/Run2012D_1.root","./v24/Run2012D_2.root","./v24/Run2012D_3.root"]
-    
+    listsig = ["./v24/GMSB_Lambda-"+lamb+"_CTau-"+ctau+".root"]
+    listdata = ["./v24/Run2012A.root",
+                "./v24/Run2012B_1.root","./v24/Run2012B_2.root","./v24/Run2012B_3.root","./v24/Run2012B_4.root",
+                "./v24/Run2012C_1.root","./v24/Run2012C_2.root","./v24/Run2012C_3.root","./v24/Run2012C_4.root","./v24/Run2012C_5.root",
+                "./v24/Run2012D_1.root","./v24/Run2012D_2.root","./v24/Run2012D_3.root","./v24/Run2012D_4.root","./v24/Run2012D_5.root"]
     
     vecfilessig = []
     for item in listsig:
@@ -226,7 +228,6 @@ def main():
     frame = canvas1.GetFrame()
     frame.Draw()
 
-    canvas1.SaveAs("./Tetn.png")
     canvas1.SaveAs("./convRdata.png")
 
 if __name__ == "__main__":

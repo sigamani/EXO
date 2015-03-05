@@ -156,7 +156,7 @@ cat $RESULT
 #Here comes the clever part:
 #create the grid around the observed limit using bi-section
 StartR=`grep "# R_firstguess =" $1  | cut -d '=' -f 2`
-PSEUDO_STAT=1000
+PSEUDO_STAT=2000
 IT=1
 Scan PrelimR $StartR $IT $PSEUDO_STAT $STEPS
 echo "Preliminary R = $PrelimR" >> $RESULT 

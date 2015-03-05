@@ -330,14 +330,6 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
   TFile *pileup = TFile::Open("PUweights.root");
   TH1D *pile = (TH1D*)pileup->FindObjectAny("pileup");
 
-  //bool MCward = 0;
-
-  //if (string(outname).find("Run2012") != std::string::npos)  { MCward=0;}
-  //else MCward = 1;
-
-  //if (MCward == 0) {h000->SetBinContent(0.,0.);}
-
-
   for (jentry=0; jentry<nentries && jentry<nMaxEvents;jentry++) {
     Long64_t ientry = LoadTree(jentry);
     if (ientry < 0) break;
@@ -355,8 +347,6 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
   
     if (string(outname).find("Run2012") != std::string::npos)  { MC=0;} 
     else MC = 1;
-
-    //if (MC == 0) {h000->Fill(0.);}
     
     if (MC == 0 && !(triggered == 1 || triggered == 3)) continue;
     if (MC == 1 && triggered != 1) continue;
@@ -628,20 +618,20 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
     if (string(outname).find("low") != std::string::npos) inverted = true;
 
     
-    //                                            h000->Fill(1.);
-    // if (nGoodVtx < 1) continue;                h000->Fill(2.);
-    // if (!inverted && MET < 60) continue;       h000->Fill(3.);
-    // if (inverted && MET > 30) continue;        h000->Fill(3.);
-    // if (nJet < 2) continue;                    h000->Fill(4.);
-    // if (nPhot < 2) continue;                   h000->Fill(5.);
+                                               h000->Fill(1.);
+    if (nGoodVtx < 1) continue;                h000->Fill(2.);
+    if (!inverted && MET < 60) continue;       h000->Fill(3.);
+    if (inverted && MET > 30) continue;        h000->Fill(3.);
+    if (nJet < 2) continue;                    h000->Fill(4.);
+    if (nPhot < 2) continue;                   h000->Fill(5.);
 
 
     //test
-                                                 h000->Fill(1.);
-    if (nGoodVtx < 1) continue;                  h000->Fill(2.);
-    if (!inverted && MET < 60) continue;         h000->Fill(3.);
-    if (nJet < 2 or ptJet[0] < 35) continue;     h000->Fill(4.);
-    if (nPhot < 2 or ptPhot[0] < 85) continue;   h000->Fill(5.);
+    //                                              h000->Fill(1.);
+    // if (nGoodVtx < 1) continue;                  h000->Fill(2.);
+    // if (!inverted && MET < 60) continue;         h000->Fill(3.);
+    // if (nJet < 2 or ptJet[0] < 35) continue;     h000->Fill(4.);
+    // if (nPhot < 2 or ptPhot[0] < 85) continue;   h000->Fill(5.);
     
     //N-1
     //if (!inverted && MET < 0) continue;       h000->Fill(3.);

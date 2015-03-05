@@ -189,6 +189,12 @@ def function (lamb,ctau,phot):
     background_alphaUp.SetBinError(background_alphaUp.GetNbinsX(),(background_alphaUp.GetBinError(background_alphaUp.GetNbinsX())+background_alphaUp.GetBinError(background_alphaUp.GetNbinsX()+1)))
     background_alphaDown.SetBinError(background_alphaDown.GetNbinsX(),(background_alphaDown.GetBinError(background_alphaDown.GetNbinsX())+background_alphaDown.GetBinError(background_alphaDown.GetNbinsX()+1)))
 
+    for i in range(nxbins):
+        if (i == 0 or i == 1):
+            ttjet.SetBinContent(i+1,0)
+            signal.SetBinContent(i+1,0)
+            data_obs.SetBinContent(i+1,0)
+            background.SetBinContent(i+1,0)
     
     output = TFile.Open("./simpleshapes/histofile_L"+lamb+"CT"+ctau+".root","recreate")
 
@@ -206,17 +212,17 @@ def function (lamb,ctau,phot):
 
 
 def main():
-    function("140","10",2)
-    function("140","100",2)
-    function("140","500",2)
-    function("140","1000",2)
-    function("140","2000",2)
+    # function("140","10",2)
+    # function("140","100",2)
+    # function("140","500",2)
+    # function("140","1000",2)
+    # function("140","2000",2)
 
-    function("160","10",2)
-    function("160","100",2)
-    function("160","500",2)
-    function("160","1000",2)
-    function("160","2000",2)
+    # function("160","10",2)
+    # function("160","100",2)
+    # function("160","500",2)
+    # function("160","1000",2)
+    # function("160","2000",2)
 
     function("180","10",2)
     function("180","50",2)

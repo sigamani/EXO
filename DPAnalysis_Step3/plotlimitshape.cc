@@ -143,6 +143,8 @@ void plot_limit_mass(std::string LAMBDA){
     CT50histo97->GetMean(),
   };
 
+  cout << upperlimit50;
+
   Float_t upperlimit250[5] = {
     CT250histo2->GetMean(),
     CT250histo16->GetMean(),

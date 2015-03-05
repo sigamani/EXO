@@ -32,8 +32,13 @@ def loop(vec,histo):
 
 def function ():
 
-    listdata = ["../DPAnalysis/test/v24/Run2012A.root","../DPAnalysis/test/v24/Run2012B.root","../DPAnalysis/test/v24/Run2012C_1.root","../DPAnalysis/test/v24/Run2012C_2.root","../DPAnalysis/test/v24/Run2012C_3.root","../DPAnalysis/test/v24/Run2012D_1.root","../DPAnalysis/test/v24/Run2012D_2.root","../DPAnalysis/test/v24/Run2012D_3.root"]
-    listMC = ["../DPAnalysis/test/v24/TTJets.root","../DPAnalysis/test/v24/QCD_Pt-80to120.root","../DPAnalysis/test/v24/QCD_Pt-120to170.root","../DPAnalysis/test/v24/QCD_Pt-170to300.root","../DPAnalysis/test/v24/QCD_Pt-470to600.root","../DPAnalysis/test/v24/QCD_Pt-600to800.root","../DPAnalysis/test/v24/QCD_Pt-800to1000.root","../DPAnalysis/test/v24/QCD_Pt-1000to1400.root","../DPAnalysis/test/v24/G_Pt-50to80.root","../DPAnalysis/test/v24/G_Pt-80to120.root","../DPAnalysis/test/v24/G_Pt-120to170.root","../DPAnalysis/test/v24/G_Pt-170to300.root","../DPAnalysis/test/v24/G_Pt-300to470.root","../DPAnalysis/test/v24/G_Pt-470to800.root"]
+    listdata = ["../../EXO_old/DPAnalysis/test/v24/Run2012A.root",
+                "../../EXO_old/DPAnalysis/test/v24/Run2012B.root",
+                "../../EXO_old/DPAnalysis/test/v24/Run2012C_1.root","../../EXO_old/DPAnalysis/test/v24/Run2012C_2.root","../../EXO_old/DPAnalysis/test/v24/Run2012C_3.root",
+                "../../EXO_old/DPAnalysis/test/v24/Run2012D_1.root","../../EXO_old/DPAnalysis/test/v24/Run2012D_2.root","../../EXO_old/DPAnalysis/test/v24/Run2012D_3.root"]
+    listMC = ["../../EXO_old/DPAnalysis/test/v24/TTJets.root",
+              "../../EXO_old/DPAnalysis/test/v24/QCD_Pt-80to120.root","../../EXO_old/DPAnalysis/test/v24/QCD_Pt-120to170.root","../../EXO_old/DPAnalysis/test/v24/QCD_Pt-170to300.root","../../EXO_old/DPAnalysis/test/v24/QCD_Pt-470to600.root","../../EXO_old/DPAnalysis/test/v24/QCD_Pt-600to800.root","../../EXO_old/DPAnalysis/test/v24/QCD_Pt-800to1000.root","../../EXO_old/DPAnalysis/test/v24/QCD_Pt-1000to1400.root",
+              "../../EXO_old/DPAnalysis/test/v24/G_Pt-50to80.root","../../EXO_old/DPAnalysis/test/v24/G_Pt-80to120.root","../../EXO_old/DPAnalysis/test/v24/G_Pt-120to170.root","../../EXO_old/DPAnalysis/test/v24/G_Pt-170to300.root","../../EXO_old/DPAnalysis/test/v24/G_Pt-300to470.root","../../EXO_old/DPAnalysis/test/v24/G_Pt-470to800.root"]
     
     vecfiles = []
     for item in listdata:

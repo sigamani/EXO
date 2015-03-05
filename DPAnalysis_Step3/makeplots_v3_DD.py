@@ -313,6 +313,10 @@ def function (lamb,ctau1,ctau2,phot):
     dxyttjet.SetBinError(dxyttjet.GetNbinsX(),(dxyttjet.GetBinError(dxyttjet.GetNbinsX())+dxyttjet.GetBinError(dxyttjet.GetNbinsX()+1)))
     dxyisolow.SetBinError(dxyisolow.GetNbinsX(),(dxyisolow.GetBinError(dxyisolow.GetNbinsX())+dxyisolow.GetBinError(dxyisolow.GetNbinsX()+1)))
 
+    errorsky = Double(0)
+    print vechisttjet[4].IntegralAndError(1,nxbins,errorsky)
+    print errorsky
+
     
     for i in range(len(vechis)):
         datatotal = vechis[i].Integral()
@@ -338,22 +342,15 @@ def function (lamb,ctau1,ctau2,phot):
         ratio = 1.
     vechisisolow[4].Scale(ratio)
   
-    for i in range(nxbins):
-        if (i != 0):
-            vechis[4].SetBinContent(i+1,0)
+    # for i in range(nxbins):
+    #     if (i != 0):
+    #         vechis[4].SetBinContent(i+1,0)
 
     print "DD bkg (scaled): " + str(vechisisolow[4].Integral())
     print "Data conversions: " + str(vechis[4].Integral())
     print "Sig 10 conversions: " + str(vechissig1[4].Integral())
     print "Sig 500 conversions: " + str(vechissig2[4].Integral())
     print "TTjet conversions: " + str(vechisttjet[4].Integral())
-
-    totalbkg = vechisttjet[4].Clone()
-    totalbkg.Add(vechisisolow[4])
-
-    ratio = vechis[4].Clone()
-    ratio.SetName("Ratio")
-    ratio.Divide(totalbkg)
 
     output = TFile.Open("./ctau"+ctau1+"andctau"+ctau2+"lambda"+lamb+"/output"+str(phot)+".root","recreate")
 
@@ -367,7 +364,6 @@ def function (lamb,ctau1,ctau2,phot):
         it.Write()
     for it in vechisisolow:
         it.Write()
-    ratio.Write()
 
     output.Close()
 
