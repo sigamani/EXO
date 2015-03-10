@@ -62,7 +62,10 @@ private:
     std::vector<double> chadiso;
     std::vector<double> nhadiso;
     std::vector<double> photiso;
-
+    std::vector<double> rnine;
+    std::vector<double> EoverP;
+    std::vector<double> EoverP2;
+    
 };
 
 

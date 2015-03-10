@@ -106,6 +106,8 @@ public :
    Float_t         convR[MAXCONV];   //[nConversions]
    Float_t         convMatchedEle[MAXCONV];   //[nConversions]
    Float_t         convChi2[MAXCONV];   //[nConversions]
+   Float_t         convMomentum[MAXCONV];   //[nConversions]
+   Float_t         convMomentum2[MAXCONV];   //[nConversions]
    Float_t         phoPx[MAXPHO];   //[nPhotons]
    Float_t         phoPy[MAXPHO];   //[nPhotons]
    Float_t         phoPz[MAXPHO];   //[nPhotons]
@@ -143,6 +145,7 @@ public :
    Float_t         dtdEta[MAXPHO];   //[nPhotons]
    Float_t         phoMatchedEle[MAXPHO];   //[nPhotons]
    Float_t         conversionVeto[MAXPHO];   //[nPhotons]
+   Float_t         r9[MAXPHO];   //[nPhotons]
    Int_t           vtxNTracks[MAXVTX];   //[nVertices]
    Float_t         vtxChi2[MAXVTX];   //[nVertices]
    Float_t         vtxNdof[MAXVTX];   //[nVertices]
@@ -236,6 +239,8 @@ public :
    TBranch        *b_convR;   //!
    TBranch        *b_convMatchedEle;   //!
    TBranch        *b_convChi2; //!
+   TBranch        *b_convMomentum; //!
+   TBranch        *b_convMomentum2; //!
    TBranch        *b_phoPx;   //!
    TBranch        *b_phoPy;   //!
    TBranch        *b_phoPz;   //!
@@ -273,6 +278,7 @@ public :
    TBranch        *b_dtdEta;   //!
    TBranch        *b_phoMatchedEle;  //!
    TBranch        *b_conversionVeto;  //!
+   TBranch        *b_r9;  //!
    TBranch        *b_vtxNTracks;   //!
    TBranch        *b_vtxChi2;   //!
    TBranch        *b_vtxNdof;   //!
@@ -435,6 +441,8 @@ void GMSBTree_V3::Init(TTree *tree)
    fChain->SetBranchAddress("convR", convR, &b_convR);
    fChain->SetBranchAddress("convMatchedEle", convMatchedEle, &b_convMatchedEle);
    fChain->SetBranchAddress("convChi2", convChi2, &b_convChi2);
+   fChain->SetBranchAddress("convMomentum", convMomentum, &b_convMomentum);
+   fChain->SetBranchAddress("convMomentum2", convMomentum2, &b_convMomentum2);
    fChain->SetBranchAddress("phoPx", phoPx, &b_phoPx);
    fChain->SetBranchAddress("phoPy", phoPy, &b_phoPy);
    fChain->SetBranchAddress("phoPz", phoPz, &b_phoPz);
@@ -472,6 +480,7 @@ void GMSBTree_V3::Init(TTree *tree)
    fChain->SetBranchAddress("dtdEta", dtdEta, &b_dtdEta);
    fChain->SetBranchAddress("phoMatchedEle", phoMatchedEle, &b_phoMatchedEle);
    fChain->SetBranchAddress("conversionVeto", conversionVeto, &b_conversionVeto);
+   fChain->SetBranchAddress("r9", r9, &b_r9);
    fChain->SetBranchAddress("vtxNTracks", vtxNTracks, &b_vtxNTracks);
    fChain->SetBranchAddress("vtxChi2", vtxChi2, &b_vtxChi2);
    fChain->SetBranchAddress("vtxNdof", vtxNdof, &b_vtxNdof);

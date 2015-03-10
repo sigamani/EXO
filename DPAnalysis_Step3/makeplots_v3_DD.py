@@ -313,10 +313,6 @@ def function (lamb,ctau1,ctau2,phot):
     dxyttjet.SetBinError(dxyttjet.GetNbinsX(),(dxyttjet.GetBinError(dxyttjet.GetNbinsX())+dxyttjet.GetBinError(dxyttjet.GetNbinsX()+1)))
     dxyisolow.SetBinError(dxyisolow.GetNbinsX(),(dxyisolow.GetBinError(dxyisolow.GetNbinsX())+dxyisolow.GetBinError(dxyisolow.GetNbinsX()+1)))
 
-    errorsky = Double(0)
-    print vechisttjet[4].IntegralAndError(1,nxbins,errorsky)
-    print errorsky
-
     
     for i in range(len(vechis)):
         datatotal = vechis[i].Integral()

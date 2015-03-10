@@ -316,7 +316,10 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
   anaTree->Branch("nhadiso", &nhadiso);
   anaTree->Branch("photiso", &photiso);
   anaTree->Branch("triggeredvariable", &triggeredvariable, "triggeredvariable/I");
-                                                            
+  anaTree->Branch("rnine", &rnine);
+  anaTree->Branch("EoverP",&EoverP);
+  anaTree->Branch("EoverP2",&EoverP2);
+  
   Long64_t nentries = fChain->GetEntriesFast();
   Float_t N_events_w = (Float_t) fChain->GetEntries();
 
@@ -397,6 +400,9 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
     nhadiso.clear();
     chadiso.clear();
     phohovere.clear();
+    rnine.clear();
+    EoverP.clear();
+    EoverP2.clear();
 
     int nVtx = 0 ;
     
@@ -423,8 +429,11 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
       if (convMatchedEle[i] > 0) continue;
        
       bool matching = false;
+      double tempdeltar = 10000.;
       double deltar = 0.;
-       
+      double eoverp = 10000.;
+      double eoverp2 = 10000.;
+
       for (int k=0; k < nPhotons; k++){
 	TLorentzVector phoP4( phoPx[k], phoPy[k], phoPz[k], phoE[k] );
 	double photonEta = phoP4.Eta();
@@ -440,11 +449,19 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
 
 	deltaRward.push_back(deltar);
 
+	if (deltar < tempdeltar and deltar < 0.3){ 
+	  tempdeltar = deltar;
+	  eoverp = phoP4.E() / convMomentum[i];
+	  eoverp2 = phoP4.E() / convMomentum2[i];
+	}
     
 	//if (deltar < 0.25) {matching = true;}
 
       }
 
+      if (eoverp < 1000) EoverP.push_back(eoverp);
+      if (eoverp2 < 1000) EoverP2.push_back(eoverp2);
+      
       //if (!matching) continue;
        
       dzConv.push_back(convDz[i]);
@@ -540,6 +557,7 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
       chadiso.push_back(cHadIso[i]);
       nhadiso.push_back(nHadIso[i]);
       photiso.push_back(photIso[i]);
+      rnine.push_back(r9[i]);
 
       weight = pow(0.99887, ptPhot.size());
 

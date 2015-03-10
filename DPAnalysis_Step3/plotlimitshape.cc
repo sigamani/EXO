@@ -24,17 +24,17 @@ void rootlogon();
 TString savedir = "./img_fit/";
 TString extra = "";
 
-// TFile* file_CT10L180 = new TFile(("./exclusionfiles/higgsCombineL180CTau10shapedata"+extra+".Asymptotic.mH120.root"), "READ");
-// TFile* file_CT50L180 = new TFile(("./exclusionfiles/higgsCombineL180CTau50shapedata"+extra+".Asymptotic.mH120.root"), "READ");
-// TFile* file_CT250L180 = new TFile(("./exclusionfiles/higgsCombineL180CTau250shapedata"+extra+".Asymptotic.mH120.root"), "READ");
-// TFile* file_CT500L180 = new TFile(("./exclusionfiles/higgsCombineL180CTau500shapedata"+extra+".Asymptotic.mH120.root"), "READ");
-// TFile* file_CT2000L180 = new TFile(("./exclusionfiles/higgsCombineL180CTau2000shapedata"+extra+".Asymptotic.mH120.root"), "READ");
+TFile* file_CT10L180 = new TFile(("./exclusionfiles/higgsCombineL180CTau10shapedata"+extra+".Asymptotic.mH120.root"), "READ");
+TFile* file_CT50L180 = new TFile(("./exclusionfiles/higgsCombineL180CTau50shapedata"+extra+".Asymptotic.mH120.root"), "READ");
+TFile* file_CT250L180 = new TFile(("./exclusionfiles/higgsCombineL180CTau250shapedata"+extra+".Asymptotic.mH120.root"), "READ");
+TFile* file_CT500L180 = new TFile(("./exclusionfiles/higgsCombineL180CTau500shapedata"+extra+".Asymptotic.mH120.root"), "READ");
+TFile* file_CT2000L180 = new TFile(("./exclusionfiles/higgsCombineL180CTau2000shapedata"+extra+".Asymptotic.mH120.root"), "READ");
 
-TFile* file_CT10L180 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L180CT10.root"), "READ");
-TFile* file_CT50L180 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L180CT50.root"), "READ");
-TFile* file_CT250L180 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L180CT250.root"), "READ");
-TFile* file_CT500L180 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L180CT500.root"), "READ");
-TFile* file_CT2000L180 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L180CT2000.root"), "READ");
+// TFile* file_CT10L180 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L180CT10.root"), "READ");
+// TFile* file_CT50L180 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L180CT50.root"), "READ");
+// TFile* file_CT250L180 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L180CT250.root"), "READ");
+// TFile* file_CT500L180 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L180CT500.root"), "READ");
+// TFile* file_CT2000L180 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L180CT2000.root"), "READ");
 
 void plot_limit_mass(std::string LAMBDA){
 
@@ -175,10 +175,12 @@ void plot_limit_mass(std::string LAMBDA){
   exp_lim[4] = xsec*upperlimit2000[2];
 
 
-  Double_t mTh[5] = {1.0,5.0,25.0,50.0,200.0};
+  //Double_t mTh[5] = {1.0,5.0,25.0,50.0,200.0};
+  Double_t mTh[5] = {0.366,1.83,9.14,18.3,73.1};
   Double_t xsTh[5] = {xsec,xsec,xsec,xsec,xsec};
-
-  Double_t x_pdf[10] = {1.0,5.0,25.0,50.0,200.0,200.0,50.0,25.0,5.0,1.0};
+  
+  //Double_t x_pdf[10] = {1.0,5.0,25.0,50.0,200.0,200.0,50.0,25.0,5.0,1.0};
+  Double_t x_pdf[10] = {0.366,1.83,9.14,18.3,73.1,73.1,18.3,9.14,1.83,0.366};
 
   
   Double_t y_pdf_1sig[10] = { xsec*upperlimit10[1],
