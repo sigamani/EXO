@@ -156,6 +156,7 @@ struct Ntuple
   float dtdPhi[MAXPHO];
   float phoMatchedEle[MAXPHO];
   float conversionVeto[MAXPHO];
+  float E3x3[MAXPHO];
 
 
   int   nConversions ;
@@ -166,6 +167,8 @@ struct Ntuple
   float convChi2[MAXCONV] ;
   float convMatchedEle[MAXCONV] ;
   float convR[MAXCONV] ;
+  float convMomentum[MAXCONV];
+  float convMomentum2[MAXCONV];
 
 
   // Gen Particle information
