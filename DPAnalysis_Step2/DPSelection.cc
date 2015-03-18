@@ -106,13 +106,16 @@ double weightCrossSection(const char* outname) {
   double weight;
   
  
-  
+  if (string(outname).find("GMSB_Lambda-120") != std::string::npos) weight = 0.133;  
   if (string(outname).find("GMSB_Lambda-140") != std::string::npos) weight = 0.0574;
   if (string(outname).find("GMSB_Lambda-160") != std::string::npos) weight = 0.0277;
   if (string(outname).find("GMSB_Lambda-180") != std::string::npos) weight = 0.0145;
 
   if (TString(outname) == "TTJets") weight = 13.43;
- 
+
+  //TTJets inclusive
+  //if (TString(outname) == "TTJets") weight = 211.0;
+
   if (TString(outname) == "G_Pt-50to80") weight = 3322.309;
   if (TString(outname) == "G_Pt-80to120") weight = 558.2865;
   if (TString(outname) == "G_Pt-120to170") weight = 108.0068;
@@ -168,25 +171,35 @@ int getsumcounterzero(const char* outname){
 
   int entries; 
 
+  // if (TString(outname) == "GMSB_Lambda-120_CTau-10") entries = ???;
+  // if (TString(outname) == "GMSB_Lambda-120_CTau-100") entries = ???;
+  // if (TString(outname) == "GMSB_Lambda-120_CTau-250") entries = ???;
+  // if (TString(outname) == "GMSB_Lambda-120_CTau-1000") entries = ???;
+  // if (TString(outname) == "GMSB_Lambda-120_CTau-2000") entries = ???;
+  if (TString(outname) == "GMSB_Lambda-140_CTau-1") entries = 50112 ;
   if (TString(outname) == "GMSB_Lambda-140_CTau-10") entries = 50112;
   if (TString(outname) == "GMSB_Lambda-140_CTau-50") entries = 50112 ;
   if (TString(outname) == "GMSB_Lambda-140_CTau-100") entries = 50112 ;
   if (TString(outname) == "GMSB_Lambda-140_CTau-500") entries = 50112;
   if (TString(outname) == "GMSB_Lambda-140_CTau-1000") entries = 50112 ;
   if (TString(outname) == "GMSB_Lambda-140_CTau-2000") entries = 50112 ;
+  if (TString(outname) == "GMSB_Lambda-160_CTau-1") entries = 50112 ;
   if (TString(outname) == "GMSB_Lambda-160_CTau-10") entries = 998272 ;
   if (TString(outname) == "GMSB_Lambda-160_CTau-50") entries = 993664 ;
   if (TString(outname) == "GMSB_Lambda-160_CTau-100") entries = 969984 ;
   if (TString(outname) == "GMSB_Lambda-160_CTau-500") entries = 988576 ;
   if (TString(outname) == "GMSB_Lambda-160_CTau-1000") entries = 50112 ;
   if (TString(outname) == "GMSB_Lambda-160_CTau-2000") entries = 50112 ;
+  if (TString(outname) == "GMSB_Lambda-180_CTau-1") entries = 50112 ;
   if (TString(outname) == "GMSB_Lambda-180_CTau-10") entries = 993376;
   if (TString(outname) == "GMSB_Lambda-180_CTau-50") entries = 995392 ;
   if (TString(outname) == "GMSB_Lambda-180_CTau-250") entries = 997120 ;
-  if (TString(outname) == "GMSB_Lambda-180_CTau-500") entries = 993000;
+  if (TString(outname) == "GMSB_Lambda-180_CTau-500") entries = 993000 ;
   if (TString(outname) == "GMSB_Lambda-180_CTau-2000") entries = 50112 ;
 
-  if (TString(outname) == "TTJets") entries = 3.74644e+06;
+  //if (TString(outname) == "TTJets") entries = 3.74644e+06;
+  //TTJets inclusive
+  if (TString(outname) == "TTJets") entries = 19675970;
 
   if (TString(outname) == "G_Pt-50to80") entries = 1.99506e+06;
   if (TString(outname) == "G_Pt-80to120") entries = 1.99263e+06;
@@ -319,6 +332,7 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
   anaTree->Branch("rnine", &rnine);
   anaTree->Branch("EoverP",&EoverP);
   anaTree->Branch("EoverP2",&EoverP2);
+  anaTree->Branch("EThreeByThree", &EThreeByThree);
   
   Long64_t nentries = fChain->GetEntriesFast();
   Float_t N_events_w = (Float_t) fChain->GetEntries();
@@ -350,7 +364,8 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
   
     if (string(outname).find("Run2012") != std::string::npos)  { MC=0;} 
     else MC = 1;
-    
+
+    //Triggeredvariable!!!
     if (MC == 0 && !(triggered == 1 || triggered == 3)) continue;
     if (MC == 1 && triggered != 1) continue;
 
@@ -403,6 +418,7 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
     rnine.clear();
     EoverP.clear();
     EoverP2.clear();
+    EthreeByThree.clear();
 
     int nVtx = 0 ;
     
@@ -449,18 +465,18 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
 
 	deltaRward.push_back(deltar);
 
-	if (deltar < tempdeltar and deltar < 0.3){ 
-	  tempdeltar = deltar;
-	  eoverp = phoP4.E() / convMomentum[i];
-	  eoverp2 = phoP4.E() / convMomentum2[i];
-	}
+	//if (deltar < tempdeltar and deltar < 0.3){ 
+	//  tempdeltar = deltar;
+	//  eoverp = phoP4.E() / convMomentum[i];
+	//  eoverp2 = phoP4.E() / convMomentum2[i];
+	//}
     
 	//if (deltar < 0.25) {matching = true;}
 
       }
 
-      if (eoverp < 1000) EoverP.push_back(eoverp);
-      if (eoverp2 < 1000) EoverP2.push_back(eoverp2);
+    //if (eoverp < 1000) EoverP.push_back(eoverp);
+    //  if (eoverp2 < 1000) EoverP2.push_back(eoverp2);
       
       //if (!matching) continue;
        
@@ -557,7 +573,7 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
       chadiso.push_back(cHadIso[i]);
       nhadiso.push_back(nHadIso[i]);
       photiso.push_back(photIso[i]);
-      rnine.push_back(r9[i]);
+      //rnine.push_back(r9[i]);
 
       weight = pow(0.99887, ptPhot.size());
 
@@ -591,10 +607,6 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
        
       jCorr = ( 1. - jecUnc[j] ) ;
       jp4down = jp4down*jCorr;
-
-      bool jetpt = true;
-      bool jetptup = true;
-      bool jetptdown = true;
 
       if ( jp4.Pt() < 30) continue;  //N-1!!!!!!!!!!!!!!!!!11
       
@@ -635,7 +647,8 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
 
     if (string(outname).find("low") != std::string::npos) inverted = true;
 
-    
+
+    //Normal    
                                                h000->Fill(1.);
     if (nGoodVtx < 1) continue;                h000->Fill(2.);
     if (!inverted && MET < 60) continue;       h000->Fill(3.);
@@ -644,7 +657,7 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
     if (nPhot < 2) continue;                   h000->Fill(5.);
 
 
-    //test
+    //Test
     //                                              h000->Fill(1.);
     // if (nGoodVtx < 1) continue;                  h000->Fill(2.);
     // if (!inverted && MET < 60) continue;         h000->Fill(3.);
@@ -652,10 +665,21 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
     // if (nPhot < 2 or ptPhot[0] < 85) continue;   h000->Fill(5.);
     
     //N-1
-    //if (!inverted && MET < 0) continue;       h000->Fill(3.);
-    //if (inverted && MET > 30) continue;        h000->Fill(3.);
-    //if (nJet < 1) continue;                    h000->Fill(4.);
-    //if (nPhot < 1) continue;                   h000->Fill(5.);
+    //                                            h000->Fill(1.);
+    // if (nGoodVtx < 1) continue;                h000->Fill(2.);
+    // if (!inverted && MET < 0) continue;        h000->Fill(3.);
+    // if (inverted && MET > 30) continue;        h000->Fill(3.);
+    // if (nJet < 1) continue;                    h000->Fill(4.);
+    // if (nPhot < 1) continue;                   h000->Fill(5.);
+
+    //Triggeredvariable
+    //                                            h000->Fill(1.);
+    // if (nGoodVtx < 1) continue;                h000->Fill(2.);
+    //                                            h000->Fill(3.);
+    // if (nJet < 2) continue;                    h000->Fill(4.);
+    // if (nPhot < 2) continue;                   h000->Fill(5.);
+
+
 
     TVector3 MET( metPx, metPy, 0);  
 

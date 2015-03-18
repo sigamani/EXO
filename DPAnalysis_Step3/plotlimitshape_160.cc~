@@ -192,10 +192,15 @@ void plot_limit_mass(std::string LAMBDA){
   exp_lim[3] = xsec*upperlimit1000[2];
   exp_lim[4] = xsec*upperlimit2000[2];
 
-  Double_t mTh[5] = {1.0,10.0,50.0,100.0,200.0};
-  Double_t xsTh[5] = {xsec,xsec,xsec,xsec,xsec};
+  //Theoretical CTAU
+  //Double_t mTh[5] = {1.0,10.0,50.0,100.0,200.0};
+  //Double_t x_pdf[10] = {1.0,10.0,50.0,100.0,200.0,200.0,100.0,50.0,10.0,1.0};
 
-  Double_t x_pdf[10] = {1.0,10.0,50.0,100.0,200.0,200.0,100.0,50.0,10.0,1.0};
+  //Real CTAU
+  Double_t mTh[5] = {0.428,4.28,21.4,42.8,85.6};
+  Double_t x_pdf[10] = {0.428,4.28,21.4,42.8,85.6,85.6,42.8,21.4,4.28,0.428};
+
+  Double_t xsTh[5] = {xsec,xsec,xsec,xsec,xsec};
 
   
   Double_t y_pdf_1sig[10] = { xsec*upperlimit10[1],
@@ -255,7 +260,7 @@ void plot_limit_mass(std::string LAMBDA){
   TCanvas* c0 = new TCanvas("exclusion limit", "exclusion limit", 1);
   c0->cd();
   c0->SetLogy();
-  c0->SetLogx();
+  //c0->SetLogx();
   c0->Range(83.19049,-3.60972,185.6367,1.040413);
   c0->SetFillColor(0);
   c0->SetBorderMode(0);
@@ -280,7 +285,7 @@ void plot_limit_mass(std::string LAMBDA){
   exp_lim_graph->GetXaxis()->SetTitle("c#tau_{#tilde{#chi^{0}_{1}}} (cm)");
   exp_lim_graph->GetYaxis()->SetTitle("#sigma ( #tilde{#chi^{0}_{1}} #rightarrow #tilde{G}#gamma) (pb)");
   exp_lim_graph->GetYaxis()->SetRangeUser(0.0005, 100);
-  exp_lim_graph->GetXaxis()->SetRangeUser(1, 9000.);
+  exp_lim_graph->GetXaxis()->SetRangeUser(0.1, 9000.);
   exp_lim_graph->GetXaxis()->SetTitleSize(0.048);
   exp_lim_graph->GetXaxis()->SetTitleOffset(1.24);
   exp_lim_graph->GetYaxis()->SetTitleSize(0.048);
@@ -329,7 +334,8 @@ void plot_limit_mass(std::string LAMBDA){
   leg->AddEntry(Twosig_graph, "#pm 2 #sigma Expected", "F");
   leg->Draw("same");
 
-  c0->SaveAs("exclusion_limit_L160"+extra+".pdf");
+  //c0->SaveAs("exclusion_limit_L160"+extra+".pdf");
+  c0->SaveAs("exclusion_limit_L160"+extra+".png");
 
 }
 

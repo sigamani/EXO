@@ -146,6 +146,7 @@ def function (lamb,ctau,phot):
     background_alphaDowntotal = background_alphaDown.GetBinContent(1)
     newisolowtotal = datatotal
 
+
     if(isolowtotal != 0):
         ratio = newisolowtotal/isolowtotal
         ratio_alphaUp = newisolowtotal/background_alphaUptotal
@@ -205,18 +206,21 @@ def function (lamb,ctau,phot):
 
 
 def main():
-    function("140","10",2)
-    function("140","100",2)
-    function("140","500",2)
-    function("140","1000",2)
-    function("140","2000",2)
+    # function("140","1",2)
+    # function("140","10",2)
+    # function("140","100",2)
+    # function("140","500",2)
+    # function("140","1000",2)
+    # function("140","2000",2)
 
-    function("160","10",2)
-    function("160","100",2)
-    function("160","500",2)
-    function("160","1000",2)
-    function("160","2000",2)
+    # function("160","1",2)
+    # function("160","10",2)
+    # function("160","100",2)
+    # function("160","500",2)
+    # function("160","1000",2)
+    # function("160","2000",2)
 
+    function("180","1",2)
     function("180","10",2)
     function("180","50",2)
     function("180","250",2)

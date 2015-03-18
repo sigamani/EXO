@@ -6,7 +6,8 @@ import time
 
 
 pwd = os.environ['PWD']
-scram = os.environ['SCRAM_ARCH']
+#scram = os.environ['SCRAM_ARCH']
+scram = 'slc6_amd64_gcc481'
 
 CLS_DIR = "/afs/cern.ch/work/w/wvandrie/public/EXO/CMSSW_7_1_5/src/HiggsAnalysis/CombinedLimit/" 
 TMP_DIR = "/tmp/wvandrie/"
@@ -25,7 +26,7 @@ for z in range(len(signal_point)):
 
         outputfile = open(outputname,'w')
         outputfile.write('#!/bin/bash\n')
-        outputfile.write('export SCRAM_ARCH='+scram+'\n')
+        outputfile.write('export SCRAM_ARCH'+scram+'; \n')
         outputfile.write('cd '+CLS_DIR+'; eval `scramv1 runtime -sh`; \n')  
         outputfile.write('cd '+TMP_DIR+'; \n') 
         outputfile.write('cp '+CLS_DIR[:-32]+'/bin/'+scram+'/combine .; \n') 
@@ -39,5 +40,5 @@ for z in range(len(signal_point)):
         outputfile.write('cp datacard-'+str(signal_point[z])+'.txt.result.txt '+outputdir+'/RESULT_'+str(signal_point[z])+'.txt; \n')
         outputfile.write('rm *root; \n')
         outputfile.close
-        os.system("echo bsub -q 1nd -o "+outputdir+"/"+output+".log source "+outputname)
-        os.system("bsub -q 1nd -o "+outputdir+"/"+output+".log source "+outputname)
+        os.system("echo bsub -q 8nh -o "+outputdir+"/"+output+".log source "+outputname)
+        os.system("bsub -q 8nh -o "+outputdir+"/"+output+".log source "+outputname)

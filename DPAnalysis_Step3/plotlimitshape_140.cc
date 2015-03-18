@@ -24,17 +24,19 @@ void rootlogon();
 TString savedir = "./img_fit/";
 TString extra = "";
 
-// TFile* file_CT10L140 = new TFile(("./exclusionfiles/higgsCombineL140CTau10shapedata"+extra+".Asymptotic.mH120.root"), "READ");
-// TFile* file_CT100L140 = new TFile(("./exclusionfiles/higgsCombineL140CTau100shapedata"+extra+".Asymptotic.mH120.root"), "READ");
-// TFile* file_CT500L140 = new TFile(("./exclusionfiles/higgsCombineL140CTau500shapedata"+extra+".Asymptotic.mH120.root"), "READ");
-// TFile* file_CT1000L140 = new TFile(("./exclusionfiles/higgsCombineL140CTau1000shapedata"+extra+".Asymptotic.mH120.root"), "READ");
-// TFile* file_CT2000L140 = new TFile(("./exclusionfiles/higgsCombineL140CTau2000shapedata"+extra+".Asymptotic.mH120.root"), "READ");
+TFile* file_CT1L140 = new TFile(("./exclusionfiles/higgsCombineL140CTau1shapedata"+extra+".Asymptotic.mH120.root"), "READ");
+TFile* file_CT10L140 = new TFile(("./exclusionfiles/higgsCombineL140CTau10shapedata"+extra+".Asymptotic.mH120.root"), "READ");
+TFile* file_CT100L140 = new TFile(("./exclusionfiles/higgsCombineL140CTau100shapedata"+extra+".Asymptotic.mH120.root"), "READ");
+TFile* file_CT500L140 = new TFile(("./exclusionfiles/higgsCombineL140CTau500shapedata"+extra+".Asymptotic.mH120.root"), "READ");
+TFile* file_CT1000L140 = new TFile(("./exclusionfiles/higgsCombineL140CTau1000shapedata"+extra+".Asymptotic.mH120.root"), "READ");
+TFile* file_CT2000L140 = new TFile(("./exclusionfiles/higgsCombineL140CTau2000shapedata"+extra+".Asymptotic.mH120.root"), "READ");
 
-TFile* file_CT10L140 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L140CT10.root"), "READ");
-TFile* file_CT100L140 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L140CT100.root"), "READ");
-TFile* file_CT500L140 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L140CT500.root"), "READ");
-TFile* file_CT1000L140 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L140CT1000.root"), "READ");
-TFile* file_CT2000L140 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L140CT2000.root"), "READ");
+// TFile* file_CT1L140 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L140CT1.root"), "READ");
+// TFile* file_CT10L140 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L140CT10.root"), "READ");
+// TFile* file_CT100L140 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L140CT100.root"), "READ");
+// TFile* file_CT500L140 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L140CT500.root"), "READ");
+// TFile* file_CT1000L140 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L140CT1000.root"), "READ");
+// TFile* file_CT2000L140 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L140CT2000.root"), "READ");
 
 void plot_limit_mass(std::string LAMBDA){
 
@@ -44,6 +46,7 @@ void plot_limit_mass(std::string LAMBDA){
 
   if ( LAMBDA=="140" ) {
     xsec = 0.0574;
+    TTree * CT1 = (TTree*)file_CT1L140->Get("limit");
     TTree * CT10 = (TTree*)file_CT10L140->Get("limit");
     //TTree * CT50 = (TTree*)file_CT50L140->Get("limit");
     TTree * CT100 = (TTree*)file_CT100L140->Get("limit");
@@ -52,8 +55,8 @@ void plot_limit_mass(std::string LAMBDA){
     TTree * CT2000 = (TTree*)file_CT2000L140->Get("limit");
   }
 
-  Double_t obs_lim[5]= {0.};
-  Double_t exp_lim[5]= {0.};
+  Double_t obs_lim[6]= {0.};
+  Double_t exp_lim[6]= {0.};
 
   TH1F* CT500histo1 = new TH1F("CT500histo1","",100,0,100.0);
   CT500->Draw("limit>>CT500histo1", "quantileExpected==-1");
@@ -68,6 +71,18 @@ void plot_limit_mass(std::string LAMBDA){
   TH1F* CT500histo97 = new TH1F("CT500histo97","",100,0,100.0);
   CT500->Draw("limit>>CT500histo97", "quantileExpected>0.97 && quantileExpected<0.98");
 
+  TH1F* CT1histo1 = new TH1F("CT1histo1","",100,0,100.0);
+  CT1->Draw("limit>>CT1histo1", "quantileExpected==-1");
+  TH1F* CT1histo2 = new TH1F("CT1histo2","",100,0,100.0);
+  CT1->Draw("limit>>CT1histo2", "quantileExpected>0.02 && quantileExpected<0.03");
+  TH1F* CT1histo16 = new TH1F("CT1histo16","",100,0,100.0);
+  CT1->Draw("limit>>CT1histo16", "quantileExpected>0.15 && quantileExpected<0.16");
+  TH1F* CT1histo50 = new TH1F("CT1histo50","",100,0,100.0);
+  CT1->Draw("limit>>CT1histo50", "quantileExpected==0.5");
+  TH1F* CT1histo84 = new TH1F("CT1histo84","",100,0,100.0);
+  CT1->Draw("limit>>CT1histo84", "quantileExpected>0.83 && quantileExpected<0.84");
+  TH1F* CT1histo97 = new TH1F("CT1histo97","",100,0,100.0);
+  CT1->Draw("limit>>CT1histo97", "quantileExpected>0.97 && quantileExpected<0.98");
 
   TH1F* CT10histo1 = new TH1F("CT10histo1","",100,0,100.0);
   CT10->Draw("limit>>CT10histo1", "quantileExpected==-1");
@@ -141,7 +156,15 @@ void plot_limit_mass(std::string LAMBDA){
     CT500histo84->GetMean(),
     CT500histo97->GetMean(),
   };
-  
+
+  Float_t upperlimit1[5] = {
+    CT1histo2->GetMean(),
+    CT1histo16->GetMean(),
+    CT1histo50->GetMean(),
+    CT1histo84->GetMean(),
+    CT1histo97->GetMean(),
+  };
+
   Float_t upperlimit10[5] = {
     CT10histo2->GetMean(),
     CT10histo16->GetMean(),
@@ -182,28 +205,38 @@ void plot_limit_mass(std::string LAMBDA){
     CT2000histo97->GetMean(),
   };
 
-  obs_lim[0] = xsec*CT10histo1->GetMean();
+  obs_lim[0] = xsec*CT1histo1->GetMean();
+  obs_lim[1] = xsec*CT10histo1->GetMean();
   //obs_lim[1] = xsec*CT50histo1->GetMean();
-  obs_lim[1] = xsec*CT100histo1->GetMean();
-  obs_lim[2] = xsec*CT500histo1->GetMean();
-  obs_lim[3] = xsec*CT1000histo1->GetMean();
-  obs_lim[4] = xsec*CT2000histo1->GetMean();
+  obs_lim[2] = xsec*CT100histo1->GetMean();
+  obs_lim[3] = xsec*CT500histo1->GetMean();
+  obs_lim[4] = xsec*CT1000histo1->GetMean();
+  obs_lim[5] = xsec*CT2000histo1->GetMean();
 
 
-  exp_lim[0] = xsec*upperlimit10[2];
+  exp_lim[0] = xsec*upperlimit1[2];
+  exp_lim[1] = xsec*upperlimit10[2];
   //exp_lim[1] = xsec*upperlimit50[2];
-  exp_lim[1] = xsec*upperlimit100[2];
-  exp_lim[2] = xsec*upperlimit500[2];
-  exp_lim[3] = xsec*upperlimit1000[2];
-  exp_lim[4] = xsec*upperlimit2000[2];
+  exp_lim[2] = xsec*upperlimit100[2];
+  exp_lim[3] = xsec*upperlimit500[2];
+  exp_lim[4] = xsec*upperlimit1000[2];
+  exp_lim[5] = xsec*upperlimit2000[2];
 
-  Double_t mTh[5] = {1.0,10.0,50.0,100.0,200.0};
-  Double_t xsTh[5] = {xsec,xsec,xsec,xsec,xsec};
+  cout << exp_lim[0] << endl << exp_lim[1] << endl;
 
-  Double_t x_pdf[10] = {1.0,10.0,50.0,100.0,200.0,200.0,100.0,50.0,10.0,1.0};
+  //Theoretical CTAU
+  //Double_t mTh[6] = {0.1,1.0,10.0,50.0,100.0,200.0};
+  //Double_t x_pdf[12] = {0.1,1.0,10.0,50.0,100.0,200.0,200.0,100.0,50.0,10.0,1.0,0.1};
 
+  //Real CTAU
+  Double_t mTh[6] = {0.0516,0.516,5.16,25.8,51.6,103.0};
+  Double_t x_pdf[12] = {0.0516,0.516,5.16,25.8,51.6,103.0,103.0,51.6,25.8,5.16,0.516,0.0516};
+
+
+  Double_t xsTh[6] = {xsec,xsec,xsec,xsec,xsec,xsec};
   
-  Double_t y_pdf_1sig[10] = { xsec*upperlimit10[1],
+  Double_t y_pdf_1sig[12] = {xsec*upperlimit1[1],
+			     xsec*upperlimit10[1],
 			     xsec*upperlimit100[1],
 			     xsec*upperlimit500[1],
 			     xsec*upperlimit1000[1],
@@ -212,10 +245,12 @@ void plot_limit_mass(std::string LAMBDA){
                              xsec*upperlimit1000[3],
 			     xsec*upperlimit500[3],
                              xsec*upperlimit100[3],
-                             xsec*upperlimit10[3]};
+                             xsec*upperlimit10[3],
+			     xsec*upperlimit1[3]};
 
 
-  Double_t y_pdf_2sig[12] = {xsec*upperlimit10[0],
+  Double_t y_pdf_2sig[12] = {xsec*upperlimit1[0],
+			     xsec*upperlimit10[0],
                              xsec*upperlimit100[0],
                              xsec*upperlimit500[0],
 			     xsec*upperlimit1000[0],
@@ -224,19 +259,20 @@ void plot_limit_mass(std::string LAMBDA){
                              xsec*upperlimit1000[4],
 			     xsec*upperlimit500[4],
 			     xsec*upperlimit100[4],
-                             xsec*upperlimit10[4]}
+                             xsec*upperlimit10[4],
+			     xsec*upperlimit1[4]}
 
   TGraph* Onesig_graph;
-  Onesig_graph = new TGraph(10., x_pdf, y_pdf_1sig );
+  Onesig_graph = new TGraph(12., x_pdf, y_pdf_1sig );
 
   TGraph* Twosig_graph;
-  Twosig_graph = new TGraph(10., x_pdf, y_pdf_2sig );
+  Twosig_graph = new TGraph(12., x_pdf, y_pdf_2sig );
 
   Onesig_graph->SetFillColor(kGreen);
   Twosig_graph->SetFillColor(kYellow);
 
   TGraph* exp_lim_graph;
-  exp_lim_graph  = new TGraph(5, mTh, exp_lim);
+  exp_lim_graph  = new TGraph(6, mTh, exp_lim);
   exp_lim_graph->SetMarkerStyle(19);
   exp_lim_graph->SetMarkerSize(1.5);
   exp_lim_graph->SetMarkerColor(kRed);
@@ -245,7 +281,7 @@ void plot_limit_mass(std::string LAMBDA){
   exp_lim_graph->SetTitle("");
 
   TGraph* ul_lim_graph;
-  ul_lim_graph  = new TGraph(5, mTh, obs_lim);
+  ul_lim_graph  = new TGraph(6, mTh, obs_lim);
   ul_lim_graph->SetMarkerStyle(22);
   ul_lim_graph->SetMarkerSize(1.5);
   ul_lim_graph->SetLineColor(kBlack);
@@ -285,7 +321,7 @@ void plot_limit_mass(std::string LAMBDA){
   exp_lim_graph->GetXaxis()->SetTitle("c#tau_{#tilde{#chi^{0}_{1}}} (cm)");
   exp_lim_graph->GetYaxis()->SetTitle("#sigma ( #tilde{#chi^{0}_{1}} #rightarrow #tilde{G}#gamma) (pb)");
   exp_lim_graph->GetYaxis()->SetRangeUser(0.0005, 100);
-  exp_lim_graph->GetXaxis()->SetRangeUser(1, 9000.);
+  exp_lim_graph->GetXaxis()->SetRangeUser(0.01, 9000.);
   exp_lim_graph->GetXaxis()->SetTitleSize(0.048);
   exp_lim_graph->GetXaxis()->SetTitleOffset(1.24);
   exp_lim_graph->GetYaxis()->SetTitleSize(0.048);
@@ -323,7 +359,6 @@ void plot_limit_mass(std::string LAMBDA){
   TString massLeg;
 
   if ( LAMBDA=="140" ) { massLeg = "#Lambda = 140: M_{#tilde{#chi}^{0}_{1}} =  198 GeV/c^{2}";}
-  if ( LAMBDA=="180" ) { massLeg = "#Lambda = 180: M_{#tilde{#chi}^{0}_{1}} =  256.8 GeV/c^{2}";}
  
   leg->SetHeader(massLeg);
   leg->SetTextFont(22);
@@ -334,7 +369,7 @@ void plot_limit_mass(std::string LAMBDA){
   leg->AddEntry(Twosig_graph, "#pm 2 #sigma Expected", "F");
   leg->Draw("same");
 
-  c0->SaveAs("exclusion_limit_L140"+extra+".pdf");
+  //c0->SaveAs("exclusion_limit_L140"+extra+".pdf");
   c0->SaveAs("exclusion_limit_L140"+extra+".png");
   
 }

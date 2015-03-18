@@ -24,17 +24,17 @@ void rootlogon();
 TString savedir = "./img_fit/";
 TString extra = "";
 
-// TFile* file_CT10L140 = new TFile(("./exclusionfiles/higgsCombineL140CTau10shapedata"+extra+".Asymptotic.mH120.root"), "READ");
-// TFile* file_CT100L140 = new TFile(("./exclusionfiles/higgsCombineL140CTau100shapedata"+extra+".Asymptotic.mH120.root"), "READ");
-// TFile* file_CT500L140 = new TFile(("./exclusionfiles/higgsCombineL140CTau500shapedata"+extra+".Asymptotic.mH120.root"), "READ");
-// TFile* file_CT1000L140 = new TFile(("./exclusionfiles/higgsCombineL140CTau1000shapedata"+extra+".Asymptotic.mH120.root"), "READ");
-// TFile* file_CT2000L140 = new TFile(("./exclusionfiles/higgsCombineL140CTau2000shapedata"+extra+".Asymptotic.mH120.root"), "READ");
+TFile* file_CT10L140 = new TFile(("./exclusionfiles/higgsCombineL140CTau10shapedata"+extra+".Asymptotic.mH120.root"), "READ");
+TFile* file_CT100L140 = new TFile(("./exclusionfiles/higgsCombineL140CTau100shapedata"+extra+".Asymptotic.mH120.root"), "READ");
+TFile* file_CT500L140 = new TFile(("./exclusionfiles/higgsCombineL140CTau500shapedata"+extra+".Asymptotic.mH120.root"), "READ");
+TFile* file_CT1000L140 = new TFile(("./exclusionfiles/higgsCombineL140CTau1000shapedata"+extra+".Asymptotic.mH120.root"), "READ");
+TFile* file_CT2000L140 = new TFile(("./exclusionfiles/higgsCombineL140CTau2000shapedata"+extra+".Asymptotic.mH120.root"), "READ");
 
-TFile* file_CT10L140 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L140CT10.root"), "READ");
-TFile* file_CT100L140 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L140CT100.root"), "READ");
-TFile* file_CT500L140 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L140CT500.root"), "READ");
-TFile* file_CT1000L140 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L140CT1000.root"), "READ");
-TFile* file_CT2000L140 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L140CT2000.root"), "READ");
+// TFile* file_CT10L140 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L140CT10.root"), "READ");
+// TFile* file_CT100L140 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L140CT100.root"), "READ");
+// TFile* file_CT500L140 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L140CT500.root"), "READ");
+// TFile* file_CT1000L140 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L140CT1000.root"), "READ");
+// TFile* file_CT2000L140 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L140CT2000.root"), "READ");
 
 void plot_limit_mass(std::string LAMBDA){
 
@@ -197,11 +197,17 @@ void plot_limit_mass(std::string LAMBDA){
   exp_lim[3] = xsec*upperlimit1000[2];
   exp_lim[4] = xsec*upperlimit2000[2];
 
-  Double_t mTh[5] = {1.0,10.0,50.0,100.0,200.0};
+
+  //Theoretical CTAU
+  //Double_t mTh[5] = {1.0,10.0,50.0,100.0,200.0};
+  //Double_t x_pdf[10] = {1.0,10.0,50.0,100.0,200.0,200.0,100.0,50.0,10.0,1.0};
+
+  //Real CTAU
+  Double_t mTh[5] = {0.516,5.16,25.8,51.6,103.0};
+  Double_t x_pdf[10] = {0.516,5.16,25.8,51.6,103.0,103.0,51.6,25.8,5.16,0.516};
+
+
   Double_t xsTh[5] = {xsec,xsec,xsec,xsec,xsec};
-
-  Double_t x_pdf[10] = {1.0,10.0,50.0,100.0,200.0,200.0,100.0,50.0,10.0,1.0};
-
   
   Double_t y_pdf_1sig[10] = { xsec*upperlimit10[1],
 			     xsec*upperlimit100[1],
@@ -323,7 +329,6 @@ void plot_limit_mass(std::string LAMBDA){
   TString massLeg;
 
   if ( LAMBDA=="140" ) { massLeg = "#Lambda = 140: M_{#tilde{#chi}^{0}_{1}} =  198 GeV/c^{2}";}
-  if ( LAMBDA=="180" ) { massLeg = "#Lambda = 180: M_{#tilde{#chi}^{0}_{1}} =  256.8 GeV/c^{2}";}
  
   leg->SetHeader(massLeg);
   leg->SetTextFont(22);
@@ -334,7 +339,7 @@ void plot_limit_mass(std::string LAMBDA){
   leg->AddEntry(Twosig_graph, "#pm 2 #sigma Expected", "F");
   leg->Draw("same");
 
-  c0->SaveAs("exclusion_limit_L140"+extra+".pdf");
+  //c0->SaveAs("exclusion_limit_L140"+extra+".pdf");
   c0->SaveAs("exclusion_limit_L140"+extra+".png");
   
 }

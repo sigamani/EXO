@@ -65,7 +65,7 @@ private:
     std::vector<double> rnine;
     std::vector<double> EoverP;
     std::vector<double> EoverP2;
-    
+    std::vector<double> EThreeByThree;
 };
 
 
