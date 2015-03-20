@@ -929,7 +929,7 @@ bool DPAnalysis::PhotonSelection( Handle<reco::PhotonCollection> photons, Handle
     // calculate met uncertainty
     if ( it->pt() < 10. ) continue ;
 
-
+    
     met_dx += it->px() ;
     met_dy += it->py() ;
     //double ptscale = ( it->isEB() ) ? 0.994 : 0.985;
@@ -962,6 +962,11 @@ bool DPAnalysis::PhotonSelection( Handle<reco::PhotonCollection> photons, Handle
     reco::CaloClusterPtr SCseed = it->superCluster()->seed() ;
     const EcalRecHitCollection* rechits = ( it->isEB()) ? recHitsEB.product() : recHitsEE.product() ;
     
+    // r9 calculation 
+    leaves.E3x3[k] = it->e3x3(); 
+
+    	 
+
     Cluster2ndMoments moments = EcalClusterTools::cluster2ndMoments(*SCseed, *rechits);
     float sMin =  moments.sMin  ;
     float sMaj =  moments.sMaj  ;
@@ -1167,6 +1172,7 @@ bool DPAnalysis::PhotonSelection( Handle<reco::PhotonCollection> photons, Handle
       //photon direction and origin point
       
       GlobalVector conv_photon_dir(0, 0, 0);
+      GlobalVector conv_photon_dir2(0, 0, 0);
       
       GlobalPoint point(0, 0, 0);
       
@@ -1189,26 +1195,41 @@ bool DPAnalysis::PhotonSelection( Handle<reco::PhotonCollection> photons, Handle
 	refit_tracks = the_vtx.refittedTracks();
 	Track& rtk1 = refit_tracks.front();
 	Track& rtk2 = refit_tracks.back();
+
 	math::XYZVector refit_photonMom = rtk1.momentum()+rtk2.momentum();
-//	float refit_recoPhoPt = sqrt(refit_photonMom.perp2());                                                                                     
-//	cout << "look: conv " << refit_recoPhoPt << endl;
-	//loop in photons and see if it matches                                                                                                      
 	GlobalVector conv_dir(refit_photonMom.x(), refit_photonMom.y(), refit_photonMom.z());
-
 	GlobalVector conv_dir_point(refit_photonMom.x() + conv->conversionVertex().position().x(), refit_photonMom.y() + conv->conversionVertex().position().y(), refit_photonMom.z() + conv->conversionVertex().position().z());
-
 	conv_photon_dir = conv_dir_point;
 
-//	cout << "1: "<< conv_dir << endl;
-//	cout << "2: " << conv_dir + point << endl;
-
 	leaves.convEta[j] = conv_photon_dir.eta();
-        leaves.convPhi[j] = conv_photon_dir.phi();
-        leaves.convChi2[j]=chi2Prob;
+    leaves.convPhi[j] = conv_photon_dir.phi();
+    leaves.convMomentum[j] = conv_photon_dir.perp();
+    leaves.convChi2[j]=chi2Prob;
 
 
+    // to check with the other method
 
-     	     double minDR2_ = 1000.;
+    GlobalTrajectoryParameters posGtp = getGlobalTrajectoryParameters(tk1);
+    GlobalTrajectoryParameters negGtp = getGlobalTrajectoryParameters(tk2);
+
+    TangentApproachInRPhi theMinimum;//tangent point instead of min distance                                                                     
+    theMinimum.calculate(posGtp,negGtp);
+
+    std::pair<GlobalVector,GlobalVector> momenta;
+
+    std::pair <GlobalTrajectoryParameters, GlobalTrajectoryParameters > tj = theMinimum.trajectoryParameters();
+    GlobalTrajectoryParameters &theG = tj.first, &theH=tj.second;
+    momenta.first = theG.momentum();
+    momenta.second = theH.momentum();
+
+    conv_photon_dir2 = momenta.first + momenta.second;
+    point = theMinimum.crossingPoint();
+    // 
+    
+    leaves.convMomentum2[j] = conv_photon_dir2.perp();
+
+
+         double minDR2_ = 1000.;
 	     bool matchieleassocConv = false;
 
 	     for(reco::GsfElectronCollection::const_iterator itEle = electrons->begin(); itEle != electrons->end(); itEle++) {
@@ -1272,12 +1293,13 @@ bool DPAnalysis::PhotonSelection( Handle<reco::PhotonCollection> photons, Handle
 	
 	conv_photon_dir = momenta.first + momenta.second;
 	point = theMinimum.crossingPoint();
-	
+
       }
       //GlobalPoint point_wrt(point.x()-bs.position().x(), point.y()-bs.position().y(), point.z()-bs.position().z());                                                                                                                                                       
       GlobalPoint point_wrt(point.x()-the_pvtx.position().x(), point.y()-the_pvtx.position().y(), point.z()-the_pvtx.position().z());
   	  float radius = sqrt(point_wrt.x()*point_wrt.x()+point_wrt.y()*point_wrt.y());
       
+
       edm::Handle<reco::BeamSpot> recoBeamSpotHandle;
       
       iEvent.getByLabel(edm::InputTag("offlineBeamSpot"),recoBeamSpotHandle);
