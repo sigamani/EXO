@@ -123,6 +123,15 @@ double weightCrossSection(const char* outname) {
   if (TString(outname) == "G_Pt-300to470") weight = 2.138632;
   if (TString(outname) == "G_Pt-470to800") weight = 0.2119244;
 
+  if (TString(outname) == "QCD_Pt-20to30_EMEnriched") weight = 288600000;
+  if (TString(outname) == "QCD_Pt-30to80_EMEnriched") weight = 74330000;
+  if (TString(outname) == "QCD_Pt-80to170_EMEnriched") weight = 1191000.0;
+  if (TString(outname) == "QCD_Pt-170to250_EMEnriched") weight = 30990.0;
+  if (TString(outname) == "QCD_Pt-250to350_EMEnriched") weight = 4250.0;
+  if (TString(outname) == "QCD_Pt-350_EMEnriched") weight = 810.0;
+
+  //Normal
+  /*
   if (TString(outname) == "QCD_Pt-80to120") weight = 1033680.0;
   if (TString(outname) == "QCD_Pt-120to170") weight = 156293.3;
   if (TString(outname) == "QCD_Pt-170to300") weight = 34138.15;
@@ -131,7 +140,7 @@ double weightCrossSection(const char* outname) {
   if (TString(outname) == "QCD_Pt-600to800") weight = 26.9921;
   if (TString(outname) == "QCD_Pt-800to1000") weight = 3.550036;
   if (TString(outname) == "QCD_Pt-1000to1400") weight = 0.737844;
-
+  */
  
   return weight;
 }
@@ -208,6 +217,17 @@ int getsumcounterzero(const char* outname){
   if (TString(outname) == "G_Pt-300to470") entries = 1.90665e+06;
   if (TString(outname) == "G_Pt-470to800") entries = 1.67523e+06;
 
+  
+  if (TString(outname) == "QCD_Pt-20to30_EMEnriched") entries = 31365695;
+  if (TString(outname) == "QCD_Pt-30to80_EMEnriched") entries = 26626039;
+  if (TString(outname) == "QCD_Pt-80to170_EMEnriched") entries = 28545980;
+  if (TString(outname) == "QCD_Pt-170to250_EMEnriched") entries = 30022066;
+  if (TString(outname) == "QCD_Pt-250to350_EMEnriched") entries = 5;
+  if (TString(outname) == "QCD_Pt-350_EMEnriched") entries = 5;
+
+
+  //Normal
+  /*  
   if (TString(outname) == "QCD_Pt-80to120") entries = 5.89486e+06;
   if (TString(outname) == "QCD_Pt-120to170") entries = 5.93573e+06;
   if (TString(outname) == "QCD_Pt-170to300") entries = 5.8144e+06;
@@ -216,6 +236,7 @@ int getsumcounterzero(const char* outname){
   if (TString(outname) == "QCD_Pt-600to800") entries = 761448;
   if (TString(outname) == "QCD_Pt-800to1000") entries = 2.4532e+06;
   if (TString(outname) == "QCD_Pt-1000to1400") entries = 1.96409e+06;
+  */
 
   if (TString(outname) == "Run2012A") entries = 1.423650e+06;
   if (TString(outname) == "Run2012B_1") entries = 1.746522e+06;
@@ -294,6 +315,7 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
   anaTree->Branch("nGoodVtx", &nGoodVtx, "nGoodVtx/I");
   anaTree->Branch("isMC", &isMC, "isMC/I");
   anaTree->Branch("Rsqrd", &Rsqrd);
+  anaTree->Branch("PhotEn", &PhotEn);
   anaTree->Branch("ptPhot", &ptPhot);
   anaTree->Branch("ptPhotUp", &ptPhotUp);
   anaTree->Branch("ptPhotDown", &ptPhotDown);
@@ -391,6 +413,7 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
     double phiJet1 = 0.;
     double phiJet2 = 0.;
 
+    PhotEn.clear();
     ptPhot.clear();
     ptPhotUp.clear();
     ptPhotDown.clear();
@@ -418,7 +441,7 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
     rnine.clear();
     EoverP.clear();
     EoverP2.clear();
-    EthreeByThree.clear();
+    EThreeByThree.clear();
 
     int nVtx = 0 ;
     
@@ -559,6 +582,7 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
       //cout <<"phoMatchedEle: " << phoMatchedEle[i] << endl; 
       //cout <<"conversionVeto: " << conversionVeto[i] << endl; 
 
+      PhotEn.push_back(phoE[i]);
       ptPhot.push_back(phoP4.Pt());
       sort(ptPhot.begin(),ptPhot.end(),comp_pair);
       sort(ptPhotUp.begin(),ptPhotUp.end(),comp_pair);
@@ -574,6 +598,7 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
       nhadiso.push_back(nHadIso[i]);
       photiso.push_back(photIso[i]);
       //rnine.push_back(r9[i]);
+      //EThreeByThree.push_back(E3x3[i]);
 
       weight = pow(0.99887, ptPhot.size());
 

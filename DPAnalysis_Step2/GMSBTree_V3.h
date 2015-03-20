@@ -146,6 +146,7 @@ public :
    Float_t         phoMatchedEle[MAXPHO];   //[nPhotons]
    Float_t         conversionVeto[MAXPHO];   //[nPhotons]
    //Float_t         r9[MAXPHO];   //[nPhotons]
+   Float_t         E3x3[MAXPHO];   //[nPhotons}
    Int_t           vtxNTracks[MAXVTX];   //[nVertices]
    Float_t         vtxChi2[MAXVTX];   //[nVertices]
    Float_t         vtxNdof[MAXVTX];   //[nVertices]
@@ -279,6 +280,7 @@ public :
    TBranch        *b_phoMatchedEle;  //!
    TBranch        *b_conversionVeto;  //!
    //TBranch        *b_r9;  //!
+   TBranch        *b_E3x3; //!
    TBranch        *b_vtxNTracks;   //!
    TBranch        *b_vtxChi2;   //!
    TBranch        *b_vtxNdof;   //!
@@ -481,6 +483,7 @@ void GMSBTree_V3::Init(TTree *tree)
    fChain->SetBranchAddress("phoMatchedEle", phoMatchedEle, &b_phoMatchedEle);
    fChain->SetBranchAddress("conversionVeto", conversionVeto, &b_conversionVeto);
    //fChain->SetBranchAddress("r9", r9, &b_r9);
+   fChain->SetBranchAddress("E3x3", E3x3, &b_E3x3);
    fChain->SetBranchAddress("vtxNTracks", vtxNTracks, &b_vtxNTracks);
    fChain->SetBranchAddress("vtxChi2", vtxChi2, &b_vtxChi2);
    fChain->SetBranchAddress("vtxNdof", vtxNdof, &b_vtxNdof);

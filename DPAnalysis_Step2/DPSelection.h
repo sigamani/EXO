@@ -36,6 +36,7 @@ private:
     unsigned int originalEvents_;
     unsigned int selectedEvents_;
 
+    std::vector<double> PhotEn;
     std::vector<double> ptPhot;
     std::vector<double> ptPhotUp;
     std::vector<double> ptPhotDown;
