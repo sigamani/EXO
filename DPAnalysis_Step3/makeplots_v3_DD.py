@@ -338,9 +338,9 @@ def function (lamb,ctau1,ctau2,phot):
         ratio = 1.
     vechisisolow[4].Scale(ratio)
   
-    # for i in range(nxbins):
-    #     if (i != 0):
-    #         vechis[4].SetBinContent(i+1,0)
+    for i in range(nxbins):
+        if (i != 0):
+            vechis[4].SetBinContent(i+1,0)
 
     print "DD bkg (scaled): " + str(vechisisolow[4].Integral())
     print "Data conversions: " + str(vechis[4].Integral())

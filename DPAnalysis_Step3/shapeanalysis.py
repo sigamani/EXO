@@ -189,6 +189,10 @@ def function (lamb,ctau,phot):
     background.SetBinError(background.GetNbinsX(),(background.GetBinError(background.GetNbinsX())+background.GetBinError(background.GetNbinsX()+1)))
     background_alphaUp.SetBinError(background_alphaUp.GetNbinsX(),(background_alphaUp.GetBinError(background_alphaUp.GetNbinsX())+background_alphaUp.GetBinError(background_alphaUp.GetNbinsX()+1)))
     background_alphaDown.SetBinError(background_alphaDown.GetNbinsX(),(background_alphaDown.GetBinError(background_alphaDown.GetNbinsX())+background_alphaDown.GetBinError(background_alphaDown.GetNbinsX()+1)))
+
+    # signal.SetBinContent(1,0)
+    # signal_sigmaUp.SetBinContent(1,0)
+    # signal_sigmaDown.SetBinContent(1,0)
     
     output = TFile.Open("./simpleshapes/histofile_L"+lamb+"CT"+ctau+".root","recreate")
 

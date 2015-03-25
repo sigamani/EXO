@@ -113,8 +113,6 @@ double weightCrossSection(const char* outname) {
 
   if (TString(outname) == "TTJets") weight = 13.43;
 
-  //TTJets inclusive
-  //if (TString(outname) == "TTJets") weight = 211.0;
 
   if (TString(outname) == "G_Pt-50to80") weight = 3322.309;
   if (TString(outname) == "G_Pt-80to120") weight = 558.2865;
@@ -123,15 +121,6 @@ double weightCrossSection(const char* outname) {
   if (TString(outname) == "G_Pt-300to470") weight = 2.138632;
   if (TString(outname) == "G_Pt-470to800") weight = 0.2119244;
 
-  if (TString(outname) == "QCD_Pt-20to30_EMEnriched") weight = 288600000;
-  if (TString(outname) == "QCD_Pt-30to80_EMEnriched") weight = 74330000;
-  if (TString(outname) == "QCD_Pt-80to170_EMEnriched") weight = 1191000.0;
-  if (TString(outname) == "QCD_Pt-170to250_EMEnriched") weight = 30990.0;
-  if (TString(outname) == "QCD_Pt-250to350_EMEnriched") weight = 4250.0;
-  if (TString(outname) == "QCD_Pt-350_EMEnriched") weight = 810.0;
-
-  //Normal
-  /*
   if (TString(outname) == "QCD_Pt-80to120") weight = 1033680.0;
   if (TString(outname) == "QCD_Pt-120to170") weight = 156293.3;
   if (TString(outname) == "QCD_Pt-170to300") weight = 34138.15;
@@ -140,7 +129,6 @@ double weightCrossSection(const char* outname) {
   if (TString(outname) == "QCD_Pt-600to800") weight = 26.9921;
   if (TString(outname) == "QCD_Pt-800to1000") weight = 3.550036;
   if (TString(outname) == "QCD_Pt-1000to1400") weight = 0.737844;
-  */
  
   return weight;
 }
@@ -206,10 +194,8 @@ int getsumcounterzero(const char* outname){
   if (TString(outname) == "GMSB_Lambda-180_CTau-500") entries = 993000 ;
   if (TString(outname) == "GMSB_Lambda-180_CTau-2000") entries = 50112 ;
 
-  //if (TString(outname) == "TTJets") entries = 3.74644e+06;
-  //TTJets inclusive
-  if (TString(outname) == "TTJets") entries = 19675970;
-
+  if (TString(outname) == "TTJets") entries = 3.74644e+06;
+  
   if (TString(outname) == "G_Pt-50to80") entries = 1.99506e+06;
   if (TString(outname) == "G_Pt-80to120") entries = 1.99263e+06;
   if (TString(outname) == "G_Pt-120to170") entries = 2.00004e+06;
@@ -217,17 +203,6 @@ int getsumcounterzero(const char* outname){
   if (TString(outname) == "G_Pt-300to470") entries = 1.90665e+06;
   if (TString(outname) == "G_Pt-470to800") entries = 1.67523e+06;
 
-  
-  if (TString(outname) == "QCD_Pt-20to30_EMEnriched") entries = 31365695;
-  if (TString(outname) == "QCD_Pt-30to80_EMEnriched") entries = 26626039;
-  if (TString(outname) == "QCD_Pt-80to170_EMEnriched") entries = 28545980;
-  if (TString(outname) == "QCD_Pt-170to250_EMEnriched") entries = 30022066;
-  if (TString(outname) == "QCD_Pt-250to350_EMEnriched") entries = 5;
-  if (TString(outname) == "QCD_Pt-350_EMEnriched") entries = 5;
-
-
-  //Normal
-  /*  
   if (TString(outname) == "QCD_Pt-80to120") entries = 5.89486e+06;
   if (TString(outname) == "QCD_Pt-120to170") entries = 5.93573e+06;
   if (TString(outname) == "QCD_Pt-170to300") entries = 5.8144e+06;
@@ -236,8 +211,7 @@ int getsumcounterzero(const char* outname){
   if (TString(outname) == "QCD_Pt-600to800") entries = 761448;
   if (TString(outname) == "QCD_Pt-800to1000") entries = 2.4532e+06;
   if (TString(outname) == "QCD_Pt-1000to1400") entries = 1.96409e+06;
-  */
-
+  
   if (TString(outname) == "Run2012A") entries = 1.423650e+06;
   if (TString(outname) == "Run2012B_1") entries = 1.746522e+06;
   if (TString(outname) == "Run2012B_2") entries = 1.783702e+06;
@@ -598,7 +572,7 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
       nhadiso.push_back(nHadIso[i]);
       photiso.push_back(photIso[i]);
       //rnine.push_back(r9[i]);
-      //EThreeByThree.push_back(E3x3[i]);
+      EThreeByThree.push_back(E3x3[i]);
 
       weight = pow(0.99887, ptPhot.size());
 
@@ -681,6 +655,13 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
     if (nJet < 2) continue;                    h000->Fill(4.);
     if (nPhot < 2) continue;                   h000->Fill(5.);
 
+    
+    //E3x3
+    //                                            h000->Fill(1.);
+    // if (nGoodVtx < 1) continue;                h000->Fill(2.);
+    //                                            h000->Fill(3.);
+    // if (nJet < 2) continue;                    h000->Fill(4.);
+    // if (nPhot < 1) continue;                   h000->Fill(5.);
 
     //Test
     //                                              h000->Fill(1.);
