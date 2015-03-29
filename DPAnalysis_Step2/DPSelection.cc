@@ -280,6 +280,7 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
   Float_t EfficiencyScaleFactors;
   Float_t PUScaleFactors;
   Float_t Rsqrd;
+  Float_t r2ScalingFactor;
 
   TTree *anaTree     = new TTree("anaTree","Tree of variables"); 
   anaTree->Branch("nPhot", &nPhot, "nPhot/I");
@@ -329,7 +330,9 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
   anaTree->Branch("EoverP",&EoverP);
   anaTree->Branch("EoverP2",&EoverP2);
   anaTree->Branch("EThreeByThree", &EThreeByThree);
-  
+  anaTree->Branch("r2ScalingFactor", &r2ScalingFactor);
+
+
   Long64_t nentries = fChain->GetEntriesFast();
   Float_t N_events_w = (Float_t) fChain->GetEntries();
 
@@ -362,8 +365,8 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
     else MC = 1;
 
     //Triggeredvariable!!!
-    if (MC == 0 && !(triggered == 1 || triggered == 3)) continue;
-    if (MC == 1 && triggered != 1) continue;
+    //if (MC == 0 && !(triggered == 1 || triggered == 3)) continue;
+    //if (MC == 1 && triggered != 1) continue;
 
 
     int entries = getsumcounterzero(outname); 
@@ -648,12 +651,12 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
 
 
     //Normal    
-                                               h000->Fill(1.);
-    if (nGoodVtx < 1) continue;                h000->Fill(2.);
-    if (!inverted && MET < 60) continue;       h000->Fill(3.);
-    if (inverted && MET > 30) continue;        h000->Fill(3.);
-    if (nJet < 2) continue;                    h000->Fill(4.);
-    if (nPhot < 2) continue;                   h000->Fill(5.);
+    //                                            h000->Fill(1.);
+    // if (nGoodVtx < 1) continue;                h000->Fill(2.);
+    // if (!inverted && MET < 60) continue;       h000->Fill(3.);
+    // if (inverted && MET > 30) continue;        h000->Fill(3.);
+    // if (nJet < 2) continue;                    h000->Fill(4.);
+    // if (nPhot < 2) continue;                   h000->Fill(5.);
 
     
     //E3x3
@@ -679,11 +682,11 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
     // if (nPhot < 1) continue;                   h000->Fill(5.);
 
     //Triggeredvariable
-    //                                            h000->Fill(1.);
-    // if (nGoodVtx < 1) continue;                h000->Fill(2.);
-    //                                            h000->Fill(3.);
-    // if (nJet < 2) continue;                    h000->Fill(4.);
-    // if (nPhot < 2) continue;                   h000->Fill(5.);
+                                               h000->Fill(1.);
+    if (nGoodVtx < 1) continue;                h000->Fill(2.);
+                                               h000->Fill(3.);
+    if (nJet < 2) continue;                    h000->Fill(4.);
+    if (nPhot < 2) continue;                   h000->Fill(5.);
 
 
 
@@ -706,6 +709,18 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
     double MTR = CalcMTR(HEMIS[0], HEMIS[1], MET);
     double MRSTAR = CalcGammaMRstar(HEMIS[0], HEMIS[1]);
     Rsqrd = pow(MTR/MRSTAR,2); 
+
+    // R^2 efficiency scaling
+    r2ScalingFactor = 1.;
+
+    if (string(outname).find("GMSB") != std::string::npos && Rsqrd >= 0 && Rsqrd < 0.02)     { r2ScalingFactor = 0.65;}
+    if (string(outname).find("GMSB") != std::string::npos && Rsqrd >= 0.02 && Rsqrd < 0.04)  { r2ScalingFactor = 0.89;}
+    if (string(outname).find("GMSB") != std::string::npos && Rsqrd >= 0.04 && Rsqrd < 0.06)  { r2ScalingFactor = 0.84;}
+    if (string(outname).find("GMSB") != std::string::npos && Rsqrd >= 0.06 && Rsqrd < 0.08)  { r2ScalingFactor = 0.865;}
+    if (string(outname).find("GMSB") != std::string::npos && Rsqrd >= 0.08 && Rsqrd < 0.10)  { r2ScalingFactor = 0.83;}
+    if (string(outname).find("GMSB") != std::string::npos && Rsqrd >= 0.10 && Rsqrd < 0.12)  { r2ScalingFactor = 0.88;}
+    if (string(outname).find("GMSB") != std::string::npos && Rsqrd >= 0.12 && Rsqrd < 0.14)  { r2ScalingFactor = 0.92;}
+    if (string(outname).find("GMSB") != std::string::npos && Rsqrd >= 0.14 && Rsqrd < 0.16)  { r2ScalingFactor = 0.97;}
 
     triggeredvariable = triggered;
 

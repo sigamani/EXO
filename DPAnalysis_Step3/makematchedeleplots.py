@@ -24,7 +24,7 @@ def Draw(vec):
     leg.SetTextFont(42)
     leg.SetBorderSize(0)
     leg.AddEntry(vec[0], "TTJets","f")
-    leg.AddEntry(vec[1], "GMSB(180 GeV, 50 cm)","f")
+    leg.AddEntry(vec[1], "GMSB(180 GeV, 20 cm)","f")
     vec[0].Draw("")
     #vec[0].GetXaxis().SetTitle("Photon Matched to Electron")
     #vec[0].GetXaxis().SetTitle("Conversion Matched to Electron")

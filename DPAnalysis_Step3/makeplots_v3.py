@@ -288,21 +288,21 @@ def function (lamb,ctau1,ctau2,phot):
     vechisgpt[4].SetBinError(vechisgpt[4].GetNbinsX(),(vechisgpt[4].GetBinError(vechisgpt[4].GetNbinsX())+vechisgpt[4].GetBinError(vechisgpt[4].GetNbinsX()+1)))
 
 
-    # for i in range(len(vechis)):
-    #     datatotal = vechis[i].Integral()
-    #     bkgtotal = vechisttjet[i].Integral() + vechisgpt[i].Integral() + vechisqcd[i].Integral()
+    for i in range(len(vechis)):
+        datatotal = vechis[i].Integral()
+        bkgtotal = vechisttjet[i].Integral() + vechisgpt[i].Integral() + vechisqcd[i].Integral()
 
-    #     if(bkgtotal != 0):
-    #         ratio = datatotal/bkgtotal
-    #     else:
-    #         ratio = 1.
-    #     vechisttjet[i].Scale(ratio)
-    #     vechisqcd[i].Scale(ratio)
-    #     vechisgpt[i].Scale(ratio)
+        if(bkgtotal != 0):
+            ratio = datatotal/bkgtotal
+        else:
+            ratio = 1.
+        vechisttjet[i].Scale(ratio)
+        vechisqcd[i].Scale(ratio)
+        vechisgpt[i].Scale(ratio)
 
-    # for i in range(nxbins):
-    #     #if (i != 0):
-    #     vechis[4].SetBinContent(i+1,0)
+    for i in range(nxbins):
+        #if (i != 0):
+        vechis[4].SetBinContent(i+1,0)
 
     output = TFile.Open("./ctau"+ctau1+"andctau"+ctau2+"lambda"+lamb+"/output"+str(phot)+".root","recreate")
 
@@ -328,7 +328,7 @@ def function (lamb,ctau1,ctau2,phot):
 
 def main():
     #function("180","50",1)
-    function("180","500","500",2)
+    function("180","10","500",2)
 
 if __name__ == "__main__":
     main()

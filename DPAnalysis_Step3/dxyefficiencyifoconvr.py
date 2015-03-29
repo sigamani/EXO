@@ -47,7 +47,8 @@ def loop(vec, convr, phot):
 
 def function (lamb,ctau,phot):
 
-    listsig = ["./v24/GMSB_L"+lamb+"-CTAU"+ctau+".root"]
+    listsig = ["./v24/GMSB_Lambda-"+lamb+"_CTau-"+ctau+".root"]
+
     
     vecfilessig = []
     for item in listsig:
@@ -136,21 +137,21 @@ def main():
     leg.SetTextFont(42)
     leg.SetBorderSize(0)
 
-    leg.AddEntry(CTAU10, "GMSB(180 TeV, 1 cm)","p")
-    leg.AddEntry(CTAU50, "GMSB(180 TeV, 5 cm)","p")
-    leg.AddEntry(CTAU250, "GMSB(180 TeV, 25 cm)","p")
-    leg.AddEntry(CTAU500, "GMSB(180 TeV, 50 cm)","p")
+    leg.AddEntry(CTAU10, "GMSB(180 TeV, 0.4 cm)","p")
+    leg.AddEntry(CTAU50, "GMSB(180 TeV, 2 cm)","p")
+    leg.AddEntry(CTAU250, "GMSB(180 TeV, 9 cm)","p")
+    leg.AddEntry(CTAU500, "GMSB(180 TeV, 20 cm)","p")
 
-    # leg.AddEntry(CTAU10, "GMSB(160 GeV, 1 cm)","p")
-    # leg.AddEntry(CTAU50, "GMSB(160 GeV, 5 cm)","p")
-    # leg.AddEntry(CTAU100, "GMSB(160 GeV, 10 cm)","p")
-    # leg.AddEntry(CTAU500, "GMSB(160 GeV, 50 cm)","p")
+    # leg.AddEntry(CTAU10, "GMSB(160 GeV, 0.4 cm)","p")
+    # leg.AddEntry(CTAU50, "GMSB(160 GeV, 2 cm)","p")
+    # leg.AddEntry(CTAU100, "GMSB(160 GeV, 4 cm)","p")
+    # leg.AddEntry(CTAU500, "GMSB(160 GeV, 20 cm)","p")
 
 
     CTAU10.GetYaxis().SetRangeUser(0.00001,0.2)
     CTAU10.GetYaxis().SetTitleSize(0.05)
     CTAU10.GetYaxis().SetTitleOffset(1.2)
-    CTAU10.GetYaxis().SetTitle("Efficiency")
+    CTAU10.GetYaxis().SetTitle("Ratio")
     CTAU10.GetXaxis().SetTitle("Conversion radius (cm)")
     CTAU10.GetXaxis().SetTitleSize(0.05)
     CTAU10.GetXaxis().SetTitleOffset(1.)

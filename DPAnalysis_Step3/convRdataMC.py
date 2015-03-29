@@ -85,7 +85,7 @@ def main():
     leg1.SetTextFont(42)
     leg1.SetBorderSize(0)
 
-    leg0.AddEntry(CTAU10[0], "GMSB(160 GeV, 1 cm)","")
+    leg0.AddEntry(CTAU10[0], "GMSB(160 GeV, 0.4 cm)","")
     leg1.AddEntry(CTAU10[1], "data","")
 
 

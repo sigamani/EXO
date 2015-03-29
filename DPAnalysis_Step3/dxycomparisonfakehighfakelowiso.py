@@ -192,9 +192,9 @@ def plot(dxy):
     errhist2.SetLineWidth(3)
     errhist2.SetFillStyle(3005)
     
-    leg = TLegend(0.65,0.75,0.89,0.89)
+    leg = TLegend(0.60,0.65,0.89,0.89)
     leg.SetFillColor(kWhite)
-    leg.SetTextSize(0.03)
+    leg.SetTextSize(0.05)
     leg.SetTextFont(42)
     leg.SetBorderSize(0)
     leg.AddEntry(dxy[2], "Control region 1","f")
@@ -203,7 +203,7 @@ def plot(dxy):
 
     dxy[1].GetXaxis().SetTitle("Conversion d_{XY} (cm)")
     dxy[1].GetYaxis().SetTitle("Events / bin")
-    dxy[1].GetYaxis().SetRangeUser(0.01,1000)
+    dxy[1].GetYaxis().SetRangeUser(0.1,1000)
     dxy[1].GetYaxis().SetTitleSize(0.05)
     dxy[1].GetXaxis().SetTitleSize(0.05)
 

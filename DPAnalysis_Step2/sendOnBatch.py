@@ -35,7 +35,7 @@ dataset_name_inverted = ['Run2012A', 'Run2012B_1', 'Run2012B_2', 'Run2012B_3', '
 queue              	= "1nh" 
 executable         	= "tmp/main" 
 
-destinationfolder       = "/../DPAnalysis_Step3/v24/"
+destinationfolder       = "/../DPAnalysis_Step3/v24triggered/"
 
 for z in range(len(dataset_name)):
 
@@ -58,7 +58,7 @@ for z in range(len(dataset_name)):
     outputfile.write("mv "+dataset_name[z]+".root "+pwd+destinationfolder)
     outputfile.close
     os.system("echo Submitting "+dataset_name[z]+" to batch queue")
-    #os.system("bsub -q 1nh -o "+outputdir+"/log/"+dataset_name[z]+".log source "+outputname)
+    os.system("bsub -q 1nh -o "+outputdir+"/log/"+dataset_name[z]+".log source "+outputname)
 
 # #isolated photons, low met
 # for z in range(len(dataset_name_inverted)):

@@ -19,7 +19,7 @@ def loop(vec,vechist):
 
 def function():
 
-    files = ["./v24/GMSB_L180-CTAU10.root","./v24/GMSB_L180-CTAU50.root","./v24/GMSB_L180-CTAU250.root","./v24/GMSB_L180-CTAU500.root"]
+    files = ["./v24/GMSB_Lambda-180_CTau-10.root","./v24/GMSB_Lambda-180_CTau-50.root","./v24/GMSB_Lambda-180_CTau-250.root","./v24/GMSB_Lambda-180_CTau-500.root"]
     vecfiles = []
     
     for item in files:
@@ -47,15 +47,15 @@ def plot(dz):
     dz[2].SetLineColor(kOrange)
     dz[3].SetLineColor(kBlue)
 
-    leg = TLegend(0.65,0.75,0.89,0.89)
+    leg = TLegend(0.65,0.7,0.89,0.89)
     leg.SetFillColor(kWhite)
-    leg.SetTextSize(0.03)
+    leg.SetTextSize(0.04)
     leg.SetTextFont(42)
     leg.SetBorderSize(0)
-    leg.AddEntry(dz[0], "GMSB (180,10)","l")
-    leg.AddEntry(dz[1], "GMSB (180,50)","l")
-    leg.AddEntry(dz[2], "GMSB (180,250)","l")
-    leg.AddEntry(dz[3], "GMSB (180,500)","l")
+    leg.AddEntry(dz[0], "GMSB (180,0.4)","l")
+    leg.AddEntry(dz[1], "GMSB (180,2)","l")
+    leg.AddEntry(dz[2], "GMSB (180,9)","l")
+    leg.AddEntry(dz[3], "GMSB (180,20)","l")
     
     
     dz[0].GetXaxis().SetTitle("Conversion d_{Z} (cm)")
