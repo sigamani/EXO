@@ -47,7 +47,7 @@ void GenStudy::PrintGenEvent(const edm::Event& iEvent ) {
    Handle<edm::HepMCProduct> HepMCEvt;
    iEvent.getByLabel("generator", "", HepMCEvt);
    const HepMC::GenEvent* MCEvt = HepMCEvt->GetEvent();
-//   printf( " ======================================== \n ") ;
+   printf( " ======================================== \n ") ;
    for ( HepMC::GenEvent::particle_const_iterator it = MCEvt->particles_begin(); it != MCEvt->particles_end(); ++it ) {
        if ( (*it)->pdg_id() != 1000022 ) continue ;
        HepMC::FourVector p4 = (*it)->momentum();
@@ -76,17 +76,19 @@ void GenStudy::PrintGenEvent(const edm::Event& iEvent ) {
     
 }
 
-// From GenEvent , time in ns, length in mm
+// From GenEvent , time in ns, length in mm  (function that's used)
 void GenStudy::GetGenEvent(const edm::Event& iEvent, Ntuple& leaves, bool debug ) {
 
    Handle<edm::HepMCProduct> HepMCEvt;
    iEvent.getByLabel("generator", "", HepMCEvt);
    const HepMC::GenEvent* MCEvt = HepMCEvt->GetEvent();
    int i = 0 ;
-//   if (debug) printf(" ================================================= \n");
+   if (debug) printf(" ================================================= \n");
    for ( HepMC::GenEvent::particle_const_iterator it = MCEvt->particles_begin(); it != MCEvt->particles_end(); ++it ) {
        // tag neutrilino(1000022)
-       if ( (*it)->pdg_id() != 1000022 || (*it)->status() != 3 ) continue ;
+		
+       //if ( (*it)->pdg_id() != 1000022 || (*it)->status() != 3 ) continue ;
+       if ( (*it)->pdg_id() != 1000022 || (*it)->status() < 3  ) continue ;
        HepMC::FourVector p4 = (*it)->momentum();
 
        leaves.pdgId[i] = (*it)->pdg_id() ;
@@ -97,61 +99,79 @@ void GenStudy::GetGenEvent(const edm::Event& iEvent, Ntuple& leaves, bool debug 
        leaves.genE[i]  = p4.e() ;
        leaves.genM[i]  = (*it)->generatedMass() ;
 
+        cout<<"  ***** "<< endl;
+		cout<<"  <=== pid: "<< (*it)->pdg_id() << endl;
+
        HepMC::FourVector v2 = (*it)->end_vertex()->position() ;
        leaves.genVx[i] = v2.x() / 10. ;
        leaves.genVy[i] = v2.y() / 10.;
        leaves.genVz[i] = v2.z() / 10.;
        if ( debug ) {
-       //   HepMC::FourVector v1 = (*it)->production_vertex()->position() ;
-       //   printf(" X[%d] v1[%.2f,%.2f,%.2f] -> v2[%.2f,%.2f,%.2f]\n", i, v1.x(), v1.y(), v1.z(), v2.x(), v2.y(), v2.z() ) ;
-       //   printf("       p4: (%.1f,%.1f,%.1f,%.1f) \n", p4.px(), p4.py(), p4.pz(), p4.e() ) ;
-       //   printf(" --------------------------------------------- \n");
+          HepMC::FourVector v1 = (*it)->production_vertex()->position() ;
+          printf(" X[%d] v1[%.2f,%.2f,%.2f] -> v2[%.2f,%.2f,%.2f]\n", i, v1.x(), v1.y(), v1.z(), v2.x(), v2.y(), v2.z() ) ;
+          printf("       p4: (%.1f,%.1f,%.1f,%.1f) \n", p4.px(), p4.py(), p4.pz(), p4.e() ) ;
+          printf(" --------------------------------------------- \n");
        }
        //leaves.genT[i]  = ( v2.t() - v1.t() ) / 300. ; still zero ... useless
        int xi = i ;
        i++ ;
 
-       //double beta  = sqrt( (p4.px()*p4.px()) + (p4.py()*p4.py()) + (p4.pz()*p4.pz()) ) / p4.e() ;
+       double beta  = sqrt( (p4.px()*p4.px()) + (p4.py()*p4.py()) + (p4.pz()*p4.pz()) ) / p4.e() ;
        // trace its children, photon(22) and gravitino(1000039)
        // looping over the particles at the end vertex of the mother particle
        HepMC::GenVertex* v_out = (*it)->end_vertex() ;
        for ( HepMC::GenVertex::particles_out_const_iterator i1 = v_out->particles_out_const_begin(); i1 != v_out->particles_out_const_end(); i1++) {
-           HepMC::GenVertex* v1_out = (*i1)->end_vertex() ;
-           if ( (*i1)->pdg_id() != 22 &&  (*i1)->pdg_id() != 1000039 ) continue ;
+           HepMC::GenVertex* v1_out = (*i1)->end_vertex() ; 
+
+
+           cout<<"  ===> pid: "<< (*i1)->pdg_id()  << endl;
+           //if ( (*i1)->pdg_id() != 22 &&  (*i1)->pdg_id() != 1000039 ) continue ; 
+           if ( fabs((*i1)->pdg_id()) != 11 &&  (*i1)->pdg_id() != 1000039)  continue ; 
            for ( HepMC::GenVertex::particles_out_const_iterator i2  = v1_out->particles_out_const_begin(); 
                                                                 i2 != v1_out->particles_out_const_end(); i2++) {
                if ( (*i2)->status() != 1 ) continue ;
+ 
+           cout<<"  <===> pid: "<< (*i2)->pdg_id()  << endl;
+
+		   /*
 	       leaves.pdgId[i] = (*i2)->pdg_id() ;
 	       leaves.momId[i] = xi ;
 	       leaves.genPx[i] = (*i2)->momentum().px() ;
 	       leaves.genPy[i] = (*i2)->momentum().py() ;
 	       leaves.genPz[i] = (*i2)->momentum().pz() ;
 	       leaves.genE[i]  = (*i2)->momentum().e() ;
-	       leaves.genM[i]  = (*i2)->generatedMass() ;
+	       leaves.genM[i]  = (*i2)->generatedMass() ;*/
+	       leaves.pdgId[i] = (*i1)->pdg_id() ;
+	       leaves.momId[i] = xi ;
+	       leaves.genPx[i] = (*i1)->momentum().px() ;
+	       leaves.genPy[i] = (*i1)->momentum().py() ;
+	       leaves.genPz[i] = (*i1)->momentum().pz() ;
+	       leaves.genE[i]  = (*i1)->momentum().e() ;
+	       leaves.genM[i]  = (*i1)->generatedMass() ;
 	       leaves.genVx[i] = v1_out->position().x() / 10. ;
 	       leaves.genVy[i] = v1_out->position().y() / 10. ;
 	       leaves.genVz[i] = v1_out->position().z() / 10. ;
 	       leaves.genT[xi]  = (v1_out->position().t() - v_out->position().t()) / 300. ; // this is tau*gamma for neutralino
 	       leaves.genT[i]  = -1 ;  // this is lifetime(tau*gamma) for photon and gravitino
                if ( debug ) {
-                  //HepMC::FourVector v_x =  v_out->position() ;
-                  //HepMC::FourVector v_g =  v1_out->position() ;
-                  //double dx = v1_out->position().x() - v_out->position().x() ;
-		  //double dy = v1_out->position().y() - v_out->position().y() ;
-		  //double dz = v1_out->position().z() - v_out->position().z() ;
-		  //double dr = sqrt( (dx*dx) +  (dy*dy) + (dz*dz) ) ;
+                  HepMC::FourVector v_x =  v_out->position() ;
+                  HepMC::FourVector v_g =  v1_out->position() ;
+                  double dx = v1_out->position().x() - v_out->position().x() ;
+		  double dy = v1_out->position().y() - v_out->position().y() ;
+		  double dz = v1_out->position().z() - v_out->position().z() ;
+		  double dr = sqrt( (dx*dx) +  (dy*dy) + (dz*dz) ) ;
 
-                  //HepMC::FourVector g4 = (*i2)->momentum() ;
-                 /* printf("   g[%d] v1[%.2f,%.2f,%.2f] -> v2[%.2f,%.2f,%.2f]\n", 
-                             i-xi, v_x.x(), v_x.y(), v_x.z(), v_g.x(), v_g.y(), v_g.z() ) ;
+                  HepMC::FourVector g4 = (*i2)->momentum() ;
+                  printf("   g[%d] v1[%.2f,%.2f,%.2f] -> v2[%.2f,%.2f,%.2f]\n", 
+                              i-xi, v_x.x(), v_x.y(), v_x.z(), v_g.x(), v_g.y(), v_g.z() ) ;
                   printf("         p4 (%.1f,%.1f,%.1f,%.1f) , dT = %.3f , dr/beta = %.3f \n", 
                                      g4.px(), g4.py(), g4.pz(), g4.e(), v_g.t() - v_x.t() , dr/beta ) ;
                   printf("   --------------------------------------------- \n");
-		*/  //cout<<"  <"<< i <<">  PID: "<<(*i2)->pdg_id() <<" from "<< xi <<" beta:"<< beta ;
+		  //cout<<"  <"<< i <<">  PID: "<<(*i2)->pdg_id() <<" from "<< xi <<" beta:"<< beta ;
 		  //cout<<"  t: "<< v1_out->position().t() - v_out->position().t() <<" ctg: "<< dr/beta <<" ctbg: "<< dr  <<endl;
                }
 	       i++ ;
-           }
+           }   
        }
    }
    leaves.nGen = i ;      
@@ -206,7 +226,7 @@ void GenStudy::GetGen(const edm::Event& iEvent, Ntuple& leaves ) {
 
           for (size_t q=0; q< it->numberOfDaughters(); ++q) {
               const reco::Candidate *dau = it->daughter(q) ;
-              if( abs(dau->pdgId()) != 22 ) continue;
+              //if( abs(dau->pdgId()) != 22 ) continue; // MS taken out 
               //printf( "   pID = %d ,  status: %d  E: %.2f \n" , dau->pdgId(),  dau->status(), dau->energy() ) ;
               //printf( "   vtx=( %.2f, %.2f, %.2f ) \n" , dau->vx(),  dau->vy(), dau->vz() ) ;
               
@@ -218,7 +238,8 @@ void GenStudy::GetGen(const edm::Event& iEvent, Ntuple& leaves ) {
               leaves.genVy[i] = y1 ;
               leaves.genVz[i] = z1 ;
               leaves.momId[i]  = i-1 ;
-              leaves.pdgId[i]  = 22 ;
+              //leaves.pdgId[i]  = 22 ;
+              leaves.pdgId[i]  = abs(dau->pdgId()) ;
               
               Propagator( dau->p4(), x1, y1, z1, t1 ) ;
               double t0 = sqrt( (x1*x1) + (y1*y1) + (z1*z1) ) /30. ;
