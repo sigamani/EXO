@@ -332,6 +332,7 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
   anaTree->Branch("EThreeByThree", &EThreeByThree);
   anaTree->Branch("r2ScalingFactor", &r2ScalingFactor);
   anaTree->Branch("PDGID", &PDGID);
+  anaTree->Branch("deltaRgen", &deltaRgen);
 
   Long64_t nentries = fChain->GetEntriesFast();
   Float_t N_events_w = (Float_t) fChain->GetEntries();
@@ -420,6 +421,7 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
     EoverP2.clear();
     EThreeByThree.clear();
     PDGID.clear();
+    deltaRgen.clear();
 
     int nVtx = 0 ;
     
@@ -487,6 +489,25 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
       phiConv.push_back(convPhi[i]);
       etaConv.push_back(convEta[i]);
       ConvChi2.push_back(convChi2[i]);
+
+      for ( int j=0 ; j< nGen; j++ ) {
+	TLorentzVector genP4( genPx[j], genPy[j], genPz[j], genE[j] ) ;
+	double genEta = genP4.Eta();
+	double genPhi = genP4.Phi();
+	if (genPhi > pi){
+	  genPhi -= 2.*pi;
+	}
+	if (genPhi < -pi){
+	  genPhi += 2.*pi;
+	}
+
+	deltar = sqrt((genEta-convEta[i])*(genEta-convEta[i]) + (genPhi-convPhi[i])*(genPhi-convPhi[i]));
+
+	deltaRgen.push_back(deltar);
+
+
+      }
+
     }
 
 
