@@ -331,7 +331,7 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
   anaTree->Branch("EoverP2",&EoverP2);
   anaTree->Branch("EThreeByThree", &EThreeByThree);
   anaTree->Branch("r2ScalingFactor", &r2ScalingFactor);
-
+  anaTree->Branch("PDGID", &PDGID);
 
   Long64_t nentries = fChain->GetEntriesFast();
   Float_t N_events_w = (Float_t) fChain->GetEntries();
@@ -365,8 +365,8 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
     else MC = 1;
 
     //Triggeredvariable!!!
-    //if (MC == 0 && !(triggered == 1 || triggered == 3)) continue;
-    //if (MC == 1 && triggered != 1) continue;
+    if (MC == 0 && !(triggered == 1 || triggered == 3)) continue;
+    if (MC == 1 && triggered != 1) continue;
 
 
     int entries = getsumcounterzero(outname); 
@@ -419,6 +419,7 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
     EoverP.clear();
     EoverP2.clear();
     EThreeByThree.clear();
+    PDGID.clear();
 
     int nVtx = 0 ;
     
@@ -518,13 +519,13 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
       phoP4down = phoP4down * egScaledown;
        
       if ( fabs(fSpike[i]) > 0.001 ) continue ;
-      if ( phoP4.Pt() < 50. )  continue ; //N-1!!!!!!!!!!!!!!!!!!!!!!!
-      if ( fabs(phoP4.Eta()) > 1.47 )  continue ; //N-1!!!!!!!!!!!!!!!!!!!
-      if ( phoHoverE[i] > 0.05 ) continue ; //PHOTONISOLATION
-      if ( sigmaIeta[i] >  0.012 ) continue ; //N-1!!!!!!!!!!!!!!!!!1  
-      if ( phoP4.Eta() > -0.75 && phoP4.Eta() < -0.6 && phoP4.Phi() > -1. && phoP4.Phi() < -0.8 ) continue ;
+      //if ( phoP4.Pt() < 50. )  continue ; //N-1!!!!!!!!!!!!!!!!!!!!!!!
+      //if ( fabs(phoP4.Eta()) > 1.47 )  continue ; //N-1!!!!!!!!!!!!!!!!!!!
+      //if ( phoHoverE[i] > 0.05 ) continue ; //PHOTONISOLATION
+      //if ( sigmaIeta[i] >  0.012 ) continue ; //N-1!!!!!!!!!!!!!!!!!1  
+      //if ( phoP4.Eta() > -0.75 && phoP4.Eta() < -0.6 && phoP4.Phi() > -1. && phoP4.Phi() < -0.8 ) continue ;
 
-      if ( phoP4.Eta() > 0.80 && phoP4.Eta() < 0.95 && phoP4.Phi() > -1.95 && phoP4.Phi() < -1.8 ) continue ; 
+      //if ( phoP4.Eta() > 0.80 && phoP4.Eta() < 0.95 && phoP4.Phi() > -1.95 && phoP4.Phi() < -1.8 ) continue ; 
 
       bool fakephotons = false;
 
@@ -537,9 +538,9 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
 	/***********************************************************************/
        
 	
-	if ( cHadIso[i] >= 2.6 ) continue ;  // chargedHadron PHOTONISOLATION
-	if ( nHadIso[i] >= 3.5 + ( 0.04*phoP4.Pt()   ) ) continue ;   // neutralHadron PHOTONISOLATION
-	if ( photIso[i] >= 1.3 + ( 0.005*phoP4.Pt() ) ) continue ;  // photon PHOTONISOLATION
+	//if ( cHadIso[i] >= 2.6 ) continue ;  // chargedHadron PHOTONISOLATION
+	//if ( nHadIso[i] >= 3.5 + ( 0.04*phoP4.Pt()   ) ) continue ;   // neutralHadron PHOTONISOLATION
+	//if ( photIso[i] >= 1.3 + ( 0.005*phoP4.Pt() ) ) continue ;  // photon PHOTONISOLATION
 
       }	
       
@@ -549,7 +550,7 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
 	/***********************************************************************/
 	
 	      
-	if (!( cHadIso[i] >= 2.6 )  && (!( nHadIso[i] >= 3.5 + ( 0.04*phoP4.Pt()   ) )) && (!( photIso[i] >= 1.3 + ( 0.005*phoP4.Pt() ) ))  ) continue ;
+	//if (!( cHadIso[i] >= 2.6 )  && (!( nHadIso[i] >= 3.5 + ( 0.04*phoP4.Pt()   ) )) && (!( photIso[i] >= 1.3 + ( 0.005*phoP4.Pt() ) ))  ) continue ;
       
       }
       
@@ -610,9 +611,9 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
       jCorr = ( 1. - jecUnc[j] ) ;
       jp4down = jp4down*jCorr;
 
-      if ( jp4.Pt() < 30) continue;  //N-1!!!!!!!!!!!!!!!!!11
+      //if ( jp4.Pt() < 30) continue;  //N-1!!!!!!!!!!!!!!!!!11
       
-      if ( fabs(jp4.Eta()) > 2.4 ) continue ; //N-1!!!!!!!!!!!!!!!!!!!!!
+      //if ( fabs(jp4.Eta()) > 2.4 ) continue ; //N-1!!!!!!!!!!!!!!!!!!!!!
        
       if ( jetNDau[j] < (double)   2 )  continue ;
       if ( jetCEF[j] >= (double)0.99 )  continue ;
@@ -633,6 +634,16 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
       phiJet2 = jets[1].Phi();
 
     }
+
+    //Loop over gen
+
+    for ( int j=0 ; j< nGen; j++ ) {
+      if (fabs(pdgId[j]) == 11) {
+	PDGID.push_back(pdgId[j]);
+      }
+    }
+
+    
 
 
     nPhot = ptPhot.size(); 
@@ -674,19 +685,19 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
     // if (nPhot < 2 or ptPhot[0] < 85) continue;   h000->Fill(5.);
     
     //N-1
-    //                                            h000->Fill(1.);
-    // if (nGoodVtx < 1) continue;                h000->Fill(2.);
-    // if (!inverted && MET < 0) continue;        h000->Fill(3.);
-    // if (inverted && MET > 30) continue;        h000->Fill(3.);
-    // if (nJet < 1) continue;                    h000->Fill(4.);
-    // if (nPhot < 1) continue;                   h000->Fill(5.);
-
-    //Triggeredvariable
                                                h000->Fill(1.);
     if (nGoodVtx < 1) continue;                h000->Fill(2.);
-                                               h000->Fill(3.);
-    if (nJet < 2) continue;                    h000->Fill(4.);
-    if (nPhot < 2) continue;                   h000->Fill(5.);
+    if (!inverted && MET < 0) continue;        h000->Fill(3.);
+    if (inverted && MET > 30) continue;        h000->Fill(3.);
+    if (nJet < 1) continue;                    h000->Fill(4.);
+    if (nPhot < 1) continue;                   h000->Fill(5.);
+
+    //Triggeredvariable
+    //                                            h000->Fill(1.);
+    // if (nGoodVtx < 1) continue;                h000->Fill(2.);
+    //                                            h000->Fill(3.);
+    // if (nJet < 2) continue;                    h000->Fill(4.);
+    // if (nPhot < 2) continue;                   h000->Fill(5.);
 
 
 
@@ -713,14 +724,14 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
     // R^2 efficiency scaling
     r2ScalingFactor = 1.;
 
-    if (string(outname).find("GMSB") != std::string::npos && Rsqrd >= 0 && Rsqrd < 0.02)     { r2ScalingFactor = 0.65;}
-    if (string(outname).find("GMSB") != std::string::npos && Rsqrd >= 0.02 && Rsqrd < 0.04)  { r2ScalingFactor = 0.89;}
-    if (string(outname).find("GMSB") != std::string::npos && Rsqrd >= 0.04 && Rsqrd < 0.06)  { r2ScalingFactor = 0.84;}
-    if (string(outname).find("GMSB") != std::string::npos && Rsqrd >= 0.06 && Rsqrd < 0.08)  { r2ScalingFactor = 0.865;}
-    if (string(outname).find("GMSB") != std::string::npos && Rsqrd >= 0.08 && Rsqrd < 0.10)  { r2ScalingFactor = 0.83;}
-    if (string(outname).find("GMSB") != std::string::npos && Rsqrd >= 0.10 && Rsqrd < 0.12)  { r2ScalingFactor = 0.88;}
-    if (string(outname).find("GMSB") != std::string::npos && Rsqrd >= 0.12 && Rsqrd < 0.14)  { r2ScalingFactor = 0.92;}
-    if (string(outname).find("GMSB") != std::string::npos && Rsqrd >= 0.14 && Rsqrd < 0.16)  { r2ScalingFactor = 0.97;}
+    if (string(outname).find("GMSB") != std::string::npos && Rsqrd >= 0 && Rsqrd < 0.02)     { r2ScalingFactor = 0.71755;}
+    if (string(outname).find("GMSB") != std::string::npos && Rsqrd >= 0.02 && Rsqrd < 0.04)  { r2ScalingFactor = 0.928;}
+    if (string(outname).find("GMSB") != std::string::npos && Rsqrd >= 0.04 && Rsqrd < 0.06)  { r2ScalingFactor = 0.88;}
+    if (string(outname).find("GMSB") != std::string::npos && Rsqrd >= 0.06 && Rsqrd < 0.08)  { r2ScalingFactor = 0.91;}
+    if (string(outname).find("GMSB") != std::string::npos && Rsqrd >= 0.08 && Rsqrd < 0.10)  { r2ScalingFactor = 0.92;}
+    if (string(outname).find("GMSB") != std::string::npos && Rsqrd >= 0.10 && Rsqrd < 0.12)  { r2ScalingFactor = 0.93;}
+    if (string(outname).find("GMSB") != std::string::npos && Rsqrd >= 0.12 && Rsqrd < 0.14)  { r2ScalingFactor = 0.94;}
+    if (string(outname).find("GMSB") != std::string::npos && Rsqrd >= 0.14 && Rsqrd < 0.16)  { r2ScalingFactor = 0.95;}
 
     triggeredvariable = triggered;
 

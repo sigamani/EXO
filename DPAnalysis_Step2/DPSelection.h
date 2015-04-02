@@ -67,6 +67,7 @@ private:
     std::vector<double> EoverP;
     std::vector<double> EoverP2;
     std::vector<double> EThreeByThree;
+    std::vector<double> PDGID;
 };
 
 

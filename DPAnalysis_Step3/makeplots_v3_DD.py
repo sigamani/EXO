@@ -46,6 +46,7 @@ def loop(vec, vechisto, flag, phot):
                     vechisto[3].Fill( event.ptJet[1], (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors) )
                 if(len(dxytemp) > 0):
                     vechisto[4].Fill( dxytemp[-1], (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors))
+                    #vechisto[4].Fill( dxytemp[-1], (event.r2ScalingFactor*event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors))
 
                 vechisto[5].Fill( event.MET, (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors) )
                 vechisto[6].Fill( event.nJet, (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors))
@@ -338,9 +339,9 @@ def function (lamb,ctau1,ctau2,phot):
         ratio = 1.
     vechisisolow[4].Scale(ratio)
   
-    for i in range(nxbins):
-        if (i != 0):
-            vechis[4].SetBinContent(i+1,0)
+    # for i in range(nxbins):
+    #     if (i != 0):
+    #         vechis[4].SetBinContent(i+1,0)
 
     print "DD bkg (scaled): " + str(vechisisolow[4].Integral())
     print "Data conversions: " + str(vechis[4].Integral())

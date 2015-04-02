@@ -263,7 +263,7 @@ void plot_limit_mass(std::string LAMBDA){
   TMultiGraph* mg = new TMultiGraph;
  
   mg->Add(exp_lim_graph);
-  //mg->Add(ul_lim_graph);
+  mg->Add(ul_lim_graph);
 
 
   TCanvas* c0 = new TCanvas("exclusion limit", "exclusion limit", 1);
@@ -299,10 +299,10 @@ void plot_limit_mass(std::string LAMBDA){
   exp_lim_graph->Draw("LA");
   Twosig_graph->Draw("Fsame");
   Onesig_graph->Draw("Fsame");
-  //ul_lim_graph->Draw("Lsame");
+  ul_lim_graph->Draw("Lsame");
   exp_lim_graph->Draw("Lsame");
 
-  //ul_lim_graph->Draw("same");
+  ul_lim_graph->Draw("same");
 
   c0->RedrawAxis();
 
@@ -341,7 +341,7 @@ void plot_limit_mass(std::string LAMBDA){
   leg->SetHeader(massLeg);
   leg->SetTextFont(22);
   leg->AddEntry(xsTh_vs_m,"Theoretical LO cross-section","L");
-  //leg->AddEntry(ul_lim_graph, "Observed  95% CL upper limit", "L");
+  leg->AddEntry(ul_lim_graph, "Observed  95% CL upper limit", "L");
   leg->AddEntry(exp_lim_graph, "Expected 95% CL upper limit", "L");
   leg->AddEntry(Onesig_graph, "#pm 1 #sigma Expected", "F");
   leg->AddEntry(Twosig_graph, "#pm 2 #sigma Expected", "F");

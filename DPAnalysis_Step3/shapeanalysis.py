@@ -40,7 +40,8 @@ def loop(vec, dxy, flag, phot):
                 if(event.MET < 60):
                     continue
                 if(len(dxytemp) > 0):
-                    dxy.Fill( dxytemp[-1], (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors))    
+                    #dxy.Fill( dxytemp[-1], (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors))
+                    dxy.Fill( dxytemp[-1], (event.r2ScalingFactor*event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors))
             #data
             if (flag == 1):
                 if (event.ptJet[0] < 35): #!!!!!!!!!!!!!!!!!!!!!
@@ -49,8 +50,6 @@ def loop(vec, dxy, flag, phot):
                     continue
                 if(len(dxytemp) > 0):
                     dxy.Fill( dxytemp[-1], 1./event.EfficiencyScaleFactors)
-                    if(dxytemp[-1] > 6):
-                        print dxytemp[-1]
             #bkg
             if (flag == 2):
                 if(len(dxytemp) > 0):
@@ -190,9 +189,9 @@ def function (lamb,ctau,phot):
     background_alphaUp.SetBinError(background_alphaUp.GetNbinsX(),(background_alphaUp.GetBinError(background_alphaUp.GetNbinsX())+background_alphaUp.GetBinError(background_alphaUp.GetNbinsX()+1)))
     background_alphaDown.SetBinError(background_alphaDown.GetNbinsX(),(background_alphaDown.GetBinError(background_alphaDown.GetNbinsX())+background_alphaDown.GetBinError(background_alphaDown.GetNbinsX()+1)))
 
-    # signal.SetBinContent(1,0)
-    # signal_sigmaUp.SetBinContent(1,0)
-    # signal_sigmaDown.SetBinContent(1,0)
+    signal.SetBinContent(1,0)
+    signal_sigmaUp.SetBinContent(1,0)
+    signal_sigmaDown.SetBinContent(1,0)
     
     output = TFile.Open("./simpleshapes/histofile_L"+lamb+"CT"+ctau+".root","recreate")
 
@@ -210,26 +209,26 @@ def function (lamb,ctau,phot):
 
 
 def main():
-    # function("140","1",2)
-    # function("140","10",2)
-    # function("140","100",2)
-    # function("140","500",2)
-    # function("140","1000",2)
-    # function("140","2000",2)
+    function("140","1",2)
+    function("140","10",2)
+    function("140","100",2)
+    function("140","500",2)
+    function("140","1000",2)
+    function("140","2000",2)
 
-    # function("160","1",2)
-    # function("160","10",2)
-    # function("160","100",2)
-    # function("160","500",2)
-    # function("160","1000",2)
-    # function("160","2000",2)
+    function("160","1",2)
+    function("160","10",2)
+    function("160","100",2)
+    function("160","500",2)
+    function("160","1000",2)
+    function("160","2000",2)
 
-    function("180","1",2)
-    function("180","10",2)
-    function("180","50",2)
-    function("180","250",2)
-    function("180","500",2)
-    function("180","2000",2)
+    # function("180","1",2)
+    # function("180","10",2)
+    # function("180","50",2)
+    # function("180","250",2)
+    # function("180","500",2)
+    # function("180","2000",2)
 
 if __name__ == "__main__":
     main()
