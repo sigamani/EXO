@@ -13,7 +13,7 @@ void Limit2D() {
 
    gROOT->LoadMacro("CMS_lumi.C");
 
-   string hfolder  = "~/www/home/" ;
+   string hfolder  = "~/www/" ;
 
    //TString legTitle = "#tilde{#chi}^{0}_{1} #rightarrow #gamma #tilde{G}, c#tau ="+ ctau + " mm" ;
    string limitPlotName = "limit2D" ;
@@ -54,8 +54,8 @@ void Limit2D() {
    TGraph* obs_cms_gr = new TGraph(13, obs_cms_8TeV, obs_ct_8TeV );
    obs_cms_gr->GetXaxis()->SetLimits( 100, 460 ) ;
    obs_cms_gr->SetMaximum(1000000 ) ;
-   obs_cms_gr->SetMinimum(0.08 ) ;
-   obs_cms_gr->GetYaxis()->SetTitle( "#tilde{#chi}^{0}_{1} Mean Proper Decay Length (cm)"  ) ;
+   obs_cms_gr->SetMinimum(0.1 ) ;
+   obs_cms_gr->GetYaxis()->SetTitle( "Mean Lifetime  c#tau_{#tilde{#chi}^{0}_{1}} (cm)"  ) ;
    obs_cms_gr->GetXaxis()->SetTitle( "#tilde{#chi}^{0}_{1} Mass (GeV)") ;
    obs_cms_gr->GetYaxis()->SetTitleSize(0.047);
    obs_cms_gr->GetXaxis()->SetTitleSize(0.047);
@@ -104,13 +104,13 @@ void Limit2D() {
 //   Double_t ct_conv8TeV[6]={1.0, 1.0, 1.0, 70.0, 105., 185.}; // MET > 60
    
    //Real CTau with 1 mm
-   Double_t ct_conv8TeV[6]={0.0516, 0.0428, 0.08, 30., 45., 95.};  // MET > 60
+   //Double_t ct_conv8TeV[6]={0.0516, 0.0428, 0.08, 30., 45., 95.};  // MET > 60
 
    //Real CTau with 10 mm
    //Double_t ct_conv8TeV[6]={0.516, 0.428, 0.366, 30., 45., 95.};  // MET > 60
 
    //Real CTau with GMSB bin 1 set to 0
-   //Double_t ct_conv8TeV[6]={0.15, 0.35, 2.0, 25., 45., 90.};  // MET > 60
+   Double_t ct_conv8TeV[6]={0.15, 0.35, 2.0, 25., 45., 90.};  // MET > 60
 
    TGraph* exp_cms8_conv_gr;
    exp_cms8_conv_gr = new TGraph(6, exp_cms_conv8TeV, ct_conv8TeV );
