@@ -24,13 +24,21 @@ void rootlogon();
 TString savedir = "./img_fit/";
 TString extra = "";
 
-TFile* file_CT1L160 = new TFile(("./exclusionfiles/higgsCombineL160CTau1shapedata"+extra+".Asymptotic.mH120.root"), "READ");
-TFile* file_CT10L160 = new TFile(("./exclusionfiles/higgsCombineL160CTau10shapedata"+extra+".Asymptotic.mH120.root"), "READ");
-//TFile* file_CT50L160 = new TFile(("./exclusionfiles/higgsCombineL160CTau50shapedata"+extra+".Asymptotic.mH120.root"), "READ");
-TFile* file_CT100L160 = new TFile(("./exclusionfiles/higgsCombineL160CTau100shapedata"+extra+".Asymptotic.mH120.root"), "READ");
-TFile* file_CT500L160 = new TFile(("./exclusionfiles/higgsCombineL160CTau500shapedata"+extra+".Asymptotic.mH120.root"), "READ");
-TFile* file_CT1000L160 = new TFile(("./exclusionfiles/higgsCombineL160CTau1000shapedata"+extra+".Asymptotic.mH120.root"), "READ");
-TFile* file_CT2000L160 = new TFile(("./exclusionfiles/higgsCombineL160CTau2000shapedata"+extra+".Asymptotic.mH120.root"), "READ");
+// TFile* file_CT1L160 = new TFile(("./exclusionfiles/higgsCombineL160CTau1shapedata"+extra+".Asymptotic.mH120.root"), "READ");
+// TFile* file_CT10L160 = new TFile(("./exclusionfiles/higgsCombineL160CTau10shapedata"+extra+".Asymptotic.mH120.root"), "READ");
+// //TFile* file_CT50L160 = new TFile(("./exclusionfiles/higgsCombineL160CTau50shapedata"+extra+".Asymptotic.mH120.root"), "READ");
+// TFile* file_CT100L160 = new TFile(("./exclusionfiles/higgsCombineL160CTau100shapedata"+extra+".Asymptotic.mH120.root"), "READ");
+// TFile* file_CT500L160 = new TFile(("./exclusionfiles/higgsCombineL160CTau500shapedata"+extra+".Asymptotic.mH120.root"), "READ");
+// TFile* file_CT1000L160 = new TFile(("./exclusionfiles/higgsCombineL160CTau1000shapedata"+extra+".Asymptotic.mH120.root"), "READ");
+// TFile* file_CT2000L160 = new TFile(("./exclusionfiles/higgsCombineL160CTau2000shapedata"+extra+".Asymptotic.mH120.root"), "READ");
+
+
+TFile* file_CT1L160 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L160CT1.root"), "READ");
+TFile* file_CT10L160 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L160CT10.root"), "READ");
+TFile* file_CT100L160 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L160CT100.root"), "READ");
+TFile* file_CT500L160 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L160CT500.root"), "READ");
+TFile* file_CT1000L160 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L160CT1000.root"), "READ");
+TFile* file_CT2000L160 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L160CT2000.root"), "READ");
 
 void plot_limit_mass(std::string LAMBDA){
 
@@ -281,7 +289,7 @@ void plot_limit_mass(std::string LAMBDA){
   TMultiGraph* mg = new TMultiGraph;
  
   mg->Add(exp_lim_graph);
-  //mg->Add(ul_lim_graph);
+  mg->Add(ul_lim_graph);
 
 
   TCanvas* c0 = new TCanvas("exclusion limit", "exclusion limit", 1);
@@ -306,7 +314,7 @@ void plot_limit_mass(std::string LAMBDA){
   exp_lim_graph->Draw("LA");
   Twosig_graph->Draw("Fsame");
   Onesig_graph->Draw("Fsame");
-  //ul_lim_graph->Draw("Lsame");
+  ul_lim_graph->Draw("Lsame");
   exp_lim_graph->Draw("Lsame");
 
   exp_lim_graph->GetXaxis()->SetTitle("c#tau_{#tilde{#chi^{0}_{1}}} (cm)");
@@ -318,7 +326,7 @@ void plot_limit_mass(std::string LAMBDA){
   exp_lim_graph->GetYaxis()->SetTitleSize(0.048);
   exp_lim_graph->GetYaxis()->SetTitleOffset(1.6);
 
-  //ul_lim_graph->Draw("same");
+  ul_lim_graph->Draw("same");
 
   // integrated luminosity
   std::string s_lumi;
@@ -355,7 +363,7 @@ void plot_limit_mass(std::string LAMBDA){
   leg->SetHeader(massLeg);
   leg->SetTextFont(22);
   leg->AddEntry(xsTh_vs_m,"Theoretical LO cross-section","L");
-  //leg->AddEntry(ul_lim_graph, "Observed  95% CL upper limit", "L");
+  leg->AddEntry(ul_lim_graph, "Observed  95% CL upper limit", "L");
   leg->AddEntry(exp_lim_graph, "Expected 95% CL upper limit", "L");
   leg->AddEntry(Onesig_graph, "#pm 1 #sigma Expected", "F");
   leg->AddEntry(Twosig_graph, "#pm 2 #sigma Expected", "F");

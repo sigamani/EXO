@@ -333,7 +333,10 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
   anaTree->Branch("r2ScalingFactor", &r2ScalingFactor);
   anaTree->Branch("PDGID", &PDGID);
   anaTree->Branch("deltaRgen", &deltaRgen);
+  anaTree->Branch("deltarelectrons", &deltarelectrons);
 
+  anaTree->Branch("masseplusemin", &masseplusemin);
+  
   Long64_t nentries = fChain->GetEntriesFast();
   Float_t N_events_w = (Float_t) fChain->GetEntries();
 
@@ -423,6 +426,10 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
     PDGID.clear();
     deltaRgen.clear();
 
+    masseplusemin.clear();
+
+    deltarelectrons.clear();
+
     int nVtx = 0 ;
     
     for ( int j=0 ; j< nVertices; j++ ) {
@@ -490,22 +497,56 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
       etaConv.push_back(convEta[i]);
       ConvChi2.push_back(convChi2[i]);
 
-      for ( int j=0 ; j< nGen; j++ ) {
-	TLorentzVector genP4( genPx[j], genPy[j], genPz[j], genE[j] ) ;
-	double genEta = genP4.Eta();
-	double genPhi = genP4.Phi();
-	if (genPhi > pi){
-	  genPhi -= 2.*pi;
+
+      //bool Genhit = 0;
+      TLorentzVector genP4_electron;
+      TLorentzVector genP4_positron;
+      double deltargen_tot = 0;
+      double deltargen_1 = 0.;
+      double deltargen_2 = 0.;
+
+      if (nGen == 5) {
+
+	for ( int z=0 ; z< nGen; z++ ) {
+	  if (pdgId[z] == 11) {
+	    genP4_electron.SetPxPyPzE( genPx[z], genPy[z], genPz[z], genE[z] ) ;
+	  }
+	  if (pdgId[z] == -11) {
+            genP4_positron.SetPxPyPzE( genPx[z], genPy[z], genPz[z], genE[z] ) ;
+          }
 	}
-	if (genPhi < -pi){
-	  genPhi += 2.*pi;
+
+	//if (Genhit){
+
+	//cout << "delta R electrons: " << deltaR(genP4_electron, genP4_positron) << endl << endl;
+
+      	TLorentzVector genP4;
+
+      	genP4 = (genP4_electron + genP4_positron);
+
+	//cout << "Mass e+e-: " << genP4.M() << endl;
+
+	if(i == 0){
+	  masseplusemin.push_back(genP4.M());
+	  deltarelectrons.push_back(deltaR(genP4_electron, genP4_positron));
+	  
+	  //cout << "delta R electrons: " << deltaR(genP4_electron, genP4_positron) << endl << endl;
+	  //cout << "Mass e+e-: " << genP4.M() << endl;
 	}
 
-	deltar = sqrt((genEta-convEta[i])*(genEta-convEta[i]) + (genPhi-convPhi[i])*(genPhi-convPhi[i]));
+     	double genEta = genP4.Eta();
+      	double genPhi = genP4.Phi();
 
-	deltaRgen.push_back(deltar);
+      	if (genPhi > pi){
+      	  genPhi -= 2.*pi;
+      	}
+      	if (genPhi < -pi){
+      	  genPhi += 2.*pi;
+      	}
 
+      	deltargen_tot = sqrt((genEta-convEta[i])*(genEta-convEta[i]) + (genPhi-convPhi[i])*(genPhi-convPhi[i]));
 
+	deltaRgen.push_back(deltargen_tot);
       }
 
     }
@@ -658,9 +699,12 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
 
     //Loop over gen
 
+    bool pdgIdplus = false;
+    bool pdgIdmin = false;
+
     for ( int j=0 ; j< nGen; j++ ) {
-      if (fabs(pdgId[j]) == 11) {
-	PDGID.push_back(pdgId[j]);
+      if (pdgId[j] == 11) {
+    	PDGID.push_back(pdgId[j]);
       }
     }
 

@@ -69,6 +69,9 @@ private:
     std::vector<double> EThreeByThree;
     std::vector<double> PDGID;
     std::vector<double> deltaRgen;
+
+    std::vector<double> masseplusemin;
+    std::vector<double> deltarelectrons;
 };
 
 

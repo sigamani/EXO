@@ -24,19 +24,19 @@ void rootlogon();
 TString savedir = "./img_fit/";
 TString extra = "";
 
-// TFile* file_CT1L180 = new TFile(("./exclusionfiles/higgsCombineL180CTau1shapedata"+extra+".Asymptotic.mH120.root"), "READ");
-// TFile* file_CT10L180 = new TFile(("./exclusionfiles/higgsCombineL180CTau10shapedata"+extra+".Asymptotic.mH120.root"), "READ");
-// TFile* file_CT50L180 = new TFile(("./exclusionfiles/higgsCombineL180CTau50shapedata"+extra+".Asymptotic.mH120.root"), "READ");
-// TFile* file_CT250L180 = new TFile(("./exclusionfiles/higgsCombineL180CTau250shapedata"+extra+".Asymptotic.mH120.root"), "READ");
-// TFile* file_CT500L180 = new TFile(("./exclusionfiles/higgsCombineL180CTau500shapedata"+extra+".Asymptotic.mH120.root"), "READ");
-// TFile* file_CT2000L180 = new TFile(("./exclusionfiles/higgsCombineL180CTau2000shapedata"+extra+".Asymptotic.mH120.root"), "READ");
+TFile* file_CT1L180 = new TFile(("./exclusionfiles/higgsCombineL180CTau1shapedata"+extra+".Asymptotic.mH120.root"), "READ");
+TFile* file_CT10L180 = new TFile(("./exclusionfiles/higgsCombineL180CTau10shapedata"+extra+".Asymptotic.mH120.root"), "READ");
+TFile* file_CT50L180 = new TFile(("./exclusionfiles/higgsCombineL180CTau50shapedata"+extra+".Asymptotic.mH120.root"), "READ");
+TFile* file_CT250L180 = new TFile(("./exclusionfiles/higgsCombineL180CTau250shapedata"+extra+".Asymptotic.mH120.root"), "READ");
+TFile* file_CT500L180 = new TFile(("./exclusionfiles/higgsCombineL180CTau500shapedata"+extra+".Asymptotic.mH120.root"), "READ");
+TFile* file_CT2000L180 = new TFile(("./exclusionfiles/higgsCombineL180CTau2000shapedata"+extra+".Asymptotic.mH120.root"), "READ");
 
-TFile* file_CT1L180 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L180CT1.root"), "READ");
-TFile* file_CT10L180 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L180CT10.root"), "READ");
-TFile* file_CT50L180 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L180CT50.root"), "READ");
-TFile* file_CT250L180 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L180CT250.root"), "READ");
-TFile* file_CT500L180 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L180CT500.root"), "READ");
-TFile* file_CT2000L180 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L180CT2000.root"), "READ");
+// TFile* file_CT1L180 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L180CT1.root"), "READ");
+// TFile* file_CT10L180 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L180CT10.root"), "READ");
+// TFile* file_CT50L180 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L180CT50.root"), "READ");
+// TFile* file_CT250L180 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L180CT250.root"), "READ");
+// TFile* file_CT500L180 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L180CT500.root"), "READ");
+// TFile* file_CT2000L180 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L180CT2000.root"), "READ");
 
 void plot_limit_mass(std::string LAMBDA){
 
@@ -203,7 +203,7 @@ void plot_limit_mass(std::string LAMBDA){
 
   //Real CTAU
   Double_t mTh[6] = {0.0366,0.366,1.83,9.14,18.3,73.1};
-  Double_t x_pdf[12] = {0.0366,0.366,1.83,9.14,18.3,73.1,73.1,18.3,9.14,1.83,0.366};
+  Double_t x_pdf[12] = {0.0366,0.366,1.83,9.14,18.3,73.1,73.1,18.3,9.14,1.83,0.366,0.0366};
 
   Double_t xsTh[6] = {xsec,xsec,xsec,xsec,xsec,xsec};
 
@@ -263,7 +263,7 @@ void plot_limit_mass(std::string LAMBDA){
   TMultiGraph* mg = new TMultiGraph;
  
   mg->Add(exp_lim_graph);
-  //mg->Add(ul_lim_graph);
+  mg->Add(ul_lim_graph);
 
 
   TCanvas* c0 = new TCanvas("exclusion limit", "exclusion limit", 1);
@@ -285,22 +285,26 @@ void plot_limit_mass(std::string LAMBDA){
   c0->SetFrameFillStyle(0);
   c0->SetFrameBorderMode(0); 
 
-  exp_lim_graph->Draw("LA");
-  Twosig_graph->Draw("Fsame");
-  Onesig_graph->Draw("Fsame");
-  //ul_lim_graph->Draw("Lsame");
-  exp_lim_graph->Draw("Lsame");
-
   exp_lim_graph->GetXaxis()->SetTitle("c#tau_{#tilde{#chi^{0}_{1}}} (cm)");
   exp_lim_graph->GetYaxis()->SetTitle("#sigma ( #tilde{#chi^{0}_{1}} #rightarrow #tilde{G}#gamma) (pb)");
   exp_lim_graph->GetYaxis()->SetRangeUser(0.0005, 100);
-  exp_lim_graph->GetXaxis()->SetRangeUser(0.01, 9000.);
+  exp_lim_graph->GetXaxis()->SetRangeUser(0.001, 9000.);
   exp_lim_graph->GetXaxis()->SetTitleSize(0.048);
   exp_lim_graph->GetXaxis()->SetTitleOffset(1.24);
   exp_lim_graph->GetYaxis()->SetTitleSize(0.048);
   exp_lim_graph->GetYaxis()->SetTitleOffset(1.6);
+  
+  c0->RedrawAxis();
 
-  //ul_lim_graph->Draw("same");
+  exp_lim_graph->Draw("LA");
+  Twosig_graph->Draw("Fsame");
+  Onesig_graph->Draw("Fsame");
+  ul_lim_graph->Draw("Lsame");
+  exp_lim_graph->Draw("Lsame");
+
+  ul_lim_graph->Draw("same");
+
+  c0->RedrawAxis();
 
   // integrated luminosity
   std::string s_lumi;
@@ -315,7 +319,7 @@ void plot_limit_mass(std::string LAMBDA){
   l1.DrawLatex(0.75, 0.958, lint.c_str());
  
 
-  TGraph *xsTh_vs_m = new TGraph(5, mTh, xsTh);
+  TGraph *xsTh_vs_m = new TGraph(6, mTh, xsTh);
   xsTh_vs_m->SetLineWidth(2);
   xsTh_vs_m->SetLineColor(kRed);
   
@@ -337,7 +341,7 @@ void plot_limit_mass(std::string LAMBDA){
   leg->SetHeader(massLeg);
   leg->SetTextFont(22);
   leg->AddEntry(xsTh_vs_m,"Theoretical LO cross-section","L");
-  //leg->AddEntry(ul_lim_graph, "Observed  95% CL upper limit", "L");
+  leg->AddEntry(ul_lim_graph, "Observed  95% CL upper limit", "L");
   leg->AddEntry(exp_lim_graph, "Expected 95% CL upper limit", "L");
   leg->AddEntry(Onesig_graph, "#pm 1 #sigma Expected", "F");
   leg->AddEntry(Twosig_graph, "#pm 2 #sigma Expected", "F");

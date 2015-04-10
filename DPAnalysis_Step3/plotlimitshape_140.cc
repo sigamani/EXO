@@ -24,19 +24,20 @@ void rootlogon();
 TString savedir = "./img_fit/";
 TString extra = "";
 
-TFile* file_CT1L140 = new TFile(("./exclusionfiles/higgsCombineL140CTau1shapedata"+extra+".Asymptotic.mH120.root"), "READ");
-TFile* file_CT10L140 = new TFile(("./exclusionfiles/higgsCombineL140CTau10shapedata"+extra+".Asymptotic.mH120.root"), "READ");
-TFile* file_CT100L140 = new TFile(("./exclusionfiles/higgsCombineL140CTau100shapedata"+extra+".Asymptotic.mH120.root"), "READ");
-TFile* file_CT500L140 = new TFile(("./exclusionfiles/higgsCombineL140CTau500shapedata"+extra+".Asymptotic.mH120.root"), "READ");
-TFile* file_CT1000L140 = new TFile(("./exclusionfiles/higgsCombineL140CTau1000shapedata"+extra+".Asymptotic.mH120.root"), "READ");
-TFile* file_CT2000L140 = new TFile(("./exclusionfiles/higgsCombineL140CTau2000shapedata"+extra+".Asymptotic.mH120.root"), "READ");
+// TFile* file_CT1L140 = new TFile(("./exclusionfiles/higgsCombineL140CTau1shapedata"+extra+".Asymptotic.mH120.root"), "READ");
+// TFile* file_CT10L140 = new TFile(("./exclusionfiles/higgsCombineL140CTau10shapedata"+extra+".Asymptotic.mH120.root"), "READ");
+// TFile* file_CT100L140 = new TFile(("./exclusionfiles/higgsCombineL140CTau100shapedata"+extra+".Asymptotic.mH120.root"), "READ");
+// TFile* file_CT500L140 = new TFile(("./exclusionfiles/higgsCombineL140CTau500shapedata"+extra+".Asymptotic.mH120.root"), "READ");
+// TFile* file_CT1000L140 = new TFile(("./exclusionfiles/higgsCombineL140CTau1000shapedata"+extra+".Asymptotic.mH120.root"), "READ");
+// TFile* file_CT2000L140 = new TFile(("./exclusionfiles/higgsCombineL140CTau2000shapedata"+extra+".Asymptotic.mH120.root"), "READ");
 
-// TFile* file_CT1L140 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L140CT1.root"), "READ");
-// TFile* file_CT10L140 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L140CT10.root"), "READ");
-// TFile* file_CT100L140 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L140CT100.root"), "READ");
-// TFile* file_CT500L140 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L140CT500.root"), "READ");
-// TFile* file_CT1000L140 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L140CT1000.root"), "READ");
-// TFile* file_CT2000L140 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L140CT2000.root"), "READ");
+TFile* file_CT1L140 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L140CT1.root"), "READ");
+TFile* file_CT10L140 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L140CT10.root"), "READ");
+TFile* file_CT100L140 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L140CT100.root"), "READ");
+TFile* file_CT500L140 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L140CT500.root"), "READ");
+TFile* file_CT1000L140 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L140CT1000.root"), "READ");
+//TFile* file_CT2000L140 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L140CT2000.root"), "READ");
+TFile* file_CT2000L140 = new TFile(("./exclusionfiles/ASYMPTOTIC_CLS_RESULT_L140CT2000.root"), "READ");
 
 void plot_limit_mass(std::string LAMBDA){
 
