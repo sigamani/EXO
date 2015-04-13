@@ -31,8 +31,7 @@ TString extra = "";
 // TFile* file_CT500L180 = new TFile(("./exclusionfiles/higgsCombineL180CTau500shapedata"+extra+".Asymptotic.mH120.root"), "READ");
 // TFile* file_CT2000L180 = new TFile(("./exclusionfiles/higgsCombineL180CTau2000shapedata"+extra+".Asymptotic.mH120.root"), "READ");
 
-//TFile* file_CT1L180 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L180CT1.root"), "READ");
-TFile* file_CT1L180 = new TFile(("./exclusionfiles/ASYMPTOTIC_CLS_RESULT_L180CT1.root"), "READ");
+TFile* file_CT1L180 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L180CT1.root"), "READ");
 TFile* file_CT10L180 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L180CT10.root"), "READ");
 TFile* file_CT50L180 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L180CT50.root"), "READ");
 TFile* file_CT250L180 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L180CT250.root"), "READ");

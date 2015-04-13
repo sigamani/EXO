@@ -13,7 +13,7 @@ void Limit2D() {
 
    gROOT->LoadMacro("CMS_lumi.C");
 
-   string hfolder  = "~/www/" ;
+   string hfolder  = "~/www/home/" ;
 
    //TString legTitle = "#tilde{#chi}^{0}_{1} #rightarrow #gamma #tilde{G}, c#tau ="+ ctau + " mm" ;
    string limitPlotName = "limit2D" ;
@@ -44,7 +44,6 @@ void Limit2D() {
 
 
    
-
    //************** Observed 8 TeV Limits ********************************//
    // Mass  = 1.45*Lambda - 5
    // fitted tip: (321.08, 141.84)
@@ -67,6 +66,25 @@ void Limit2D() {
    obs_cms_gr->Draw("AL");
    c1a->Update() ;
 
+
+   //************************** EXO-14-017*******************************//
+   //************** Observed 8 TeV Limits ********************************//
+
+   Double_t obs_cms_conv8TeV[6]={198, 227., 256., 256., 227., 198};
+
+   //Full CLs |  Real CTau with GMSB bin 1 set to 0                            
+   Double_t obs_ct_conv8TeV[6]={0.3, 1.2, 9, 9, 30., 50.};  // MET > 60        
+
+   TGraph* obs_cms8_conv_gr;
+   obs_cms8_conv_gr = new TGraph(6, obs_cms_conv8TeV, obs_ct_conv8TeV );
+   obs_cms8_conv_gr->SetFillColor(kBlue);
+   obs_cms8_conv_gr->SetLineColor(kBlue);
+   obs_cms8_conv_gr->SetLineWidth(4);
+   obs_cms8_conv_gr->SetLineStyle(7);
+   obs_cms8_conv_gr->Draw("Lsames");
+   c1a->Update() ;
+
+
    //**************************observed cms 7 TeV *******************************//
    Double_t obs_cms_7TeV[16]={100., 145., 157., 179., 192., 216., 221., 218., 218., 221., 216., 192., 179., 157., 145., 100.}; 
    Double_t obs_ct_7TeV[16] ={0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 10., 25.0, 50.0, 100.0, 200.0, 400.0, 600.0, 600.0}; 
@@ -76,7 +94,7 @@ void Limit2D() {
    obs_cms7_gr->SetFillColor(5);
    obs_cms7_gr->SetLineColor(1);
    obs_cms7_gr->SetFillStyle(3001) ;
-   obs_cms7_gr->Draw("FLsames");
+   obs_cms7_gr->Draw("FL");
    c1a->Update() ;
 
    //**************************observed cdf*******************************//
@@ -110,7 +128,11 @@ void Limit2D() {
    //Double_t ct_conv8TeV[6]={0.516, 0.428, 0.366, 30., 45., 95.};  // MET > 60
 
    //Real CTau with GMSB bin 1 set to 0
-   Double_t ct_conv8TeV[6]={0.15, 0.35, 2.0, 25., 45., 90.};  // MET > 60
+   //Double_t ct_conv8TeV[6]={0.15, 0.35, 2.0, 25., 45., 90.};  // MET > 60
+
+
+   //Full CLs |  Real CTau with GMSB bin 1 set to 0
+   Double_t ct_conv8TeV[6]={0.2, 0.55, 1.5, 20., 35., 80.};  // MET > 60
 
    TGraph* exp_cms8_conv_gr;
    exp_cms8_conv_gr = new TGraph(6, exp_cms_conv8TeV, ct_conv8TeV );
@@ -133,6 +155,11 @@ void Limit2D() {
    exp_cms_gr->SetLineWidth(0);
    exp_cms_gr->Draw("Fsames"); 
    c1a->Update() ;
+
+   obs_cms_gr->Draw("Lsames");
+   obs_cms8_conv_gr->Draw("Lsames");
+   c1a->Update();
+
 
    //*** ATLAS observed 8 TeV ****
    Double_t lambda_atlas_8TeV[14] = { 82.5 , 102.5,   140,   160,   180,   200,   220, 260,  300, 302.58, 
@@ -164,6 +191,7 @@ void Limit2D() {
    leg->AddEntry(exp_cms_gr,      "CMS Timing Exp. #scale[0.7]{(19.1 fb^{-1} at 8 TeV)}",   "F" );
    leg->AddEntry(obs_cms_gr,      "CMS Timing Obs. #scale[0.7]{(19.1 fb^{-1} at 8 TeV)}",   "L" );
    leg->AddEntry(exp_cms8_conv_gr,"CMS Conversions Exp. #scale[0.7]{(19.7 fb^{-1} at 8 TeV)}","F"); 
+   leg->AddEntry(obs_cms8_conv_gr, "CMS Conversions Obs. #scale[0.7]{(19.7 fb^{-1} at 8 TeV)}","L");
    leg->AddEntry(obs_cms7_gr,     "CMS Timing Obs. #scale[0.7]{(4.9 fb^{-1} at 7 TeV)}",   "F");
    //leg->AddEntry(obs_atlas_gr,    "ATLAS Obs 20.3 fb^{-1} 8 TeV", "L" );
    leg->AddEntry(obs_cdf_gr,      "CDF Obs. #scale[0.7]{(2.6 fb^{-1} at 1.96 TeV)}", "F" ); 

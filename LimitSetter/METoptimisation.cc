@@ -22,7 +22,7 @@ using namespace std;
 
 
 
-void plot_limit_mass(){
+void METoptimization(){
 
   gStyle->SetCanvasColor(0);
   gStyle->SetPadColor(0);
@@ -31,35 +31,67 @@ void plot_limit_mass(){
   gStyle->SetPalette(1);
   gStyle->SetTextFont(42);
   gStyle->SetMarkerColor(37);
+  
+    //Theoretical CTAU
+    // Double_t Lambda180_30GeV[4] = {};
+    // Double_t Lambda180_50GeV[4] = {4.5,8.,8.,4.5};
+    // Double_t Lambda180_60GeV[4] = {1.,70.,70.,1.};
+    // Double_t Lambda180_80GeV[4] = {1.,70.,70.,1.};
+    // Double_t Lambda180_100GeV[4] = {1.,70.,70.,1.};
+    // Double_t Lambda180_140GeV[4] = {1.,50.,50.,1.};  
+    // Double_t Lambda180_160GeV[4] = {1.,40.,40.,1.};
+    // Double_t Lambda180_170GeV[4] = {2.,30.,30.,2.};
+    // Double_t Lambda180_180GeV[4] = {};
 
+    // Double_t Lambda160_30GeV[4] = {};
+    // Double_t Lambda160_50GeV[4] = {1.,60.,60.,1.};
+    // Double_t Lambda160_60GeV[4] = {1.,105.,105.,1.};
+    // Double_t Lambda160_80GeV[4] = {1.,100.,100.,1.};
+    // Double_t Lambda160_100GeV[4] = {1.,100.,100.,1.};
+    // Double_t Lambda160_140GeV[4] = {1.,75.,75.,1.};
+    // Double_t Lambda160_160GeV[4] = {1.,65.,65.,1.};
+    // Double_t Lambda160_170GeV[4] = {1.,55.,55.,1.};
+    // Double_t Lambda160_180GeV[4] = {};
+
+    // Double_t Lambda140_30GeV[4] = {};
+    // Double_t Lambda140_50GeV[4] = {1.,100.,100.,1.};
+    // Double_t Lambda140_60GeV[4] = {1.,180.,180.,1.};
+    // Double_t Lambda140_80GeV[4] = {1.,170.,170.,1.};
+    // Double_t Lambda140_100GeV[4] = {1.,170.,170.,1.};
+    // Double_t Lambda140_140GeV[4] = {1.,110.,110.,1.};
+    // Double_t Lambda140_160GeV[4] = {1.,100.,100.,1.};
+    // Double_t Lambda140_170GeV[4] = {1.,80.,80.,1.};
+    // Double_t Lambda140_180GeV[4] = {};
+
+    //Real CTAU
     Double_t Lambda180_30GeV[4] = {};
-    Double_t Lambda180_50GeV[4] = {4.5,8.,8.,4.5};
-    Double_t Lambda180_60GeV[4] = {1.,70.,70.,1.};
-    Double_t Lambda180_80GeV[4] = {1.,70.,70.,1.};
-    Double_t Lambda180_100GeV[4] = {1.,70.,70.,1.};
-    Double_t Lambda180_140GeV[4] = {1.,50.,50.,1.};  
-    Double_t Lambda180_160GeV[4] = {1.,40.,40.,1.};
-    Double_t Lambda180_170GeV[4] = {2.,30.,30.,2.};
+    Double_t Lambda180_50GeV[4] = {1.647,2.928,2.928,1.647};
+    Double_t Lambda180_60GeV[4] = {0.366,25.62,25.62,0.366};
+    Double_t Lambda180_80GeV[4] = {0.366,25.62,25.62,0.366};
+    Double_t Lambda180_100GeV[4] = {0.366,25.62,25.62,0.366};
+    Double_t Lambda180_140GeV[4] = {0.366,18.3,18.3,0.366};
+    Double_t Lambda180_160GeV[4] = {0.366,14.64,14.64,0.366};
+    Double_t Lambda180_170GeV[4] = {0.732,10.98,10.98,0.732};
     Double_t Lambda180_180GeV[4] = {};
 
     Double_t Lambda160_30GeV[4] = {};
-    Double_t Lambda160_50GeV[4] = {1.,60.,60.,1.};
-    Double_t Lambda160_60GeV[4] = {1.,105.,105.,1.};
-    Double_t Lambda160_80GeV[4] = {1.,100.,100.,1.};
-    Double_t Lambda160_100GeV[4] = {1.,100.,100.,1.};
-    Double_t Lambda160_140GeV[4] = {1.,75.,75.,1.};
-    Double_t Lambda160_160GeV[4] = {1.,65.,65.,1.};
-    Double_t Lambda160_170GeV[4] = {1.,55.,55.,1.};
+    Double_t Lambda160_50GeV[4] = {0.366,21.96,21.96,0.366};
+    Double_t Lambda160_60GeV[4] = {0.366,38.43,38.43,0.366};
+    Double_t Lambda160_80GeV[4] = {0.366,36.6,36.6,0.366};
+    Double_t Lambda160_100GeV[4] = {0.366,36.6,36.6,0.366};
+    Double_t Lambda160_140GeV[4] = {0.366,27.45,27.45,0.366};
+    Double_t Lambda160_160GeV[4] = {0.366,23.79,23.79,0.366};
+    Double_t Lambda160_170GeV[4] = {0.366,20.13,20.13,0.366};
     Double_t Lambda160_180GeV[4] = {};
 
     Double_t Lambda140_30GeV[4] = {};
-    Double_t Lambda140_50GeV[4] = {1.,100.,100.,1.};
-    Double_t Lambda140_60GeV[4] = {1.,180.,180.,1.};
-    Double_t Lambda140_80GeV[4] = {1.,170.,170.,1.};
-    Double_t Lambda140_100GeV[4] = {1.,170.,170.,1.};
-    Double_t Lambda140_140GeV[4] = {1.,110.,110.,1.};
-    Double_t Lambda140_160GeV[4] = {1.,100.,100.,1.};
-    Double_t Lambda140_170GeV[4] = {1.,80.,80.,1.};
+    Double_t Lambda140_50GeV[4] = {0.366,36.6,36.6,0.366};
+    Double_t Lambda140_60GeV[4] = {0.366,65.88,65.88,0.366};
+    Double_t Lambda140_80GeV[4] = {0.366,62.22,62.22,0.366};
+    Double_t Lambda140_100GeV[4] = {0.366,62.22,62.22,0.366};
+    Double_t Lambda140_140GeV[4] = {0.366,40.26,40.26,0.366};
+    Double_t Lambda140_160GeV[4] = {0.366,36.6,36.6,0.366};
+    Double_t Lambda140_170GeV[4] = {0.366,29.28,29.28,0.366};
     Double_t Lambda140_180GeV[4] = {};
 
 

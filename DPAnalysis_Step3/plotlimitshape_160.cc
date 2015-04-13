@@ -33,12 +33,19 @@ TString extra = "";
 // TFile* file_CT2000L160 = new TFile(("./exclusionfiles/higgsCombineL160CTau2000shapedata"+extra+".Asymptotic.mH120.root"), "READ");
 
 
-TFile* file_CT1L160 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L160CT1.root"), "READ");
-TFile* file_CT10L160 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L160CT10.root"), "READ");
-TFile* file_CT100L160 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L160CT100.root"), "READ");
-TFile* file_CT500L160 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L160CT500.root"), "READ");
-TFile* file_CT1000L160 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L160CT1000.root"), "READ");
-TFile* file_CT2000L160 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L160CT2000.root"), "READ");
+// TFile* file_CT1L160 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L160CT1.root"), "READ");
+// TFile* file_CT10L160 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L160CT10.root"), "READ");
+// TFile* file_CT100L160 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L160CT100.root"), "READ");
+// TFile* file_CT500L160 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L160CT500.root"), "READ");
+// TFile* file_CT1000L160 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L160CT1000.root"), "READ");
+// TFile* file_CT2000L160 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L160CT2000.root"), "READ");
+
+TFile* file_CT1L160 = new TFile(("./exclusionfiles/ASYMPTOTIC_CLS_RESULT_L160CT1.root"), "READ");
+TFile* file_CT10L160 = new TFile(("./exclusionfiles/ASYMPTOTIC_CLS_RESULT_L160CT10.root"), "READ");
+TFile* file_CT100L160 = new TFile(("./exclusionfiles/ASYMPTOTIC_CLS_RESULT_L160CT100.root"), "READ");
+TFile* file_CT500L160 = new TFile(("./exclusionfiles/ASYMPTOTIC_CLS_RESULT_L160CT500.root"), "READ");
+TFile* file_CT1000L160 = new TFile(("./exclusionfiles/ASYMPTOTIC_CLS_RESULT_L160CT1000.root"), "READ");
+TFile* file_CT2000L160 = new TFile(("./exclusionfiles/ASYMPTOTIC_CLS_RESULT_L160CT2000.root"), "READ");
 
 void plot_limit_mass(std::string LAMBDA){
 

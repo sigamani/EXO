@@ -36,8 +36,15 @@ TFile* file_CT10L140 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L140CT10.roo
 TFile* file_CT100L140 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L140CT100.root"), "READ");
 TFile* file_CT500L140 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L140CT500.root"), "READ");
 TFile* file_CT1000L140 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L140CT1000.root"), "READ");
-//TFile* file_CT2000L140 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L140CT2000.root"), "READ");
-TFile* file_CT2000L140 = new TFile(("./exclusionfiles/ASYMPTOTIC_CLS_RESULT_L140CT2000.root"), "READ");
+TFile* file_CT2000L140 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L140CT2000.root"), "READ");
+
+// TFile* file_CT1L140 = new TFile(("./exclusionfiles/ASYMPTOTIC_CLS_RESULT_L140CT1.root"), "READ");
+// TFile* file_CT10L140 = new TFile(("./exclusionfiles/ASYMPTOTIC_CLS_RESULT_L140CT10.root"), "READ");
+// TFile* file_CT100L140 = new TFile(("./exclusionfiles/ASYMPTOTIC_CLS_RESULT_L140CT100.root"), "READ");
+// TFile* file_CT500L140 = new TFile(("./exclusionfiles/ASYMPTOTIC_CLS_RESULT_L140CT500.root"), "READ");
+// TFile* file_CT1000L140 = new TFile(("./exclusionfiles/ASYMPTOTIC_CLS_RESULT_L140CT1000.root"), "READ");
+// TFile* file_CT2000L140 = new TFile(("./exclusionfiles/ASYMPTOTIC_CLS_RESULT_L140CT2000.root"), "READ");
+
 
 void plot_limit_mass(std::string LAMBDA){
 
@@ -291,7 +298,7 @@ void plot_limit_mass(std::string LAMBDA){
   TMultiGraph* mg = new TMultiGraph;
  
   mg->Add(exp_lim_graph);
-  //mg->Add(ul_lim_graph);
+  mg->Add(ul_lim_graph);
 
 
   TCanvas* c0 = new TCanvas("exclusion limit", "exclusion limit", 1);
@@ -316,7 +323,7 @@ void plot_limit_mass(std::string LAMBDA){
   exp_lim_graph->Draw("LA");
   Twosig_graph->Draw("Fsame");
   Onesig_graph->Draw("Fsame");
-  //ul_lim_graph->Draw("Lsame");
+  ul_lim_graph->Draw("Lsame");
   exp_lim_graph->Draw("Lsame");
 
   exp_lim_graph->GetXaxis()->SetTitle("c#tau_{#tilde{#chi^{0}_{1}}} (cm)");
@@ -328,7 +335,7 @@ void plot_limit_mass(std::string LAMBDA){
   exp_lim_graph->GetYaxis()->SetTitleSize(0.048);
   exp_lim_graph->GetYaxis()->SetTitleOffset(1.6);
 
-  //ul_lim_graph->Draw("same");
+  ul_lim_graph->Draw("same");
 
   // integrated luminosity
   std::string s_lumi;
@@ -364,7 +371,7 @@ void plot_limit_mass(std::string LAMBDA){
   leg->SetHeader(massLeg);
   leg->SetTextFont(22);
   leg->AddEntry(xsTh_vs_m,"Theoretical LO cross-section","L");
-  //leg->AddEntry(ul_lim_graph, "Observed  95% CL upper limit", "L");
+  leg->AddEntry(ul_lim_graph, "Observed  95% CL upper limit", "L");
   leg->AddEntry(exp_lim_graph, "Expected 95% CL upper limit", "L");
   leg->AddEntry(Onesig_graph, "#pm 1 #sigma Expected", "F");
   leg->AddEntry(Twosig_graph, "#pm 2 #sigma Expected", "F");
