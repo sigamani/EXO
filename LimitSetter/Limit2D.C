@@ -44,29 +44,6 @@ void Limit2D() {
 
 
    
-   //************** Observed 8 TeV Limits ********************************//
-   // Mass  = 1.45*Lambda - 5
-   // fitted tip: (321.08, 141.84)
-   Double_t obs_cms_8TeV[13] = {  140,   169,   198,  227,   256,    314,    314, 285,    256,     227,     198,     169,     140 }; 
-   Double_t obs_ct_8TeV[13]  = {92.39, 56.98, 51.43, 48.6, 70.59, 138.78, 212.92, 290, 702.16, 1063.61, 1298.93, 1243.29, 1349.28 }; 
-
-   TGraph* obs_cms_gr = new TGraph(13, obs_cms_8TeV, obs_ct_8TeV );
-   obs_cms_gr->GetXaxis()->SetLimits( 100, 460 ) ;
-   obs_cms_gr->SetMaximum(1000000 ) ;
-   obs_cms_gr->SetMinimum(0.1 ) ;
-   obs_cms_gr->GetYaxis()->SetTitle( "Mean Lifetime  c#tau_{#tilde{#chi}^{0}_{1}} (cm)"  ) ;
-   obs_cms_gr->GetXaxis()->SetTitle( "#tilde{#chi}^{0}_{1} Mass (GeV)") ;
-   obs_cms_gr->GetYaxis()->SetTitleSize(0.047);
-   obs_cms_gr->GetXaxis()->SetTitleSize(0.047);
-   obs_cms_gr->GetXaxis()->SetTitleOffset(1.45);
-   obs_cms_gr->GetYaxis()->SetTitleOffset(1.45);
-   obs_cms_gr->SetLineColor(2);
-   obs_cms_gr->SetLineWidth(4);
-   obs_cms_gr->SetLineStyle(7);
-   obs_cms_gr->Draw("AL");
-   c1a->Update() ;
-
-
    //************************** EXO-14-017*******************************//
    //************** Observed 8 TeV Limits ********************************//
 
@@ -77,11 +54,33 @@ void Limit2D() {
 
    TGraph* obs_cms8_conv_gr;
    obs_cms8_conv_gr = new TGraph(6, obs_cms_conv8TeV, obs_ct_conv8TeV );
+   obs_cms8_conv_gr->GetXaxis()->SetLimits( 100, 460 ) ;
+   obs_cms8_conv_gr->SetMaximum(1000000 ) ;
+   obs_cms8_conv_gr->SetMinimum(0.1 ) ;
+   obs_cms8_conv_gr->GetYaxis()->SetTitle( "Mean Lifetime  c#tau_{#tilde{#chi}^{0}_{1}} (cm)"  ) ;
+   obs_cms8_conv_gr->GetXaxis()->SetTitle( "#tilde{#chi}^{0}_{1} Mass (GeV)") ;
+   obs_cms8_conv_gr->GetYaxis()->SetTitleSize(0.047);
+   obs_cms8_conv_gr->GetXaxis()->SetTitleSize(0.047);
+   obs_cms8_conv_gr->GetXaxis()->SetTitleOffset(1.45);
+   obs_cms8_conv_gr->GetYaxis()->SetTitleOffset(1.45);
    obs_cms8_conv_gr->SetFillColor(kBlue);
    obs_cms8_conv_gr->SetLineColor(kBlue);
    obs_cms8_conv_gr->SetLineWidth(4);
    obs_cms8_conv_gr->SetLineStyle(7);
-   obs_cms8_conv_gr->Draw("Lsames");
+   obs_cms8_conv_gr->Draw("ALsames");
+   c1a->Update() ;
+
+   //************** Observed 8 TeV Limits ********************************//
+   // Mass  = 1.45*Lambda - 5
+   // fitted tip: (321.08, 141.84)
+   Double_t obs_cms_8TeV[13] = {  140,   169,   198,  227,   256,    314,    314, 285,    256,     227,     198,     169,     140 }; 
+   Double_t obs_ct_8TeV[13]  = {92.39, 56.98, 51.43, 48.6, 70.59, 138.78, 212.92, 290, 702.16, 1063.61, 1298.93, 1243.29, 1349.28 }; 
+
+   TGraph* obs_cms_gr = new TGraph(13, obs_cms_8TeV, obs_ct_8TeV );
+   obs_cms_gr->SetLineColor(2);
+   obs_cms_gr->SetLineWidth(4);
+   obs_cms_gr->SetLineStyle(7);
+   //obs_cms_gr->Draw("Lsames");
    c1a->Update() ;
 
 
@@ -93,7 +92,7 @@ void Limit2D() {
    obs_cms7_gr = new TGraph(16, obs_cms_7TeV, obs_ct_7TeV );
    obs_cms7_gr->SetFillColor(5);
    obs_cms7_gr->SetLineColor(1);
-   obs_cms7_gr->SetFillStyle(3001) ;
+   //obs_cms7_gr->SetFillStyle(3001) ;
    obs_cms7_gr->Draw("FL");
    c1a->Update() ;
 
@@ -153,10 +152,10 @@ void Limit2D() {
    exp_cms_gr->SetFillStyle(3002);
    exp_cms_gr->SetLineColor(kRed);
    exp_cms_gr->SetLineWidth(0);
-   exp_cms_gr->Draw("Fsames"); 
+   //exp_cms_gr->Draw("Fsames"); 
    c1a->Update() ;
 
-   obs_cms_gr->Draw("Lsames");
+   //obs_cms_gr->Draw("Lsames");
    obs_cms8_conv_gr->Draw("Lsames");
    c1a->Update();
 
@@ -188,8 +187,8 @@ void Limit2D() {
  
    // leg ->SetTextFont(22);
    leg ->SetTextFont(42);
-   leg->AddEntry(exp_cms_gr,      "CMS Timing Exp. #scale[0.7]{(19.1 fb^{-1} at 8 TeV)}",   "F" );
-   leg->AddEntry(obs_cms_gr,      "CMS Timing Obs. #scale[0.7]{(19.1 fb^{-1} at 8 TeV)}",   "L" );
+   //leg->AddEntry(exp_cms_gr,      "CMS Timing Exp. #scale[0.7]{(19.1 fb^{-1} at 8 TeV)}",   "F" );
+   //leg->AddEntry(obs_cms_gr,      "CMS Timing Obs. #scale[0.7]{(19.1 fb^{-1} at 8 TeV)}",   "L" );
    leg->AddEntry(exp_cms8_conv_gr,"CMS Conversions Exp. #scale[0.7]{(19.7 fb^{-1} at 8 TeV)}","F"); 
    leg->AddEntry(obs_cms8_conv_gr, "CMS Conversions Obs. #scale[0.7]{(19.7 fb^{-1} at 8 TeV)}","L");
    leg->AddEntry(obs_cms7_gr,     "CMS Timing Obs. #scale[0.7]{(4.9 fb^{-1} at 7 TeV)}",   "F");

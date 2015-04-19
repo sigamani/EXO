@@ -126,7 +126,7 @@ def function():
     return dxy
 
 def plot(dxy):
-    dxy[2].SetFillStyle(3001)
+    #dxy[2].SetFillStyle(3001)
     dxy[0].SetMarkerStyle(22)
     dxy[1].SetMarkerStyle(21)
     dxy[0].SetMarkerColor(kBlack)
@@ -179,17 +179,17 @@ def plot(dxy):
 
     errhist0 = TGraphErrors(n,x0,y0,ex0,ey0)
     errhist0.SetFillColor(kBlack)
-    errhist0.SetLineWidth(3)
+    errhist0.SetLineWidth(0)
     errhist0.SetFillStyle(3005)
 
     errhist1 = TGraphErrors(n,x1,y1,ex1,ey1)
     errhist1.SetFillColor(kRed)
-    errhist1.SetLineWidth(3)
+    errhist1.SetLineWidth(0)
     errhist1.SetFillStyle(3005)
 
     errhist2 = TGraphErrors(n,x2,y2,ex2,ey2)
     errhist2.SetFillColor(kBlack)
-    errhist2.SetLineWidth(3)
+    errhist2.SetLineWidth(0)
     errhist2.SetFillStyle(3005)
     
     leg = TLegend(0.60,0.65,0.89,0.89)
@@ -197,9 +197,10 @@ def plot(dxy):
     leg.SetTextSize(0.05)
     leg.SetTextFont(42)
     leg.SetBorderSize(0)
-    leg.AddEntry(dxy[2], "Control region 1","f")
-    leg.AddEntry(dxy[1], "Control region 2","l")
-    leg.AddEntry(dxy[0], "Control region 3","l")
+    leg.AddEntry(dxy[2], "Control Region 1","f")
+    leg.AddEntry(errhist2, "Stat. Unc. CR1","f")
+    leg.AddEntry(dxy[1], "Control Region 2","pl")
+    leg.AddEntry(dxy[0], "Control Region 3","pl")
 
     dxy[1].GetXaxis().SetTitle("Conversion d_{XY} (cm)")
     dxy[1].GetYaxis().SetTitle("Events / bin")

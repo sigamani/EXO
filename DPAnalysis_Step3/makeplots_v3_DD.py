@@ -22,7 +22,7 @@ def loop(vec, vechisto, flag, phot):
                 continue
             if (event.sMinPhot[0] < 0.15 or event.sMinPhot[0] > 0.3):
                 continue
-            if (event.ptJet[0] < 35):
+            if (event.ptJet[0] < 30): #!!!!!!!!!!!!
                 continue
             if (event.sigmaIetaPhot[0] > 0.012):
                continue
@@ -35,6 +35,8 @@ def loop(vec, vechisto, flag, phot):
                 #    continue
 
                 if (event.MET < 60):
+                    continue
+                if (event.ptJet[0] < 35): #!!!!!!!!!!!!!!!!!!!!!
                     continue
                 lum = 19700.
                 vechisto[0].Fill( event.ptPhot[0], (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors) )
@@ -68,6 +70,8 @@ def loop(vec, vechisto, flag, phot):
                 #    continue
 
                 if (event.MET < 60):
+                    continue
+                if (event.ptJet[0] < 35): #!!!!!!!!!!!!!!!!!!!!!
                     continue
                 vechisto[0].Fill( event.ptPhot[0], 1./event.EfficiencyScaleFactors )
                 if (event.ptPhot.size() > phot):
@@ -363,6 +367,9 @@ def function (lamb,ctau1,ctau2,phot):
         it.Write()
 
     output.Close()
+
+    for i in range(nxbins):
+        print vechisisolow[4].GetBinContent(i+1)
 
 
 def main():

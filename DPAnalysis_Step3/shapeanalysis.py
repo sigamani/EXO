@@ -34,7 +34,7 @@ def loop(vec, dxy, flag, phot):
 
             #MC
             if(flag == 0):
-                lum = 19280.
+                lum = 19700.
                 if (event.ptJet[0] < 35): #!!!!!!!!!!!!!!!!!!!!!
                     continue
                 if(event.MET < 60):
@@ -204,6 +204,9 @@ def function (lamb,ctau,phot):
     background_alphaUp.Write()
     background_alphaDown.Write()
     
+
+    for i in range(nxbins):
+        print background.GetBinContent(i+1) - background_alphaUp.GetBinContent(i+1)
 
     output.Close()
 

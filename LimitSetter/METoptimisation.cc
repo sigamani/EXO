@@ -75,25 +75,24 @@ void METoptimization(){
     Double_t Lambda180_180GeV[4] = {};
 
     Double_t Lambda160_30GeV[4] = {};
-    Double_t Lambda160_50GeV[4] = {0.366,21.96,21.96,0.366};
-    Double_t Lambda160_60GeV[4] = {0.366,38.43,38.43,0.366};
-    Double_t Lambda160_80GeV[4] = {0.366,36.6,36.6,0.366};
-    Double_t Lambda160_100GeV[4] = {0.366,36.6,36.6,0.366};
-    Double_t Lambda160_140GeV[4] = {0.366,27.45,27.45,0.366};
-    Double_t Lambda160_160GeV[4] = {0.366,23.79,23.79,0.366};
-    Double_t Lambda160_170GeV[4] = {0.366,20.13,20.13,0.366};
+    Double_t Lambda160_50GeV[4] = {0.428,25.68,25.68,0.428};
+    Double_t Lambda160_60GeV[4] = {0.428,44.94,44.94,0.428};
+    Double_t Lambda160_80GeV[4] = {0.428,42.8,42.8,0.428};
+    Double_t Lambda160_100GeV[4] = {0.428,42.8,42.8,0.428};
+    Double_t Lambda160_140GeV[4] = {0.428,32.1,32.1,0.428};
+    Double_t Lambda160_160GeV[4] = {0.428,27.82,27.82,0.428};
+    Double_t Lambda160_170GeV[4] = {0.428,23.54,23.54,0.428};
     Double_t Lambda160_180GeV[4] = {};
 
     Double_t Lambda140_30GeV[4] = {};
-    Double_t Lambda140_50GeV[4] = {0.366,36.6,36.6,0.366};
-    Double_t Lambda140_60GeV[4] = {0.366,65.88,65.88,0.366};
-    Double_t Lambda140_80GeV[4] = {0.366,62.22,62.22,0.366};
-    Double_t Lambda140_100GeV[4] = {0.366,62.22,62.22,0.366};
-    Double_t Lambda140_140GeV[4] = {0.366,40.26,40.26,0.366};
-    Double_t Lambda140_160GeV[4] = {0.366,36.6,36.6,0.366};
-    Double_t Lambda140_170GeV[4] = {0.366,29.28,29.28,0.366};
+    Double_t Lambda140_50GeV[4] = {0.516,51.6.,51.6,0.516};
+    Double_t Lambda140_60GeV[4] = {0.516,92.88,92.88,0.516};
+    Double_t Lambda140_80GeV[4] = {0.516,87.72,87.72,0.516};
+    Double_t Lambda140_100GeV[4] = {0.516,87.72,87.72,0.516};
+    Double_t Lambda140_140GeV[4] = {0.516,56.76,56.76,0.516};
+    Double_t Lambda140_160GeV[4] = {0.516,51.6,51.6,0.516};
+    Double_t Lambda140_170GeV[4] = {0.516,41.28,41.28,0.516};
     Double_t Lambda140_180GeV[4] = {};
-
 
   Double_t mTh[7] = {50,60,80,100,140,160,170};
 
@@ -165,7 +164,7 @@ void METoptimization(){
   double METcut_optimal = 60; 
   
 
-  TLine *line = new TLine(METcut_optimal,1,METcut_optimal,10e2);
+  TLine *line = new TLine(METcut_optimal,0.516,METcut_optimal,400);
   line->SetLineColor(kBlue);
   line->SetLineStyle(2);
   line->SetLineWidth(5);
@@ -178,7 +177,7 @@ void METoptimization(){
   Exp_graph_Lambda180->SetTitle("");
   Exp_graph_Lambda180->GetXaxis()->SetTitle("MET cut (GeV)");
   Exp_graph_Lambda180->GetYaxis()->SetTitle("#tilde{#chi}^{0}_{1} Mean Proper Decay Length (cm)");
-  Exp_graph_Lambda180->GetYaxis()->SetRangeUser(1, 1000);
+  Exp_graph_Lambda180->GetYaxis()->SetRangeUser(0.516, 400);
   Exp_graph_Lambda180->GetXaxis()->SetRangeUser(0,200);
 
   Exp_graph_Lambda180->Draw("AF");
@@ -190,7 +189,7 @@ void METoptimization(){
   c0->RedrawAxis();
 
    
-  TLegend* leg = new TLegend(0.3,0.75,0.65,0.99);
+  TLegend* leg = new TLegend(0.3,0.75,0.65,0.95);
   leg->SetFillStyle(0); leg->SetBorderSize(0);
   leg->SetFillColor(0);
 
@@ -203,8 +202,7 @@ void METoptimization(){
   leg->AddEntry(Exp_graph_Lambda140, "Exp. exclusion (#Lambda = 140 TeV)", "F");
   leg->Draw("same");
 
-  c0->SaveAs("~/www/2Dexclusion_limit.pdf");
-  c0->SaveAs("~/www/2Dexclusion_limit.png");
+  c0->SaveAs("~/www/METoptimisation.pdf");
 
 }
 
