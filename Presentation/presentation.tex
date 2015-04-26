@@ -45,7 +45,7 @@
   
 \pdfpageattr {/Group << /S /Transparency /I true /CS /DeviceRGB>>} 
 
-\title{{\Large \textbf{Search for long-lived, neutral particles decaying to photons at 8 TeV}\\
+\title{{\Large \textbf{Search for long-lived neutral particles decaying to photons at 8 TeV}\\
 \vspace{2mm}
 \normalsize Approval of EXO-14-017}}
 \author{Alberto Ocampo, Michael Sigamani, \textbf{Ward Van Driessche}}
@@ -80,73 +80,69 @@
 \label{introdu}
 \begin{frame}
 \frametitle{\insertsection}
-\centering
-\textbf{\large Search for displaced photons.}
+
+%\centering
+%\textbf{\large Search for displaced photons.}
+
 \begin{columns}
 \begin{column}{6cm}
 \begin{block}{}
 \setbeamertemplate{itemize items}[ball]
 \begin{itemize}
-\item \textbf{Signal model: GMSB} 
+\item \textcolor{Red}{\textbf{GMSB signal model:}} 
 \setbeamertemplate{itemize items}[default]
 \begin{itemize}
-\item $ \tilde{\chi}^0_1\rightarrow \gamma$ + invisible particle.
+\item $ \tilde{\chi}^0_1\rightarrow \gamma$ + Gravitino.
 %\item Gauge interaction responsible for \textbf{soft SUSY breaking} in MSSM.
-\item Neutralino NLSP: \textbf{non-zero lifetime}.
-\item Gravitino LSP.
+\item Neutralino is NLSP
+\item Gravitino is LSP
 \end{itemize}
 \vspace{3mm}
 \setbeamertemplate{itemize items}[ball]
-\item $E^{miss}_T$ because of Gravitino when assuming conserved R-parity.
-\item Two free parameters in the model:
+%\item $E^{miss}_T$ because of Gravitino when assuming conserved R-parity.
+\item \textcolor{Red}{\textbf{Two free parameters:}}
 \begin{itemize}
-\setbeamertemplate{itemize items}[default]
-\item $c\tau$ (mean lifetime of $\widetilde{\chi}^0_1$)
-\item $\Lambda$ (SUSY breaking scale)
+%\setbeamertemplate{itemize items}[default]
+\item Mean lifetime of $\widetilde{\chi}^0_1$ ($c\tau$)
+\item \textcolor{Green}{SUSY breaking scale ($\Lambda$)}
 \end{itemize}
 \end{itemize}
 \end{block}
+
+\begin{itemize}
+\item AN (v13): \href{http://cms.cern.ch/iCMS/jsp/openfile.jsp?tp=draft&files=AN2013_421_v13.pdf}{ \textcolor{Red}{\textbf{Click here}}}
+\item PAS (v11): \href{http://cms.cern.ch:80/iCMS/analysisadmin/get?analysis=EXO-14-017-pas-v11.pdf}{ \textcolor{Red}{\textbf{Click here}}} 
+\item Twiki: \href{https://twiki.cern.ch/twiki/bin/viewauth/CMS/DisplacedPhotonsWithConversions8TeV}{ \textcolor{Red}{\textbf{Click here}}}
+\item CADI: \href{http://cms.cern.ch/iCMS/analysisadmin/cadilines?line=EXO-14-017}{ \textcolor{Red}{\textbf{Click here}}}  
+\end{itemize}
+
 \end{column} 
+
 \begin{column}{6cm}
 \centering
 \includegraphics[width=0.9\textwidth]{Feynman1.png}\\ 
 \includegraphics[width=0.9\textwidth]{Feynman2.png}\\
-$\tilde{\chi}^0_1 \rightarrow \gamma + \tilde{G}$
 \end{column}
 \end{columns}
 \end{frame}
 
 
-\subsection{Useful Links}
-\begin{frame}
-\frametitle{\insertsubsection}
-\begin{itemize}
-\item AN:\\
-\url{http://cms.cern.ch/iCMS/jsp/openfile.jsp?tp=draft&files=AN2013_421_v13.pdf}
-\item PAS:\\
-\url{http://cms.cern.ch/iCMS/analysisadmin/get?analysis=EXO-14-017-pas-v11.pdf}
-\item TWIKI:\\
-\url{https://twiki.cern.ch/twiki/bin/viewauth/CMS/DisplacedPhotonsWithConversions8TeV}
-\item CADI:\\
-\url{http://cms.cern.ch/iCMS/analysisadmin/cadilines?line=EXO-14-017}
-\end{itemize}
-\end{frame}
 
 
-\subsection{Other Displaced Photon Analyses}
+\subsection{Related analyses}
 \begin{frame}
 \frametitle{\insertsubsection}
 \vspace{-4mm}
 \begin{columns}
 \begin{column}{6.0cm}
-\begin{center}\href{http://cms.cern.ch/iCMS/analysisadmin/cadilines?line=EXO-11-067}{EXO-11-067}\end{center}
 \vspace{-4mm}
-\begin{block}{\footnotesize Displaced photons, conversions - 7 TeV}
+\begin{block}{\footnotesize Using conversions at 7 TeV (2.1 fb$^{-1}$)}
 \begin{itemize}
 \begin{scriptsize}
-\item At least two photons with $p_T > 45$ GeV.
-\item At least two jets with $p_T >$ (80, 50) GeV.
-\item $E^{miss}_T > 30$ GeV.
+\item $\geq 2$ photons ($p_T > 45$ GeV)
+\item $\geq 2$ jets ($p_T >$ 80 & 50 GeV)
+\item $E^{miss}_T > 30$ GeV 
+\item \textcolor{Red} {EXO-11-067: JHEP (2012)} 
 \end{scriptsize}
 \end{itemize}
 \end{block}
@@ -155,44 +151,44 @@ $\tilde{\chi}^0_1 \rightarrow \gamma + \tilde{G}$
 \hspace{1mm}
 
 \begin{column}{5.9cm}
-\begin{center}\href{http://cms.cern.ch/iCMS/analysisadmin/cadilines?line=EXO-11-035}{EXO-11-035}\end{center}
 \vspace{-4mm}
-\begin{block}{\footnotesize Displaced photons, timing - 7 TeV}
+\begin{block}{\footnotesize Using ECAL timing at 7 TeV (4.8 fb$^{-1}$)}
 \begin{itemize}
 \begin{scriptsize}
-\item At least one photon with $p_T \geq 100$ GeV.
-\item At least three jets with $p_T >$ 35 GeV.
+\item $\geq 1$ photon ($p_T \geq 100$ GeV)
+\item $\geq 3$ jets ($p_T >$ 35 GeV)
+\item \textcolor{Red} {EXO-11-035: PLB (2013)} 
 \end{scriptsize}
 \end{itemize}
 \end{block}
 \end{column}
 \end{columns}
+
 \begin{columns}
 \begin{column}{5.8cm}
-\begin{center}\href{http://cms.cern.ch/iCMS/analysisadmin/cadilines?line=EXO-12-035}{EXO-12-035}\end{center}
 \vspace{-4mm}
-\begin{exampleblock}{\footnotesize Displaced photons, timing - 8 TeV}
+\begin{exampleblock}{\footnotesize Using ECAL timing at 8 TeV (19.1 fb$^{-1}$)}
 \begin{footnotesize}
 \begin{itemize}
-\item At least one photon with $p_T > $ 80 GeV (leading) and $p_T >$ 45 GeV for other photons.
-\item At least two jets with $p_T > $ 35 GeV.
-\item $E^{miss}_T > 60$ GeV.
+\item $\geq 1$ ($p_T > $ 80 & 45 GeV) 
+\item $\geq 2$ jets ($p_T > $ 35 GeV)
+\item $E^{miss}_T > 60$ GeV
 \end{itemize} 
 \end{footnotesize}
 \end{exampleblock}
 \end{column}
 \hspace{-3mm}
+
 \begin{column}{6.2cm}
 \begin{itemize}
 \begin{small}
-\item Redoing EXO-11-067 at 8 TeV.
-\item Working in parallel with EXO-12-035 (timing).
+\item \textcolor{Blue}{\textbf{This analysis: A reboot of EXO-11-067 at 8 TeV}} 
 \setbeamertemplate{itemize items}[default]
 \begin{itemize}
-\item Both are pre-approved.
 \end{itemize}
 \setbeamertemplate{itemize items}[ball]
-\item Both analyses are complementary (next slide).
+\item Both 8 TeV analyses are complementary (next slide)
+\item Both 8 TeV analyses are pre-approved + aiming for PAS
 \end{small}
 \end{itemize}
 \end{column}
@@ -206,22 +202,21 @@ $\tilde{\chi}^0_1 \rightarrow \gamma + \tilde{G}$
 \begin{column}{7cm}
 \includegraphics[width=\textwidth]{limit2D_noresult.png}\\
 \vspace{-4mm}
-\begin{center}\textbf{Plot from PAS, EXO-14-017 with Timing - 8 TeV included}\end{center}
 \end{column}
 \begin{column}{5.7cm}
 \begin{itemize}
 \begin{large}
-\item Left plot shows current exclusion limits for other displaced photon analyses
+\item Usually show exclusion range as 2D plot in $c\tau$ and $\Lambda$ 
 \begin{itemize}
 \setbeamertemplate{itemize items}[default]
-\item \textcolor{Yellow}{Timing - 7 TeV}
-\item \textcolor{Red}{Timing - 8 TeV}
+\item \textcolor{Yellow}{ECAL timing - 7 TeV}
+\item \textcolor{Red}{ECAL timing - 8 TeV (not yet approv.)}
 \item \textcolor{blue}{Conversions - 8 TeV}
 \end{itemize}
 \setbeamertemplate{itemize items}[ball]
-\item Conversions optimal for short to mid-range lifetimes ($c\tau$ = 0.4-100 cm)
+\item Conversions are sensitive to lifetimes between $c\tau$ = 0.4 - 100 cm 
 \vspace{3mm}
-\item Select signal samples in the range of $\Lambda = 140 - 180$ TeV
+\item Generate signal MC between $\Lambda = 140 - 180$ TeV
 \end{large}
 \end{itemize}
 \end{column}
@@ -230,36 +225,50 @@ $\tilde{\chi}^0_1 \rightarrow \gamma + \tilde{G}$
 
 
 
-\section{Datasets \& Trigger}
+\subsection{MC Samples}
+\begin{frame}
+\frametitle{\insertsubsection}
+\begin{columns}
+\begin{column}{3.5cm}
+\begin{exampleblock}{\begin{center}M$_{\chi^0_1} = 198$ GeV\end{center}}
+\begin{center}$\Lambda = 140$ TeV\end{center}
+\end{exampleblock}
+\end{column}
+\begin{column}{3.5cm}
+\begin{alertblock}{\begin{center}M$_{\chi^0_1} = 228$ GeV\end{center}}
+\begin{center}$\Lambda = 160$ TeV\end{center}
+\end{alertblock}
+\end{column}
+\begin{column}{3.5cm}
+\begin{block}{\begin{center}M$_{\chi^0_1} = 257$ GeV\end{center}}
+\begin{center}$\Lambda = 180$ TeV\end{center}
+\end{block}
+\end{column}
+\end{columns}
+\begin{figure}
+\centering
+\includegraphics[width=0.7\textwidth]{table.png}\\
+\end{figure}
+\vspace{-5mm}
+\begin{center}\normalsize \textbf{AN-13-421: Table 2}\end{center}
+\vspace{-2mm}
+\begin{itemize}
+\item \textbf{Generate 1M signal events}
+\end{itemize}
+
+\end{frame}
+
+
+
+\section{Data samples}
 
 \subsection{Data/Trigger}
 \begin{frame}
 \frametitle{\insertsection}
 %\includegraphics[width=0.95\textwidth]{datasamples.png}\\
-\vspace{-3mm}
-\begin{scriptsize}
-\begin{table}[!ht]
-\begin{center}
-\caption*{\textbf{AN-13-421: Table 1}}
-\begin{tabular}{l|l|c}
-\hline
-\hline
- Run range &  Primary Dataset Name  & Lumi [fb$^{-1}$] \\
-\hline
+%\vspace{-3mm}
 
- 190456--193621  &   /Photon/Run2012A-22Jan2013-v1/AOD        &  0.87 \\
- 193834--196531  &  /DoublePhoton/Run2012B-22Jan2013-v1/AOD   &  4.43 \\
- 198022--203742  & /DoublePhoton/Run2012C-22Jan2013-v2/AOD    &  7.15 \\
- 203777--208686  & /DoublePhoton/Run2012D-22Jan2013-v1/AOD    &  7.30 \\
 
-\hline
-& Total & 19.7\\
-\hline \hline
-
-\end{tabular}
-\end{center}
-\end{table}
-\end{scriptsize}
 \centering
 \begin{alertblock}{\small Use Official JSON}
 \begin{itemize}
@@ -276,48 +285,40 @@ $\tilde{\chi}^0_1 \rightarrow \gamma + \tilde{G}$
 \begin{itemize}
 \setbeamertemplate{itemize items}[default]
 \begin{scriptsize}
-\item Select photon $p_T > $ 50 GeV;
-\item And select photon ID to be tighter than trigger 
-\item Both selections to ensure being on plateau of trigger efficiency
+\item Select photon $p_T > $ 50 GeV
+\item Select offline photon ID to be on plateau of trigger efficiency 
 \end{scriptsize}
 \end{itemize}
 \end{scriptsize}
 \end{itemize}
 \end{block}
-\end{frame}
 
-\subsection{MC Samples}
-\begin{frame}
-\frametitle{\insertsubsection}
-\begin{columns}
-\begin{column}{3.5cm}
-\begin{exampleblock}{\begin{center}M$_{\chi^0_1} = 198$ GeV/$c^2$\end{center}}
-\begin{center}$\Lambda = 140$ TeV\end{center}
-\end{exampleblock}
-\end{column}
-\begin{column}{3.5cm}
-\begin{alertblock}{\begin{center}M$_{\chi^0_1} = 228$ GeV/$c^2$\end{center}}
-\begin{center}$\Lambda = 160$ TeV\end{center}
-\end{alertblock}
-\end{column}
-\begin{column}{3.5cm}
-\begin{block}{\begin{center}M$_{\chi^0_1} = 257$ GeV/$c^2$\end{center}}
-\begin{center}$\Lambda = 180$ TeV\end{center}
-\end{block}
-\end{column}
-\end{columns}
-\begin{figure}
-\centering
-\includegraphics[width=0.7\textwidth]{table.png}\\
-\end{figure}
-\vspace{-5mm}
-\begin{center}\normalsize \textbf{AN-13-421: Table 2}\end{center}
-\vspace{-2mm}
-\begin{itemize}
-\item \textbf{Generate 1M raw signal events}
-\end{itemize}
+\begin{scriptsize}
+\begin{table}[!ht]
+\begin{center}
+\begin{tabular}{l|l|c}
+\hline
+\hline
+ Run range &  Primary Dataset Name  & Lumi [fb$^{-1}$] \\
+\hline
+
+ 190456--193621  &   /Photon/Run2012A-22Jan2013-v1/AOD        &  0.87 \\
+ 193834--196531  &  /DoublePhoton/Run2012B-22Jan2013-v1/AOD   &  4.43 \\
+ 198022--203742  & /DoublePhoton/Run2012C-22Jan2013-v2/AOD    &  7.15 \\
+ 203777--208686  & /DoublePhoton/Run2012D-22Jan2013-v1/AOD    &  7.30 \\
+
+\hline
+& Total & 19.7\\
+\hline \hline
+\end{tabular}
+\end{center}
+\begin{center}\normalsize \textbf{AN-13-421: Table 1}\end{center}
+\end{table}
+\end{scriptsize}
+
 
 \end{frame}
+
 
 
 \section[Obj. ID.]{Object ID}
@@ -499,7 +500,8 @@ Reject events where electrons or jets fake the signature of a photon:
 \item Two oppositely signed tracks;
 \item Both need at least five valid hits;
 \item Conversion vertex requires valid fit with $\chi^2$ prob. $> 0.01$;
-\item Got blessing from EGamma POG (slide \ref{egammapog})
+\item Have blessing from EGamma POG \href{https://indico.cern.ch/event/366543/}{ \textcolor{Red}{\textbf{ (Click here for talk) }}}
+
 \end{itemize}
 \end{block}
 \vspace{-3mm}
@@ -528,8 +530,8 @@ Reject events where electrons or jets fake the signature of a photon:
 \begin{itemize}
 \begin{small}
 \item At least 2 photons ($p_T >$ 50 GeV) with leading photon of $p_T > 85$ GeV.
-\item At least 2 jets ($p_T$ > 35 GeV).
-\item At least one photon conversion. 
+\item At least 2 jets ($p_T >$  35 GeV).
+\item At least one photon conversion 
 \item $E^{miss}_T > $ 60 GeV (see slide \ref{METoptimisation}).
 \end{small}
 \end{itemize}
@@ -554,21 +556,20 @@ Reject events where electrons or jets fake the signature of a photon:
 \frametitle{\insertsection}
 \begin{columns}
 \begin{column}{6cm}
-\begin{block}{Data Driven Method:}
+\begin{block}{}
 \begin{itemize}
 \item Expect bkg to be rich in $\gamma+$jets.
+%\vspace{1mm}
 \item Instrumental $E^{miss}_T$ will give rise to \textbf{low} $\mathbf{E^{miss}_T}$ distribution.
-%\item Select events in data that satisfy all selection criteria as \textbf{data in the signal region}.
-\item Repeat 7 TeV bkg estimation.
-%\item Derive shape of bkg 
-%\begin{itemize}
-%\setbeamertemplate{itemize items}[default]
+%\vspace{1mm}
+%\item Use 7 TeV estimation method
+\vspace{1mm}
 \item \textbf{\textcolor{red}{Select events in data with $E^{miss}_T < 30$ but satisfy all other signal selection criteria (to derive shape).}}
-%\end{itemize}
-%events in \textbf{data} with $E^{miss}_T < 30$ GeV but satisfy all other criteria as \textbf{signal region}.
+\vspace{1mm}
 \setbeamertemplate{itemize items}[ball]
 \item \textbf{\textcolor{red}{Normalise shape to the $d_{XY}$ peak of data (first bin).}}
-\item Validation cross-checks in next slides.
+\vspace{1mm}
+\item \textbf{\textcolor{red}{Fully data driven method}}
 \end{itemize}
 \end{block}
 \end{column}
@@ -589,14 +590,14 @@ Reject events where electrons or jets fake the signature of a photon:
 \begin{column}{12cm}
 \vspace{-8mm}
 \begin{table}
-\caption*{\textbf{EXO-14-017: Table 1}}
+%\caption*{\textbf{EXO-14-017: Table 1}}
 \begin{tabular}{l|l|c}
 \hline
 \hline
 Region &  $E^{miss}_T$ requirement  & Photon passes all isolation \\
 & & requirements \\
 \hline
- \textcolor{blue}{\textbf{CR1}}  &   $\leq 30$ GeV        &  Yes \\
+ \textcolor{Dandelion}{\textbf{CR1}}  &   \textcolor{Dandelion}{\textbf{$\leq 30$ GeV}}        &  \textcolor{Dandelion}{\textbf{Yes}} \\
  CR2  &   $\leq 30$ GeV        &  No \\
  CR3  &   $\geq 60$ GeV        &  No \\
 \hline
@@ -614,19 +615,22 @@ Region &  $E^{miss}_T$ requirement  & Photon passes all isolation \\
 \begin{column}{6.5cm}
 \setbeamertemplate{itemize items}[ball]
 \begin{itemize}
-\item All 3 histograms derived using data.
-\item \textcolor{blue}{CR 1 as background estimate.}
-\item Use CR 2 as shape syst. for CR 1.
-\item Checked that there is only 1\% of signal contamination in CR1.
+\item \textcolor{Dandelion}{\textbf{CR 1 is nominal bkg. estimate}}
+\vspace{1mm}
+\item \textbf{All 3 histograms (left) are data}
+\vspace{1mm}
+\item \textbf{Signal contam. in CR1 $\leq 1\%$}
+\vspace{1mm}
+\item \textbf{Use CR 2 as shape systematic} 
 \end{itemize}
 \end{column}
 \end{columns}
 \end{frame}
 
 
-\subsection{Closure test for bkg. determination}
+\section{Closure tests for bkg. determination}
 \begin{frame}
-\frametitle{\insertsection: \insertsubsection}
+\frametitle{\insertsection}
 \vspace{-2mm}
 \begin{center}
 \includegraphics[width=0.48\textwidth]{jetPtDD.png}
@@ -649,8 +653,15 @@ Region &  $E^{miss}_T$ requirement  & Photon passes all isolation \\
 \hspace{-14mm}
 \begin{column}{6cm}
 \begin{itemize}
-\item We show the $E^{miss}_T$ optimisation (minimise upper-limit cross section) for our signal points.
-\item $E^{miss}_T > 60$ GeV is the most optimal. 
+
+\item \textcolor{Black}{\textbf{Can see from slide 15 that signal peaks at high $E^{miss}_T$ while bkg. drops off sharply}}
+\vspace{2mm}
+\item \textcolor{Black}{\textbf{Pick optimal $E^{miss}_T$ cut by maximising expected exclusion area @95\% C.L.}}
+\vspace{2mm}
+\item \textcolor{Orange}{\textbf{Input all signal points, data driven bkg. est, final systematics into CLs}}
+\vspace{2mm}
+\item \textcolor{Orange}{\textbf{See from plot (left) that $E^{miss}_T > 60$ GeV is optimal}}
+
 \end{itemize}
 \end{column}
 \end{columns}
@@ -669,8 +680,13 @@ Region &  $E^{miss}_T$ requirement  & Photon passes all isolation \\
 \hspace{-14mm}
 \begin{column}{6cm}
 \begin{itemize}
-\item We show the $E^{miss}_T$ optimisation (minimise upper-limit cross section) for our signal points.
-\item $E^{miss}_T > 60$ GeV is the most optimal. 
+\item \textcolor{Black}{\textbf{Can see from slide 15 that signal peaks at high $E^{miss}_T$ while bkg. drops off sharply}}
+\vspace{2mm}
+\item \textcolor{Black}{\textbf{Pick optimal $E^{miss}_T$ cut by maximising expected exclusion area @95\% C.L.}}
+\vspace{2mm}
+\item \textcolor{Orange}{\textbf{Input all signal points, data driven bkg. est, final systematics into CLs}}
+\vspace{2mm}
+\item \textcolor{Orange}{\textbf{See from plot (left) that $E^{miss}_T > 60$ GeV is optimal}}
 \end{itemize}
 \end{column}
 \end{columns}
@@ -737,55 +753,6 @@ Region &  $E^{miss}_T$ requirement  & Photon passes all isolation \\
 
 
 
-\subsection{Expected \& Observed Upper Limits}
-\begin{frame}
-\label{explimits}
-\frametitle{\insertsection: \insertsubsection}
-\vspace{-3mm}
-\begin{columns}
-\begin{column}{3.8cm}
-\begin{block}{$\Lambda = 140$ TeV}
-\begin{center}
-\includegraphics[width=\textwidth]{exclusion_limit_L140_FullCLs.png}
-\end{center}
-\end{block}
-\end{column}
-\begin{column}{3.8cm}
-\begin{block}{$\Lambda = 160$ TeV}
-\begin{center}
-\includegraphics[width=\textwidth]{exclusion_limit_L160_FullCLs.png}
-\end{center}
-\end{block}
-\end{column}
-\begin{column}{3.8cm}
-\begin{block}{$\Lambda = 180$ TeV}
-\begin{center}
-\includegraphics[width=\textwidth]{exclusion_limit_L180_FullCLs.png}
-\end{center}
-\end{block}
-\end{column}
-\end{columns}
-\begin{columns}
-\begin{column}{7.5cm}
-\end{column}
-\end{columns}
-\begin{itemize}
-\begin{small}
-\setbeamertemplate{itemize items}[ball]
-\item Calculate upper limits using Full CLs (input histograms from slide \ref{dxyhistogram})
-\item Shape uncertainty on bkg. (slide \ref{shapeuncertainty}) + uncertainties on the signal (slide \ref{signaluncert}).
-\item Because first bin in $d_{XY}$ has no signal sensitivity (slide \ref{dxyhistogram}) we exclude it from the exclusion limit computation.
-\end{small}
-\end{itemize}
-\end{frame}
-
-
-\begin{frame}
-\frametitle{\insertsection}
-\begin{center}
-\includegraphics[width=0.8\textwidth]{limit2D_everything.png}
-\end{center}
-\end{frame}
 
 
 \section[Unct.]{Uncertainties}
@@ -909,7 +876,59 @@ $0.19 = \sqrt{(1-0.93)^2 + \left(1-\frac{\textcolor{green}{7.2\%}}{8.5\%}\right)
 \end{frame}
 
 
-\subsection{Conversions Analysis at 13 TeV}
+
+\section{Upper Limits}
+\begin{frame}
+\label{explimits}
+\frametitle{\insertsection: \insertsubsection}
+\vspace{-3mm}
+\begin{columns}
+\begin{column}{3.8cm}
+\begin{block}{$\Lambda = 140$ TeV}
+\begin{center}
+\includegraphics[width=\textwidth]{exclusion_limit_L140_FullCLs.png}
+\end{center}
+\end{block}
+\end{column}
+\begin{column}{3.8cm}
+\begin{block}{$\Lambda = 160$ TeV}
+\begin{center}
+\includegraphics[width=\textwidth]{exclusion_limit_L160_FullCLs.png}
+\end{center}
+\end{block}
+\end{column}
+\begin{column}{3.8cm}
+\begin{block}{$\Lambda = 180$ TeV}
+\begin{center}
+\includegraphics[width=\textwidth]{exclusion_limit_L180_FullCLs.png}
+\end{center}
+\end{block}
+\end{column}
+\end{columns}
+\begin{columns}
+\begin{column}{7.5cm}
+\end{column}
+\end{columns}
+\begin{itemize}
+\begin{small}
+\setbeamertemplate{itemize items}[ball]
+\item Calculate upper limits using Full CLs (input histograms from slide \ref{dxyhistogram})
+\item Shape uncertainty on bkg. (slide \ref{shapeuncertainty}) + uncertainties on the signal (slide \ref{signaluncert}).
+\item Because first bin in $d_{XY}$ has no signal sensitivity (slide \ref{dxyhistogram}) we exclude it from the exclusion limit computation.
+\end{small}
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{2D exclusion results}
+\begin{center}
+\includegraphics[width=0.8\textwidth]{limit2D_everything.png}
+\end{center}
+\end{frame}
+
+
+\subsection{Overview for 13 TeV}
 \begin{frame}
 \frametitle{\insertsubsection}
 \begin{columns}
@@ -942,21 +961,34 @@ $0.19 = \sqrt{(1-0.93)^2 + \left(1-\frac{\textcolor{green}{7.2\%}}{8.5\%}\right)
 \end{frame}
 
 
-\subsection{Summary}
+\section{Summary}
 \begin{frame}
-\frametitle{\insertsubsection}
-\begin{block}{Summary of 2012 Analysis}
+\frametitle{Summary}
 \begin{itemize}
-\item Goal: similar analysis as EXO-11-067, but at 8 TeV.
-\item Made some improvements.
-\item Analysis is largely the same (however we use a shape analysis instead of cut and count).
-\item Shape analysis increases potential sensitivity.
-\item Expected exclusion (slide 28) complementary to EXO-12-035.
+\item \textcolor{Orange}{\textbf{Performed a search for displaced photons using conversions at 8 TeV}} 
+
+\vspace{3mm}
+
+\item \textcolor{Orange}{\textbf{Analysis keeps the main features from the 7 TeV result}}
+\begin{itemize}
+\item i.e. Bkg. estimation, systematic assessment, signal samples
 \end{itemize}
-\end{block}
-\begin{alertblock}{Publication Strategy}
-Hoping to be approved for a PAS.
-\end{alertblock}
+\vspace{3mm}
+
+\item \textcolor{Orange}{\textbf{But also has added some improvements}} 
+\begin{itemize}
+\item i.e. Use a full shape analysis instead of cut and count, $E^{miss}_T$ optimisation 
+\end{itemize}
+
+\vspace{3mm}
+
+\item \textcolor{Orange}{\textbf{Analysis is complementary to the ECAL timing method}}
+
+\vspace{3mm}
+
+\item \textcolor{Orange}{\textbf{Aiming for approved PAS only}} 
+\end{itemize}
+
 \end{frame}
 
 
@@ -969,32 +1001,33 @@ Hoping to be approved for a PAS.
 
 \begin{frame}
 \frametitle{\insertsection}
-Do these isolation variables make sense with displaced photons?
+Do the isolation variables make sense for displaced photons?
 \includegraphics[width=0.55\textwidth]{chadMCrealnocuts.png}
 \includegraphics[width=0.4\textwidth]{chadiso_nancy.png}\\
-Seem to match with EGM-14-001.
+Matches with plots from EGM-14-001.
 
 \end{frame}
 
 \begin{frame}
 \frametitle{\insertsection}
-Do these isolation variables make sense with displaced photons?
+Do the isolation variables make sense for displaced photons?
 \includegraphics[width=0.55\textwidth]{nhadMCrealnocuts.png}
 \includegraphics[width=0.4\textwidth]{nhadiso_nancy.png}\\
-Seem to match with EGM-14-001.
+Matches with plots from EGM-14-001.
 \end{frame}
 
 \begin{frame}
 \frametitle{\insertsection}
-Do these isolation variables make sense with displaced photons?
+Do the isolation variables make sense for displaced photons?
 \includegraphics[width=0.55\textwidth]{photisoMCrealnocuts.png}
 \includegraphics[width=0.4\textwidth]{photiso_nancy.png}\\
-Seem to match with EGM-14-001.
+Matches with plots from EGM-14-001.
 \end{frame}
 
 \begin{frame}
 \frametitle{\insertsubsection}
-Photon $p_T$ in signal between at least one conversion and no conversions should be proportional:
+
+Look at the $p_T$ spectrum of converted and non converted photons. They should be proportional after correcting for the efficiency.
 
 \begin{figure}
 \centering
@@ -1004,7 +1037,9 @@ Photon $p_T$ in signal between at least one conversion and no conversions should
 
 \begin{frame}
 \frametitle{\insertsection}
-E taken from ECAL divided by the momentum measured from the tracks
+
+As sanity check (to see if you are really getting conversions and not random stuff) 
+can you try to plot the E taken from ECAL divided by the p measured from the tracks. 
 
 \begin{figure}
 \centering
@@ -1020,7 +1055,7 @@ Agrees with Fig. 13 from EGM-14-001.
 \frametitle{\insertsection}
 \begin{figure}
 \centering
-Look at the $R_9 = e3x3/E(sc)$ variable for signal photons and compare with the background.
+Look at the $R_9$ $(e3x3/E(sc)$ variable for signal photons and compare with the background.
 \includegraphics[width=0.55\textwidth]{rninewithandwithoutconversions_GMSBvsGPT.png}
 \includegraphics[width=0.45\textwidth]{r9_nancy.png}
 \end{figure}
@@ -1036,19 +1071,7 @@ Look at the $R_9 = e3x3/E(sc)$ variable for signal photons and compare with the 
 \end{frame}
 
 
-\begin{frame}
-\label{egammapog}
-\frametitle{\insertsection}
-\begin{itemize}
-\item You need blessing from EGamma POG on the conversion selection.
-\setbeamertemplate{itemize items}[default]
-\begin{itemize}
-\item Michael just gave a talk to the EGamma POG.
-\item \url{https://indico.cern.ch/event/366543/}
-\item They say they're happy
-\end{itemize}
-\end{itemize}
-\end{frame}
+
 
 \begin{frame}
 \frametitle{\insertsection: \insertsubsection}
@@ -1058,7 +1081,7 @@ Comparison between cut and count method and shape analysis.
 \item Cut and count method where a cut at $|d_{XY}|> 1.5$ cm is applied (left).
 \item Full shape analysis for $\Lambda = 180$ TeV (right).
 \item Both used asymptotic limit setter.
-\item Gain especially visible at low lifetimes ($c\tau$).
+%\item Gain especially visible at low lifetimes ($c\tau$).
 \end{itemize}
 \end{footnotesize}
 \begin{figure}
@@ -1106,19 +1129,6 @@ Thank You
 
 
 \section{}
-
-\begin{frame}
-\frametitle{Back Up}
-\includegraphics[width=0.5\textwidth]{dxycomparisongjet.png}
-\includegraphics[width=0.5\textwidth]{dxycomparisongjet1phot2jet.png}
-\\
-\begin{itemize}
-\item Checked the $d_{XY}$ distribion of our $\gamma$+jets MC samples in the CR1 and signal region.
-\item Hope to see similar behaviour between red and yellow.
-\item Suffer from low statistics (left plot).
-\item Loosened photon selection for more stats (right plot).
-\end{itemize}
-\end{frame}
 
 
 \begin{frame}
