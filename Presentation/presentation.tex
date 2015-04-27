@@ -110,10 +110,10 @@
 \end{block}
 
 \begin{itemize}
-\item AN (v13): \href{http://cms.cern.ch/iCMS/jsp/openfile.jsp?tp=draft&files=AN2013_421_v13.pdf}{ \textcolor{Red}{\textbf{Click here}}}
-\item PAS (v11): \href{http://cms.cern.ch:80/iCMS/analysisadmin/get?analysis=EXO-14-017-pas-v11.pdf}{ \textcolor{Red}{\textbf{Click here}}} 
-\item Twiki: \href{https://twiki.cern.ch/twiki/bin/viewauth/CMS/DisplacedPhotonsWithConversions8TeV}{ \textcolor{Red}{\textbf{Click here}}}
-\item CADI: \href{http://cms.cern.ch/iCMS/analysisadmin/cadilines?line=EXO-14-017}{ \textcolor{Red}{\textbf{Click here}}}  
+\item AN (v13): \href{http://cms.cern.ch/iCMS/jsp/openfile.jsp?tp=draft&files=AN2013_421_v13.pdf}{ \textcolor{black}{\textbf{Click here}}}
+\item PAS (v11): \href{http://cms.cern.ch:80/iCMS/analysisadmin/get?analysis=EXO-14-017-pas-v11.pdf}{ \textcolor{black}{\textbf{Click here}}} 
+\item Twiki: \href{https://twiki.cern.ch/twiki/bin/viewauth/CMS/DisplacedPhotonsWithConversions8TeV}{ \textcolor{black}{\textbf{Click here}}}
+\item CADI: \href{http://cms.cern.ch/iCMS/analysisadmin/cadilines?line=EXO-14-017}{ \textcolor{black}{\textbf{Click here}}}  
 \end{itemize}
 
 \end{column} 
@@ -140,16 +140,14 @@
 \begin{itemize}
 \begin{scriptsize}
 \item $\geq 2$ photons ($p_T > 45$ GeV)
-\item $\geq 2$ jets ($p_T >$ 80 & 50 GeV)
+\item $\geq 2$ jets ($p_T >$ 80 \& 50 GeV)
 \item $E^{miss}_T > 30$ GeV 
 \item \textcolor{Red} {EXO-11-067: JHEP (2012)} 
 \end{scriptsize}
 \end{itemize}
 \end{block}
 \end{column}
-
 \hspace{1mm}
-
 \begin{column}{5.9cm}
 \vspace{-4mm}
 \begin{block}{\footnotesize Using ECAL timing at 7 TeV (4.8 fb$^{-1}$)}
@@ -170,7 +168,7 @@
 \begin{exampleblock}{\footnotesize Using ECAL timing at 8 TeV (19.1 fb$^{-1}$)}
 \begin{footnotesize}
 \begin{itemize}
-\item $\geq 1$ ($p_T > $ 80 & 45 GeV) 
+\item $\geq 1$ photon ($p_T > $ 80 \& 45 GeV) 
 \item $\geq 2$ jets ($p_T > $ 35 GeV)
 \item $E^{miss}_T > 60$ GeV
 \end{itemize} 
@@ -178,17 +176,16 @@
 \end{exampleblock}
 \end{column}
 \hspace{-3mm}
-
 \begin{column}{6.2cm}
 \begin{itemize}
 \begin{small}
-\item \textcolor{Blue}{\textbf{This analysis: A reboot of EXO-11-067 at 8 TeV}} 
-\setbeamertemplate{itemize items}[default]
-\begin{itemize}
-\end{itemize}
 \setbeamertemplate{itemize items}[ball]
+\item \textcolor{Blue}{\textbf{This analysis: A reboot of EXO-11-067 at 8 TeV}} 
+\begin{itemize}
+\setbeamertemplate{itemize items}[default]
 \item Both 8 TeV analyses are complementary (next slide)
 \item Both 8 TeV analyses are pre-approved + aiming for PAS
+\end{itemize}
 \end{small}
 \end{itemize}
 \end{column}
@@ -199,9 +196,9 @@
 \begin{frame}
 \frametitle{\insertsubsection}
 \begin{columns}
-\begin{column}{7cm}
+\begin{column}{6.7cm}
 \includegraphics[width=\textwidth]{limit2D_noresult.png}\\
-\vspace{-4mm}
+\hspace{-5mm}
 \end{column}
 \begin{column}{5.7cm}
 \begin{itemize}
@@ -476,7 +473,7 @@ Reject events where electrons or jets fake the signature of a photon:
 \begin{itemize}
 \begin{footnotesize}
 \item $e^+ e^-$ tracks required to be parallel in momentum.
-\item Transverse Impact Parameter (IP) $d_{XY}$: distance of closest approach of photon trajectory to \textbf{\textcolor{red}{beam line}}.
+\item Transverse Impact Parameter (IP) $d_{XY}$: distance of closest approach of photon trajectory to \textbf{\textcolor{red}{beam axis}}.
 \end{footnotesize}
 \end{itemize}
 \end{footnotesize}
@@ -727,9 +724,7 @@ Region &  $E^{miss}_T$ requirement  & Photon passes all isolation \\
 %Num. jets  $\geq$ 2 &   102                &98   & - & 4.55e+08\\
 %Num. phot. $\geq$ 2 &   41                 &41   & - & 1.42e+06\\
 %&&&&\\
-%\hline
-%Num. conv. $\geq$ 1 &   5.2  &3.7 & 3.5 & \multirow{2}{*}{4.0}\\
-%(Error) & (0.5$_{stat} \pm 0.4_{sys}$) & ($0.4_{stat} \pm 0.8_{sys}$) & $\pm$ 0.7 &\\
+%Num. conv. $\geq$ 1 &   5.2 $\pm \ 0.5$  &3.7 $\pm \ 0.8$ & 3.5 $\pm \ 0.7$ & 4.0\\
 %\hline
 %\hline
 %\end{tabular}
@@ -1001,27 +996,45 @@ $0.19 = \sqrt{(1-0.93)^2 + \left(1-\frac{\textcolor{green}{7.2\%}}{8.5\%}\right)
 
 \begin{frame}
 \frametitle{\insertsection}
-Do the isolation variables make sense for displaced photons?
-\includegraphics[width=0.55\textwidth]{chadMCrealnocuts.png}
-\includegraphics[width=0.4\textwidth]{chadiso_nancy.png}\\
-Matches with plots from EGM-14-001.
+\begin{center}Do the isolation variables make sense for displaced photons?\end{center}
+\begin{columns}
+\begin{column}{6cm}
+\includegraphics[width=\textwidth]{chadMCrealnocuts.png}
+\end{column}
+\begin{column}{6.5cm}
+\includegraphics[width=0.8\textwidth]{chadiso_nancy.png}\\
+\end{column}
+\end{columns}
+\begin{center}Matches with plots from EGM-14-001.\end{center}
 
 \end{frame}
 
 \begin{frame}
 \frametitle{\insertsection}
-Do the isolation variables make sense for displaced photons?
-\includegraphics[width=0.55\textwidth]{nhadMCrealnocuts.png}
-\includegraphics[width=0.4\textwidth]{nhadiso_nancy.png}\\
-Matches with plots from EGM-14-001.
+\begin{center}Do the isolation variables make sense for displaced photons?\end{center}
+\begin{columns}
+\begin{column}{6cm}
+\includegraphics[width=\textwidth]{nhadMCrealnocuts.png}
+\end{column}
+\begin{column}{6.5cm}
+\includegraphics[width=0.8\textwidth]{nhadiso_nancy.png}\\
+\end{column}
+\end{columns}
+\begin{center}Matches with plots from EGM-14-001.\end{center}
 \end{frame}
 
 \begin{frame}
 \frametitle{\insertsection}
-Do the isolation variables make sense for displaced photons?
-\includegraphics[width=0.55\textwidth]{photisoMCrealnocuts.png}
-\includegraphics[width=0.4\textwidth]{photiso_nancy.png}\\
-Matches with plots from EGM-14-001.
+\begin{center}Do the isolation variables make sense for displaced photons?\end{center}
+\begin{columns}
+\begin{column}{6cm}
+\includegraphics[width=\textwidth]{photisoMCrealnocuts.png}
+\end{column}
+\begin{column}{6.5cm}
+\includegraphics[width=0.8\textwidth]{photiso_nancy.png}\\
+\end{column}
+\end{columns}
+\begin{center}Matches with plots from EGM-14-001.\end{center}
 \end{frame}
 
 \begin{frame}
@@ -1037,15 +1050,19 @@ Look at the $p_T$ spectrum of converted and non converted photons. They should b
 
 \begin{frame}
 \frametitle{\insertsection}
-
-As sanity check (to see if you are really getting conversions and not random stuff) 
-can you try to plot the E taken from ECAL divided by the p measured from the tracks. 
-
-\begin{figure}
-\centering
-\includegraphics[width=0.55\textwidth]{eoverp.png}
-\includegraphics[width=0.4\textwidth]{Eoverp_nancy.png}
-\end{figure}
+\vspace{-3mm}
+\begin{center}As sanity check (to see if you are really getting conversions and not random stuff) 
+can you try to plot the E taken from ECAL divided by the p measured from the tracks. \end{center}
+\begin{center}
+\begin{columns}
+\begin{column}{7cm}
+\includegraphics[width=0.8\textwidth]{eoverp.png}
+\end{column}
+\begin{column}{6.5cm}
+\includegraphics[width=0.7\textwidth]{Eoverp_nancy.png}
+\end{column}
+\end{columns}
+\end{center}
 \begin{center}
 Agrees with Fig. 13 from EGM-14-001.
 \end{center}
@@ -1063,14 +1080,46 @@ Look at the $R_9$ $(e3x3/E(sc)$ variable for signal photons and compare with the
 
 \begin{frame}
 \frametitle{\insertsection}
-\begin{figure}
-\centering
-\includegraphics[width=0.5\textwidth]{dxyefficiencygenelectron_loose_convRunder40.png}
-\includegraphics[width=0.5\textwidth]{dxyefficiencyifodxyL180.png}
-\end{figure}
+\begin{center}What is the conversion efficiency in bins of $d_{XY}$?\end{center}
+\begin{columns}
+\begin{column}{6cm}
+\includegraphics[width=\textwidth]{dxyefficiencygenelectron_loose_convRunder40.png}\\
+\end{column}
+\hspace{-3mm}
+\begin{column}{7cm}
+\begin{itemize}
+\item Ratio $= \frac{\#(conv. \ RECOed + GENmatch)}{\# (conv. \ GEN)}$
+\item Fairly constant up to large $d_{XY}$ in MC
+\item Lack large enough data sample to do this for data
+\setbeamertemplate{itemize items}[default]
+\begin{itemize}
+\item Suggestion: look at cosmic data
+\item Very few events passing conv. rec. (as expected)
+\end{itemize}
+\end{itemize}
+\end{column}
+\end{columns}
 \end{frame}
 
 
+\begin{frame}
+\frametitle{\insertsection}
+\begin{columns}
+\begin{column}{6cm}
+\includegraphics[width=\textwidth]{dxyefficiencyifodxyL180.png}\\
+\end{column}
+\hspace{-4mm}
+\begin{column}{6.77cm}
+\begin{itemize}
+\item Ratio $= \frac{\# conversions}{\# photons}$
+\item Includes conversion probability
+\item Main sensitivity is $d_{XY} > \sim 1.5$ cm
+\item Probability goes down factor $\sim 5$ when $d_{XY}$ reaches 6 cm
+\item Not really necessary to know efficiency at 6 cm
+\end{itemize}
+\end{column}
+\end{columns}
+\end{frame}
 
 
 \begin{frame}
@@ -1128,60 +1177,65 @@ Thank You
 \end{frame}
 
 
-\section{}
+%\section{}
 
 
-\begin{frame}
-\frametitle{Back Up}
-\begin{center}
-\includegraphics[width=0.5\textwidth]{n-1etaMC.png}
-\includegraphics[width=0.5\textwidth]{n-1jetPtMC.png}
-\end{center}
-\end{frame}
+%\begin{frame}
+%\frametitle{Back Up}
+%\begin{center}
+%\includegraphics[width=0.5\textwidth]{n-1etaMC.png}
+%\includegraphics[width=0.5\textwidth]{n-1jetPtMC.png}
+%\end{center}
+%\end{frame}
 
-\begin{frame}
-\frametitle{Back Up}
-\begin{center}
-\includegraphics[width=0.5\textwidth]{n-1nPhotMC.png}
-\includegraphics[width=0.5\textwidth]{n-1photPtMC.png}
-\end{center}
-\end{frame}
+%\begin{frame}
+%\frametitle{Back Up}
+%\begin{center}
+%\includegraphics[width=0.5\textwidth]{n-1nPhotMC.png}
+%\includegraphics[width=0.5\textwidth]{n-1photPtMC.png}
+%\end{center}
+%\end{frame}
 
-\begin{frame}
-\frametitle{Back Up}
-\begin{center}
-\includegraphics[width=0.5\textwidth]{n-1sMinMC.png}
-\includegraphics[width=0.5\textwidth]{n-1sigmaietaMC.png}
-\end{center}
-\end{frame}
+%\begin{frame}
+%\frametitle{Back Up}
+%\begin{center}
+%\includegraphics[width=0.5\textwidth]{n-1sMinMC.png}
+%\includegraphics[width=0.5\textwidth]{n-1sigmaietaMC.png}
+%\end{center}
+%\end{frame}
 
-\begin{frame}
-\frametitle{Back Up}
-\begin{center}
-\includegraphics[width=0.8\textwidth]{unnamed.png}
-\end{center}
-\end{frame}
-
-
-\begin{frame}
-\frametitle{Back Up}
-\includegraphics[width=\textwidth]{razor.png}
-\end{frame}
-
-\begin{frame}
-\frametitle{Back Up}
-\includegraphics[width=\textwidth]{rsqrdtriggerL180_subleading55.png}
-\end{frame}
+%\begin{frame}
+%\frametitle{Back Up}
+%\begin{center}
+%\includegraphics[width=0.8\textwidth]{unnamed.png}
+%\end{center}
+%\end{frame}
 
 
-\begin{frame}
-\frametitle{Back Up}
-\includegraphics[width=\textwidth]{tracker.png}
-\end{frame}
+%\begin{frame}
+%\frametitle{Back Up}
+%\includegraphics[width=\textwidth]{razor.png}
+%\end{frame}
 
-\begin{frame}
-\frametitle{Back Up}
-\begin{center}\includegraphics[width=0.7\textwidth]{Atlas.png}\\\end{center}
-\begin{center}\href{http://arxiv.org/pdf/1409.5542v1.pdf}{Arxiv}\end{center}
-\end{frame}
+%\begin{frame}
+%\frametitle{Back Up}
+%\includegraphics[width=\textwidth]{rsqrdtriggerL180_subleading55.png}
+%\end{frame}
+
+
+%\begin{frame}
+%\frametitle{Back Up}
+%\includegraphics[width=\textwidth]{tracker.png}
+%\end{frame}
+
+%\begin{frame}
+%\frametitle{Back Up}
+%\includegraphics[width=\textwidth]{trackingeff.png}
+%\end{frame}
+
+%\begin{frame}
+%\frametitle{Back Up}
+%\begin{center}\includegraphics[width=0.7\textwidth]{Atlas.png}\\\end{center}
+%\begin{center}\href{http://arxiv.org/pdf/1409.5542v1.pdf}{Arxiv}\end{center}
+%\end{frame}
 \end{document}
