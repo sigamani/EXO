@@ -200,14 +200,14 @@
 \includegraphics[width=\textwidth]{limit2D_noresult.png}\\
 \hspace{-5mm}
 \end{column}
-\begin{column}{5.7cm}
+\begin{column}{5.5cm}
 \begin{itemize}
 \begin{large}
-\item Usually show exclusion range as 2D plot in $c\tau$ and $\Lambda$ 
+\item Plot exclusion as 2D plot in $c\tau$ and $\Lambda$ 
 \begin{itemize}
 \setbeamertemplate{itemize items}[default]
 \item \textcolor{Yellow}{ECAL timing - 7 TeV}
-\item \textcolor{Red}{ECAL timing - 8 TeV (not yet approv.)}
+\item \textcolor{Red}{ECAL timing - \\ 8 TeV (not yet approv.)}
 \item \textcolor{blue}{Conversions - 8 TeV}
 \end{itemize}
 \setbeamertemplate{itemize items}[ball]
@@ -462,21 +462,26 @@ Reject events where electrons or jets fake the signature of a photon:
 \begin{column}{6.5cm}
 \begin{block}{}
 \begin{itemize}
-\begin{footnotesize}
-\item Tracker has a large material budget.
-\item Up to $\sim$ 60\% of photons traversing CMS tracker can convert into $e^+e^--$pairs.
-\item Nuisance in the event reconstruction for many physics analyses. 
-\item \textbf{\textcolor{red}{However, we can use conversions to obtain photon direction}}.
-\item \textbf{Photon conversions} to $e^+ e^-$ pairs in the tracker material can be used to obtain the \underline{photon direction}. 
-\item Photon conversions $\rightarrow$ small opening angle.
-\setbeamertemplate{itemize items}[default]
-\begin{itemize}
-\begin{footnotesize}
-\item $e^+ e^-$ tracks required to be parallel in momentum.
-\item Transverse Impact Parameter (IP) $d_{XY}$: distance of closest approach of photon trajectory to \textbf{\textcolor{red}{beam axis}}.
-\end{footnotesize}
-\end{itemize}
-\end{footnotesize}
+%\begin{footnotesize}
+%\item Tracker has a large material budget.
+\item Up to 60\% of photons traversing CMS tracker can convert into $e^+e^--$pairs
+\vspace{2mm}
+\item Nuisance in event reconstruction for many physics analyses
+\vspace{2mm}
+\item \textbf{Photon conversions} to $e^+ e^-$ pairs can be used to obtain the \underline{photon direction}
+\vspace{2mm}
+\item \textbf{\textcolor{red}{Extrapolate to calculate transverse impact parameter ($d_{XY}$)}}
+\vspace{2mm}
+\item \textbf{\textcolor{red}{Search for excess using the tail of the $d_{XY}$}}
+%\item Photon conversions $\rightarrow$ small opening angle.
+%\setbeamertemplate{itemize items}[default]
+%\begin{itemize}
+%\begin{footnotesize}
+%\item $e^+ e^-$ tracks required to be parallel in momentum.
+%\item Transverse Impact Parameter (IP) $d_{XY}$: distance of closest approach of photon trajectory to \textbf{\textcolor{red}{beam axis}}.
+%\end{footnotesize}
+%\end{itemize}
+%\end{footnotesize}
 \end{itemize}
 \end{block}
 \end{column}
@@ -616,6 +621,7 @@ Region &  $E^{miss}_T$ requirement  & Photon passes all isolation \\
 \vspace{1mm}
 \item \textbf{All 3 histograms (left) are data}
 \vspace{1mm}
+\item \textbf{Good agreement between 3 CRs} 
 \item \textbf{Signal contam. in CR1 $\leq 1\%$}
 \vspace{1mm}
 \item \textbf{Use CR 2 as shape systematic} 
@@ -907,9 +913,9 @@ $0.19 = \sqrt{(1-0.93)^2 + \left(1-\frac{\textcolor{green}{7.2\%}}{8.5\%}\right)
 \begin{itemize}
 \begin{small}
 \setbeamertemplate{itemize items}[ball]
-\item Calculate upper limits using Full CLs (input histograms from slide \ref{dxyhistogram})
-\item Shape uncertainty on bkg. (slide \ref{shapeuncertainty}) + uncertainties on the signal (slide \ref{signaluncert}).
-\item Because first bin in $d_{XY}$ has no signal sensitivity (slide \ref{dxyhistogram}) we exclude it from the exclusion limit computation.
+\item Calculate ULs using CLs (10,000 toys) %input histograms from slide \ref{dxyhistogram})
+\item Shape uncertainty on bkg. (slide \ref{shapeuncertainty}) + uncertainties on the signal (slide \ref{signaluncert})
+\item First bin in $d_{XY}$ is excluded from limit computation
 \end{small}
 \end{itemize}
 \end{frame}
@@ -918,8 +924,16 @@ $0.19 = \sqrt{(1-0.93)^2 + \left(1-\frac{\textcolor{green}{7.2\%}}{8.5\%}\right)
 \begin{frame}
 \frametitle{2D exclusion results}
 \begin{center}
-\includegraphics[width=0.8\textwidth]{limit2D_everything.png}
+\includegraphics[width=0.75\textwidth]{limit2D_everything.png}
 \end{center}
+
+%\begin{itemize}
+%\begin{small}
+%\item Results from conversions analysis helps to exclude low c$\tau$ region  
+%\item Results from EXO-12-035 and this analysis work nicely together 
+%\end{small}
+%\end{itemize}
+
 \end{frame}
 
 
