@@ -88,14 +88,12 @@ void Limit2D() {
    obs_cms8_conv_gr->GetXaxis()->SetTitleSize(0.047);
    obs_cms8_conv_gr->GetXaxis()->SetTitleOffset(1.45);
    obs_cms8_conv_gr->GetYaxis()->SetTitleOffset(1.45);
-<<<<<<< HEAD
 
    obs_cms8_conv_gr->SetLineWidth(4);
-=======
-   obs_cms8_conv_gr->SetFillColor(kBlue);
-   obs_cms8_conv_gr->SetLineColor(kWhite);
-   obs_cms8_conv_gr->SetLineWidth(0);
->>>>>>> 08a14539d5891cb28975637f0259cbfaa9c38771
+   // obs_cms8_conv_gr->SetFillColor(kBlue);
+   // obs_cms8_conv_gr->SetLineColor(kWhite);
+   // obs_cms8_conv_gr->SetLineWidth(0);
+
    obs_cms8_conv_gr->SetLineStyle(7);
    obs_cms8_conv_gr->Draw("AL");
    c1a->Update() ;
@@ -110,12 +108,7 @@ void Limit2D() {
    obs_cms7_gr->SetFillColor(kYellow);
    obs_cms7_gr->SetLineColor(1);
    //obs_cms7_gr->SetFillStyle(3001) ;
-<<<<<<< HEAD
    obs_cms7_gr->Draw("FLsames");
-=======
-   obs_cms7_gr->Draw("FL");
-   //obs_cms7_gr->Draw("FLsames");
->>>>>>> 08a14539d5891cb28975637f0259cbfaa9c38771
    c1a->Update() ;
 
    //**************************observed cdf*******************************//
@@ -161,7 +154,7 @@ void Limit2D() {
    exp_cms8_conv_gr->SetFillColor(2);
    exp_cms8_conv_gr->SetLineColor(2);
    exp_cms8_conv_gr->SetFillStyle(3244);
-   //exp_cms8_conv_gr->Draw("FLsames");
+   exp_cms8_conv_gr->Draw("FLsames");
    c1a->Update() ;
 
    //************** Expected 8 TeV Limits ********************************//
@@ -176,11 +169,11 @@ void Limit2D() {
    exp_cms_gr->SetFillStyle(3002);
    exp_cms_gr->SetLineColor(kRed);
    exp_cms_gr->SetLineWidth(0);
-   exp_cms_gr->Draw("Fsames"); 
+   //exp_cms_gr->Draw("Fsames"); 
    c1a->Update() ;
 
-   obs_cms_gr->Draw("Lsames");
-   //obs_cms8_conv_gr->Draw("Lsames");
+   //obs_cms_gr->Draw("Lsames");
+   obs_cms8_conv_gr->Draw("Lsames");
    c1a->Update();
 
 
