@@ -106,6 +106,7 @@ double weightCrossSection(const char* outname) {
   double weight;
   
  
+  if (string(outname).find("GMSB_Lambda-100") != std::string::npos) weight = 0.368;
   if (string(outname).find("GMSB_Lambda-120") != std::string::npos) weight = 0.133;  
   if (string(outname).find("GMSB_Lambda-140") != std::string::npos) weight = 0.0574;
   if (string(outname).find("GMSB_Lambda-160") != std::string::npos) weight = 0.0277;
@@ -137,6 +138,7 @@ double weightCrossSection(const char* outname) {
 
 
 int getsumcounterzero(const char* outname){
+
 // int getsumcounterzero(TString infile){
 
 
@@ -168,11 +170,13 @@ int getsumcounterzero(const char* outname){
 
   int entries; 
 
-  // if (TString(outname) == "GMSB_Lambda-120_CTau-10") entries = ???;
-  // if (TString(outname) == "GMSB_Lambda-120_CTau-100") entries = ???;
-  // if (TString(outname) == "GMSB_Lambda-120_CTau-250") entries = ???;
-  // if (TString(outname) == "GMSB_Lambda-120_CTau-1000") entries = ???;
-  // if (TString(outname) == "GMSB_Lambda-120_CTau-2000") entries = ???;
+  if (TString(outname) == "GMSB_Lambda-100_CTau-1") entries = 50112;
+  if (TString(outname) == "GMSB_Lambda-100_CTau-10") entries = 50112;
+  if (TString(outname) == "GMSB_Lambda-100_CTau-100") entries = 50112;
+  if (TString(outname) == "GMSB_Lambda-100_CTau-250") entries = 50112;
+  if (TString(outname) == "GMSB_Lambda-100_CTau-500") entries = 50112;
+  if (TString(outname) == "GMSB_Lambda-100_CTau-1000") entries = 50112;
+  if (TString(outname) == "GMSB_Lambda-100_CTau-2000") entries = 50112;
   if (TString(outname) == "GMSB_Lambda-140_CTau-1") entries = 50112 ;
   if (TString(outname) == "GMSB_Lambda-140_CTau-10") entries = 50112;
   if (TString(outname) == "GMSB_Lambda-140_CTau-50") entries = 50112 ;
@@ -507,34 +511,34 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
 
       if (nGen == 5) {
 
-	for ( int z=0 ; z< nGen; z++ ) {
-	  if (pdgId[z] == 11) {
-	    genP4_electron.SetPxPyPzE( genPx[z], genPy[z], genPz[z], genE[z] ) ;
-	  }
-	  if (pdgId[z] == -11) {
+      	for ( int z=0 ; z< nGen; z++ ) {
+      	  if (pdgId[z] == 11) {
+      	    genP4_electron.SetPxPyPzE( genPx[z], genPy[z], genPz[z], genE[z] ) ;
+      	  }
+      	  if (pdgId[z] == -11) {
             genP4_positron.SetPxPyPzE( genPx[z], genPy[z], genPz[z], genE[z] ) ;
           }
-	}
+      	}
 
-	//if (Genhit){
+      	//if (Genhit){
 
-	//cout << "delta R electrons: " << deltaR(genP4_electron, genP4_positron) << endl << endl;
+      	//cout << "delta R electrons: " << deltaR(genP4_electron, genP4_positron) << endl << endl;
 
       	TLorentzVector genP4;
 
       	genP4 = (genP4_electron + genP4_positron);
 
-	//cout << "Mass e+e-: " << genP4.M() << endl;
+      	//cout << "Mass e+e-: " << genP4.M() << endl;
 
-	if(i == 0){
-	  masseplusemin.push_back(genP4.M());
-	  deltarelectrons.push_back(deltaR(genP4_electron, genP4_positron));
+      	if(i == 0){
+      	  masseplusemin.push_back(genP4.M());
+      	  deltarelectrons.push_back(deltaR(genP4_electron, genP4_positron));
 	  
-	  //cout << "delta R electrons: " << deltaR(genP4_electron, genP4_positron) << endl << endl;
-	  //cout << "Mass e+e-: " << genP4.M() << endl;
-	}
+      	  //cout << "delta R electrons: " << deltaR(genP4_electron, genP4_positron) << endl << endl;
+      	  //cout << "Mass e+e-: " << genP4.M() << endl;
+      	}
 
-     	double genEta = genP4.Eta();
+      	double genEta = genP4.Eta();
       	double genPhi = genP4.Phi();
 
       	if (genPhi > pi){
@@ -546,7 +550,7 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
 
       	deltargen_tot = sqrt((genEta-convEta[i])*(genEta-convEta[i]) + (genPhi-convPhi[i])*(genPhi-convPhi[i]));
 
-	deltaRgen.push_back(deltargen_tot);
+      	deltaRgen.push_back(deltargen_tot);
       }
 
     }
@@ -581,13 +585,17 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
       phoP4down = phoP4down * egScaledown;
        
       if ( fabs(fSpike[i]) > 0.001 ) continue ;
-      //if ( phoP4.Pt() < 50. )  continue ; //N-1!!!!!!!!!!!!!!!!!!!!!!!
-      //if ( fabs(phoP4.Eta()) > 1.47 )  continue ; //N-1!!!!!!!!!!!!!!!!!!!
-      //if ( phoHoverE[i] > 0.05 ) continue ; //PHOTONISOLATION
-      //if ( sigmaIeta[i] >  0.012 ) continue ; //N-1!!!!!!!!!!!!!!!!!1  
-      //if ( phoP4.Eta() > -0.75 && phoP4.Eta() < -0.6 && phoP4.Phi() > -1. && phoP4.Phi() < -0.8 ) continue ;
+      if ( phoP4.Pt() < 50. )  continue ; //N-1!!!!!!!!!!!!!!!!!!!!!!!
+      //if ( phoP4up.Pt() < 50. )  continue ; //WARDTEMP
+      if ( fabs(phoP4.Eta()) > 1.47 )  continue ; //N-1!!!!!!!!!!!!!!!!!!!
+      //if ( fabs(phoP4up.Eta()) > 1.47 )  continue ; //N-1!!!!!!!!!!!!!!!!!!! //WARDTEMP
+      if ( phoHoverE[i] > 0.05 ) continue ; //PHOTONISOLATION
+      if ( sigmaIeta[i] >  0.012 ) continue ; //N-1!!!!!!!!!!!!!!!!!1  
+      if ( phoP4.Eta() > -0.75 && phoP4.Eta() < -0.6 && phoP4.Phi() > -1. && phoP4.Phi() < -0.8 ) continue ;
+      //if ( phoP4up.Eta() > -0.75 && phoP4up.Eta() < -0.6 && phoP4up.Phi() > -1. && phoP4up.Phi() < -0.8 ) continue ; //WARDTEMP
 
-      //if ( phoP4.Eta() > 0.80 && phoP4.Eta() < 0.95 && phoP4.Phi() > -1.95 && phoP4.Phi() < -1.8 ) continue ; 
+      if ( phoP4.Eta() > 0.80 && phoP4.Eta() < 0.95 && phoP4.Phi() > -1.95 && phoP4.Phi() < -1.8 ) continue ;
+      //if ( phoP4up.Eta() > 0.80 && phoP4up.Eta() < 0.95 && phoP4up.Phi() > -1.95 && phoP4up.Phi() < -1.8 ) continue ; //WARDTEMP
 
       bool fakephotons = false;
 
@@ -600,9 +608,11 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
 	/***********************************************************************/
        
 	
-	//if ( cHadIso[i] >= 2.6 ) continue ;  // chargedHadron PHOTONISOLATION
-	//if ( nHadIso[i] >= 3.5 + ( 0.04*phoP4.Pt()   ) ) continue ;   // neutralHadron PHOTONISOLATION
-	//if ( photIso[i] >= 1.3 + ( 0.005*phoP4.Pt() ) ) continue ;  // photon PHOTONISOLATION
+	if ( cHadIso[i] >= 2.6 ) continue ;  // chargedHadron PHOTONISOLATION
+	if ( nHadIso[i] >= 3.5 + ( 0.04*phoP4.Pt()   ) ) continue ;   // neutralHadron PHOTONISOLATION 
+	//if ( nHadIso[i] >= 3.5 + ( 0.04*phoP4up.Pt()   ) ) continue ;   // neutralHadron PHOTONISOLATION //WARDTEMP
+	if ( photIso[i] >= 1.3 + ( 0.005*phoP4.Pt() ) ) continue ;  // photon PHOTONISOLATION 
+	//if ( nHadIso[i] >= 3.5 + ( 0.04*phoP4up.Pt()   ) ) continue ;   // neutralHadron PHOTONISOLATION //WARDTEMP
 
       }	
       
@@ -612,8 +622,9 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
 	/***********************************************************************/
 	
 	      
-	//if (!( cHadIso[i] >= 2.6 )  && (!( nHadIso[i] >= 3.5 + ( 0.04*phoP4.Pt()   ) )) && (!( photIso[i] >= 1.3 + ( 0.005*phoP4.Pt() ) ))  ) continue ;
-      
+	if (!( cHadIso[i] >= 2.6 )  && (!( nHadIso[i] >= 3.5 + ( 0.04*phoP4.Pt()   ) )) && (!( photIso[i] >= 1.3 + ( 0.005*phoP4.Pt() ) ))  ) continue ;
+	//if (!( cHadIso[i] >= 2.6 )  && (!( nHadIso[i] >= 3.5 + ( 0.04*phoP4up.Pt()   ) )) && (!( photIso[i] >= 1.3 + ( 0.005*phoP4up.Pt() ) ))  ) continue ; //WARDTEMP
+
       }
       
       if (phoMatchedEle[i] > 0) continue;
@@ -673,9 +684,9 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
       jCorr = ( 1. - jecUnc[j] ) ;
       jp4down = jp4down*jCorr;
 
-      //if ( jp4.Pt() < 30) continue;  //N-1!!!!!!!!!!!!!!!!!11
+      if ( jp4.Pt() < 30) continue;  //N-1!!!!!!!!!!!!!!!!!11
       
-      //if ( fabs(jp4.Eta()) > 2.4 ) continue ; //N-1!!!!!!!!!!!!!!!!!!!!!
+      if ( fabs(jp4.Eta()) > 2.4 ) continue ; //N-1!!!!!!!!!!!!!!!!!!!!!
        
       if ( jetNDau[j] < (double)   2 )  continue ;
       if ( jetCEF[j] >= (double)0.99 )  continue ;
@@ -727,12 +738,12 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
 
 
     //Normal    
-    //                                            h000->Fill(1.);
-    // if (nGoodVtx < 1) continue;                h000->Fill(2.);
-    // if (!inverted && MET < 60) continue;       h000->Fill(3.);
-    // if (inverted && MET > 30) continue;        h000->Fill(3.);
-    // if (nJet < 2) continue;                    h000->Fill(4.);
-    // if (nPhot < 2) continue;                   h000->Fill(5.);
+                                               h000->Fill(1.);
+    if (nGoodVtx < 1) continue;                h000->Fill(2.);
+    if (!inverted && MET < 60) continue;       h000->Fill(3.);
+    if (inverted && MET > 30) continue;        h000->Fill(3.);
+    if (nJet < 2) continue;                    h000->Fill(4.);
+    if (nPhot < 2) continue;                   h000->Fill(5.);
 
     
     //E3x3
@@ -750,12 +761,12 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
     // if (nPhot < 2 or ptPhot[0] < 85) continue;   h000->Fill(5.);
     
     //N-1
-                                               h000->Fill(1.);
-    if (nGoodVtx < 1) continue;                h000->Fill(2.);
-    if (!inverted && MET < 0) continue;        h000->Fill(3.);
-    if (inverted && MET > 30) continue;        h000->Fill(3.);
-    if (nJet < 1) continue;                    h000->Fill(4.);
-    if (nPhot < 1) continue;                   h000->Fill(5.);
+    //                                            h000->Fill(1.);
+    // if (nGoodVtx < 1) continue;                h000->Fill(2.);
+    // if (!inverted && MET < 0) continue;        h000->Fill(3.);
+    // if (inverted && MET > 30) continue;        h000->Fill(3.);
+    // if (nJet < 1) continue;                    h000->Fill(4.);
+    // if (nPhot < 1) continue;                   h000->Fill(5.);
 
     //Triggeredvariable
     //                                            h000->Fill(1.);

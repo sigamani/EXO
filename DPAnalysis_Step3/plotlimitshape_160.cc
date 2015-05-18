@@ -33,19 +33,19 @@ TString extra = "";
 // TFile* file_CT2000L160 = new TFile(("./exclusionfiles/higgsCombineL160CTau2000shapedata"+extra+".Asymptotic.mH120.root"), "READ");
 
 
-// TFile* file_CT1L160 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L160CT1.root"), "READ");
-// TFile* file_CT10L160 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L160CT10.root"), "READ");
-// TFile* file_CT100L160 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L160CT100.root"), "READ");
-// TFile* file_CT500L160 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L160CT500.root"), "READ");
-// TFile* file_CT1000L160 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L160CT1000.root"), "READ");
-// TFile* file_CT2000L160 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L160CT2000.root"), "READ");
+TFile* file_CT1L160 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L160CT1.root"), "READ");
+TFile* file_CT10L160 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L160CT10.root"), "READ");
+TFile* file_CT100L160 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L160CT100.root"), "READ");
+TFile* file_CT500L160 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L160CT500.root"), "READ");
+TFile* file_CT1000L160 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L160CT1000.root"), "READ");
+TFile* file_CT2000L160 = new TFile(("./exclusionfiles/FULL_CLS_RESULT_L160CT2000.root"), "READ");
 
-TFile* file_CT1L160 = new TFile(("./exclusionfiles/ASYMPTOTIC_CLS_RESULT_L160CT1.root"), "READ");
-TFile* file_CT10L160 = new TFile(("./exclusionfiles/ASYMPTOTIC_CLS_RESULT_L160CT10.root"), "READ");
-TFile* file_CT100L160 = new TFile(("./exclusionfiles/ASYMPTOTIC_CLS_RESULT_L160CT100.root"), "READ");
-TFile* file_CT500L160 = new TFile(("./exclusionfiles/ASYMPTOTIC_CLS_RESULT_L160CT500.root"), "READ");
-TFile* file_CT1000L160 = new TFile(("./exclusionfiles/ASYMPTOTIC_CLS_RESULT_L160CT1000.root"), "READ");
-TFile* file_CT2000L160 = new TFile(("./exclusionfiles/ASYMPTOTIC_CLS_RESULT_L160CT2000.root"), "READ");
+// TFile* file_CT1L160 = new TFile(("./exclusionfiles/ASYMPTOTIC_CLS_RESULT_L160CT1.root"), "READ");
+// TFile* file_CT10L160 = new TFile(("./exclusionfiles/ASYMPTOTIC_CLS_RESULT_L160CT10.root"), "READ");
+// TFile* file_CT100L160 = new TFile(("./exclusionfiles/ASYMPTOTIC_CLS_RESULT_L160CT100.root"), "READ");
+// TFile* file_CT500L160 = new TFile(("./exclusionfiles/ASYMPTOTIC_CLS_RESULT_L160CT500.root"), "READ");
+// TFile* file_CT1000L160 = new TFile(("./exclusionfiles/ASYMPTOTIC_CLS_RESULT_L160CT1000.root"), "READ");
+// TFile* file_CT2000L160 = new TFile(("./exclusionfiles/ASYMPTOTIC_CLS_RESULT_L160CT2000.root"), "READ");
 
 void plot_limit_mass(std::string LAMBDA){
 
@@ -222,6 +222,8 @@ void plot_limit_mass(std::string LAMBDA){
   obs_lim[4] = xsec*CT1000histo1->GetMean();
   obs_lim[5] = xsec*CT2000histo1->GetMean();
 
+  cout << upperlimit500[2] << endl;
+
   exp_lim[0] = xsec*upperlimit1[2];
   exp_lim[1] = xsec*upperlimit10[2];
   //exp_lim[1] = xsec*upperlimit50[2];
@@ -229,6 +231,93 @@ void plot_limit_mass(std::string LAMBDA){
   exp_lim[3] = xsec*upperlimit500[2];
   exp_lim[4] = xsec*upperlimit1000[2];
   exp_lim[5] = xsec*upperlimit2000[2];
+
+  ofstream myfile;
+  myfile.open ("events_Lambda160.tex");
+
+    myfile << "\\documentclass[11pt]{article}" << endl;
+  myfile << "\\usepackage{multirow}" << endl;
+  myfile << "\\begin{document}" << endl;
+
+  myfile << "SIGNAL EVENTS: " << int(xsec*19700) << endl << endl;
+
+  myfile << "\\begin{table}[h!]" << endl;
+  myfile << "\\begin{tabular}{|c|c|c|}" << endl;
+  myfile << "\\hline" << endl;
+  myfile << "CTAU 1 & Expected & Observed \\\\ \\hline" << endl;
+  myfile << "-2$\\sigma$ & " << int(xsec*upperlimit1[0]*19700) << " & \\multirow{3}{*}{" << int(obs_lim[0]*19700) << "} \\\\" << endl;
+  myfile << "Events & " << int(exp_lim[0]*19700) << " & \\\\"<< endl;
+  myfile << "+2$\\sigma$ & " << int(xsec*upperlimit1[4]*19700) <<" & \\\\"<< endl;
+  myfile <<  "\\hline"<< endl;
+  myfile << "\\end{tabular}"<< endl;
+  myfile << "\\end{table}"<< endl<< endl;
+
+
+  myfile << "\\begin{table}[h!]" << endl;
+  myfile << "\\begin{tabular}{|c|c|c|}" << endl;
+  myfile << "\\hline" << endl;
+  myfile << "CTAU 10 & Expected & Observed \\\\ \\hline" << endl;
+  myfile << "-2$\\sigma$ & " << int(xsec*upperlimit10[0]*19700) << " & \\multirow{3}{*}{" << int(obs_lim[1]*19700) << "}  \\\\" << endl;
+  myfile << "Events & " << int(exp_lim[1]*19700) << " & \\\\"<< endl;
+  myfile << "+2$\\sigma$ & " << int(xsec*upperlimit10[4]*19700) <<" & \\\\"<< endl;
+  myfile <<  "\\hline"<< endl;
+  myfile << "\\end{tabular}"<< endl;
+  myfile << "\\end{table}"<< endl<< endl;
+
+
+  myfile << "\\begin{table}[h!]" << endl;
+  myfile << "\\begin{tabular}{|c|c|c|}" << endl;
+  myfile << "\\hline" << endl;
+  myfile << "CTAU 100 & Expected & Observed \\\\ \\hline" << endl;
+  myfile << "-2$\\sigma$ & " << int(xsec*upperlimit100[0]*19700) << " & \\multirow{3}{*}{" << int(obs_lim[2]*19700) << "}  \\\\" << endl;
+  myfile << "Events & " << int(exp_lim[2]*19700) << " & \\\\"<< endl;
+  myfile << "+2$\\sigma$ & " << int(xsec*upperlimit100[4]*19700) << " & \\\\"<< endl;
+  myfile <<  "\\hline"<< endl;
+  myfile << "\\end{tabular}"<< endl;
+  myfile << "\\end{table}"<< endl << endl;
+
+
+  myfile << "\\begin{table}[h!]" << endl;
+  myfile << "\\begin{tabular}{|c|c|c|}" << endl;
+  myfile << "\\hline" << endl;
+  myfile << "CTAU 500 & Expected & Observed \\\\ \\hline" << endl;
+  myfile << "-2$\\sigma$ & " << int(xsec*upperlimit500[0]*19700) << " & \\multirow{3}{*}{" << int(obs_lim[3]*19700) << "}  \\\\" << endl;
+  myfile << "Events & " << int(exp_lim[3]*19700) << " & \\\\"<< endl;
+  myfile << "+2$\\sigma$ & " << int(xsec*upperlimit500[4]*19700) <<" & \\\\"<< endl;
+  myfile <<  "\\hline"<< endl;
+  myfile << "\\end{tabular}"<< endl;
+  myfile << "\\end{table}"<< endl << endl;
+
+
+  myfile << "\\begin{table}[h!]" << endl;
+  myfile << "\\begin{tabular}{|c|c|c|}" << endl;
+  myfile << "\\hline" << endl;
+  myfile << "CTAU 1000 & Expected & Observed \\\\ \\hline" << endl;
+  myfile << "-2$\\sigma$ & " << int(xsec*upperlimit1000[0]*19700) << " & \\multirow{3}{*}{" << int(obs_lim[4]*19700) << "}  \\\\" << endl;
+  myfile << "Events & " << int(exp_lim[4]*19700) << " & \\\\"<< endl;
+  myfile << "+2$\\sigma$ & " << int(xsec*upperlimit1000[4]*19700) <<" & \\\\"<< endl;
+  myfile <<  "\\hline"<< endl;
+  myfile << "\\end{tabular}"<< endl;
+  myfile << "\\end{table}"<< endl << endl;
+
+
+  myfile << "\\begin{table}[h!]" << endl;
+  myfile << "\\begin{tabular}{|c|c|c|}" << endl;
+  myfile << "\\hline" << endl;
+  myfile << "CTAU 2000 & Expected & Observed \\\\ \\hline" << endl;
+  myfile << "-2$\\sigma$ & " << int(xsec*upperlimit2000[0]*19700) << " & \\multirow{3}{*}{" << int(obs_lim[5]*19700) << "}  \\\\" << endl;
+  myfile << "Events & " << int(exp_lim[5]*19700) << " & \\\\"<< endl;
+  myfile << "+2$\\sigma$ & " << int(xsec*upperlimit2000[4]*19700) <<" & \\\\"<< endl;
+  myfile <<  "\\hline"<< endl;
+  myfile << "\\end{tabular}"<< endl;
+  myfile << "\\end{table}"<< endl << endl;
+  
+
+  myfile << "\\end{document}"<< endl;
+
+
+
+  myfile.close();
 
   //Theoretical CTAU
   //Double_t mTh[5] = {1.0,10.0,50.0,100.0,200.0};

@@ -204,9 +204,17 @@ def plot(dxy):
 
     dxy[1].GetXaxis().SetTitle("Conversion d_{XY} (cm)")
     dxy[1].GetYaxis().SetTitle("Events / bin")
+ 
+    dxy[1].GetYaxis().SetTitleSize(0.06)
+    dxy[1].GetYaxis().SetTitleOffset(0.78)
     dxy[1].GetYaxis().SetRangeUser(0.1,1000)
-    dxy[1].GetYaxis().SetTitleSize(0.05)
-    dxy[1].GetXaxis().SetTitleSize(0.05)
+    dxy[1].GetYaxis().SetLabelSize(0.05)
+    dxy[1].GetXaxis().SetLabelSize(0.)
+    dxy[1].GetXaxis().SetTitleSize(0.055)
+    dxy[1].GetXaxis().SetTitleOffset(0.89)
+    dxy[1].GetXaxis().SetLabelSize(0.045)
+    dxy[1].GetXaxis().SetLabelOffset(0.01)
+
 
     gStyle.SetOptStat(0)
 
@@ -273,6 +281,7 @@ def plot(dxy):
     frame.Draw()
     
     canvas.SaveAs("dxycomparisonfakehighfakelowisolow.png")
+    canvas.SaveAs("dxycomparisonfakehighfakelowisolow.pdf")
     canvas.Close()
     
 def main():

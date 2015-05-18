@@ -183,7 +183,7 @@ def function (lamb,ctau1,ctau2,phot):
     nphotttjet = TH1D("nPhotTTJet","",15,0,15)
     nvertttjet = TH1D("nVertTTJet","",8,0,40)
     smajttjet = TH1D("sMajTTJet","",40,0,3)
-    sminttjet = TH1D("sMinTTJet","",20,0,0.5)
+    sminttjet = TH1D("sMinTTJet","",20,0.1,0.5)
     sigietattjet = TH1D("SigmaIetaTTJet","",50,0,0.03)
     etattjet = TH1D("EtaTTJet","",50,0,2)
     chadisottjet = TH1D("cHadIsoTTJet","",50,0,5)
@@ -210,7 +210,7 @@ def function (lamb,ctau1,ctau2,phot):
     nphotsig1 = TH1D("nPhotSignal1","",15,0,15)
     nvertsig1 = TH1D("nVertSignal1","",8,0,40)
     smajsig1 = TH1D("sMajSignal1","",40,0,3)
-    sminsig1 = TH1D("sMinSignal1","",20,0,0.5)
+    sminsig1 = TH1D("sMinSignal1","",20,0.1,0.5)
     sigietasig1 = TH1D("SigmaIetaSignal1","",50,0,0.03)
     etasig1 = TH1D("EtaSignal1","",50,0,2)    
     chadisosig1 = TH1D("cHadIsoSignal1","",50,0,5)
@@ -236,7 +236,7 @@ def function (lamb,ctau1,ctau2,phot):
     nphotsig2 = TH1D("nPhotSignal2","",15,0,15)
     nvertsig2 = TH1D("nVertSignal2","",8,0,40)
     smajsig2 = TH1D("sMajSignal2","",40,0,3)
-    sminsig2 = TH1D("sMinSignal2","",20,0,0.5)
+    sminsig2 = TH1D("sMinSignal2","",20,0.1,0.5)
     sigietasig2 = TH1D("SigmaIetaSignal2","",50,0,0.03)
     etasig2 = TH1D("EtaSignal2","",50,0,2)
     chadisosig2 = TH1D("cHadIsoSignal2","",50,0,5)
@@ -263,7 +263,7 @@ def function (lamb,ctau1,ctau2,phot):
     nphot = TH1D("nPhot","",15,0,15)
     nvert = TH1D("nVert","",8,0,40)
     smaj = TH1D("sMaj","",40,0,3)
-    smin = TH1D("sMin","",20,0,0.5)
+    smin = TH1D("sMin","",20,0.1,0.5)
     sigieta = TH1D("SigmaIeta","",50,0,0.03)
     eta = TH1D("Eta","",50,0,2)
     chadiso = TH1D("cHadIso","",50,0,5)
@@ -290,7 +290,7 @@ def function (lamb,ctau1,ctau2,phot):
     nphotisolow = TH1D("nPhotisolow","",15,0,15)
     nvertisolow = TH1D("nVertisolow","",8,0,40)
     smajisolow = TH1D("sMajisolow","",40,0,3)
-    sminisolow = TH1D("sMinisolow","",20,0,0.5)
+    sminisolow = TH1D("sMinisolow","",20,0.1,0.5)
     sigietaisolow = TH1D("SigmaIetaisolow","",50,0,0.03)
     etaisolow = TH1D("Etaisolow","",50,0,2)
     chadisoisolow = TH1D("cHadIsoisolow","",50,0,5)
@@ -329,7 +329,7 @@ def function (lamb,ctau1,ctau2,phot):
             ratio = newisolowtotal/isolowtotal
         else:
             ratio = 1.
-        vechisisolow[i].Scale(ratio)
+        vechisisolow[i].Scale(ratio)    
 
       
     datatotal = vechis[4].GetBinContent(1)

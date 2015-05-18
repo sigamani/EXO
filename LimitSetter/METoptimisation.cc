@@ -202,7 +202,7 @@ void METoptimization(){
   leg->AddEntry(Exp_graph_Lambda140, "Exp. exclusion (#Lambda = 140 TeV)", "F");
   leg->Draw("same");
 
-  c0->SaveAs("~/www/METoptimisation.pdf");
+  c0->SaveAs("~/www/home/METoptimisation.png");
 
 }
 

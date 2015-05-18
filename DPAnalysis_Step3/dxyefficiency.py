@@ -91,11 +91,11 @@ def function (lamb,ctau,phot):
     return EfficiencyHist
 
 def main():
-    CTAU10 = function("180","10",2)
-    CTAU50 = function("180","50",2)
-    CTAU250 = function("180","250",2)
-    CTAU500 = function("180","500",2)
-    CTAU2000 = function("180","2000",2)
+    # CTAU10 = function("180","10",2)
+    # CTAU50 = function("180","50",2)
+    # CTAU250 = function("180","250",2)
+    # CTAU500 = function("180","500",2)
+    # CTAU2000 = function("180","2000",2)
 
     # CTAU10 = function("160","10",2)
     # CTAU100 = function("160","100",2)
@@ -109,11 +109,17 @@ def main():
     # CTAU2000 = function("140","2000",2)                                                                                                                                                                                                     
     # CTAU500 = function("140","500",2) 
 
+    CTAU10 = function("100","10",2)
+    CTAU100 = function("100","100",2)
+    CTAU1000 = function("100","1000",2)
+    CTAU500 = function("100","500",2)
+    CTAU2000 = function("100","2000",2)
+
     CTAU10.SetMarkerColor(1)
-    CTAU50.SetMarkerColor(2)
-    CTAU250.SetMarkerColor(3)
-    #CTAU100.SetMarkerColor(4)
-    #CTAU1000.SetMarkerColor(5)
+    #CTAU50.SetMarkerColor(2)
+    #CTAU250.SetMarkerColor(3)
+    CTAU100.SetMarkerColor(4)
+    CTAU1000.SetMarkerColor(5)
     CTAU500.SetMarkerColor(6)
     CTAU2000.SetMarkerColor(7)
 
@@ -123,11 +129,11 @@ def main():
     leg.SetTextFont(42)
     leg.SetBorderSize(0)
 
-    leg.AddEntry(CTAU10, "GMSB(180 TeV, 0.4 cm)","p")
-    leg.AddEntry(CTAU50, "GMSB(180 TeV, 2 cm)","p")
-    leg.AddEntry(CTAU250, "GMSB(180 TeV, 9 cm)","p")
-    leg.AddEntry(CTAU500, "GMSB(180 TeV, 20 cm)","p")
-    #leg.AddEntry(CTAU2000, "GMSB(180 TeV, 70 cm)","p")
+    # leg.AddEntry(CTAU10, "GMSB(180 TeV, 0.4 cm)","p")
+    # leg.AddEntry(CTAU50, "GMSB(180 TeV, 2 cm)","p")
+    # leg.AddEntry(CTAU250, "GMSB(180 TeV, 9 cm)","p")
+    # leg.AddEntry(CTAU500, "GMSB(180 TeV, 20 cm)","p")
+    # #leg.AddEntry(CTAU2000, "GMSB(180 TeV, 70 cm)","p")
 
     # leg.AddEntry(CTAU10, "GMSB(160 GeV, 0.4 cm)","p")
     # leg.AddEntry(CTAU100, "GMSB(160 GeV, 4 cm)","p")
@@ -140,6 +146,12 @@ def main():
     # leg.AddEntry(CTAU1000, "GMSB(140 GeV, 100 cm)","p")                                                                                                                                                                                     
     # leg.AddEntry(CTAU500, "GMSB(140 GeV, 50 cm)","p")                                                                                                                                                                                       
     # leg.AddEntry(CTAU2000, "GMSB(140 TeV, 200 cm)","p")
+
+    leg.AddEntry(CTAU10, "GMSB(100 GeV, 1 cm)","p")
+    leg.AddEntry(CTAU100, "GMSB(100 GeV, 10 cm)","p")
+    leg.AddEntry(CTAU1000, "GMSB(100 GeV, 100 cm)","p")
+    leg.AddEntry(CTAU500, "GMSB(100 GeV, 50 cm)","p")
+    leg.AddEntry(CTAU2000, "GMSB(100 TeV, 200 cm)","p")
 
     CTAU10.GetYaxis().SetRangeUser(0.,0.2)
     CTAU10.GetYaxis().SetTitleSize(0.05)
@@ -194,10 +206,10 @@ def main():
 
 
     CTAU10.Draw("PE")
-    CTAU50.Draw("PEsame")
-    CTAU250.Draw("PEsame")
-    #CTAU100.Draw("PEsame")
-    #CTAU1000.Draw("PEsame")
+    #CTAU50.Draw("PEsame")
+    #CTAU250.Draw("PEsame")
+    CTAU100.Draw("PEsame")
+    CTAU1000.Draw("PEsame")
     #CTAU2000.Draw("PEsame")
     CTAU500.Draw("PEsame")
     leg.Draw("same")
@@ -212,10 +224,10 @@ def main():
     frame = canvas.GetFrame()
     frame.Draw()
   
-    canvas.SaveAs("./dxyefficiencyL180.png")
+    #canvas.SaveAs("./dxyefficiencyL180.png")
     #canvas.SaveAs("./dxyefficiencyL160.png")
     #canvas.SaveAs("./dxyefficiencyL140.png")
-
+    canvas.SaveAs("./dxyefficiencyL100.png")
 
 if __name__ == "__main__":
     main()

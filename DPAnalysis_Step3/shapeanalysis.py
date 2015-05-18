@@ -204,34 +204,38 @@ def function (lamb,ctau,phot):
     background_alphaUp.Write()
     background_alphaDown.Write()
     
-
-    for i in range(nxbins):
-        print background.GetBinContent(i+1) - background_alphaUp.GetBinContent(i+1)
-
     output.Close()
 
 
 def main():
-    # function("140","1",2)
-    # function("140","10",2)
-    # function("140","100",2)
-    # function("140","500",2)
-    # function("140","1000",2)
-    # function("140","2000",2)
+    # function("100","1",2)
+    # function("100","10",2)
+    # function("100","100",2)
+    # function("100","250",2)
+    # function("100","500",2)
+    # function("100","1000",2)
+    # function("100","2000",2)
 
-    # function("160","1",2)
-    # function("160","10",2)
-    # function("160","100",2)
-    # function("160","500",2)
-    # function("160","1000",2)
-    # function("160","2000",2)
+    function("140","1",2)
+    function("140","10",2)
+    function("140","100",2)
+    function("140","500",2)
+    function("140","1000",2)
+    function("140","2000",2)
 
-    function("180","1",2)
-    function("180","10",2)
-    function("180","50",2)
-    function("180","250",2)
-    function("180","500",2)
-    function("180","2000",2)
+    function("160","1",2)
+    function("160","10",2)
+    function("160","100",2)
+    function("160","500",2)
+    function("160","1000",2)
+    function("160","2000",2)
+
+    # function("180","1",2)
+    # function("180","10",2)
+    # function("180","50",2)
+    # function("180","250",2)
+    # function("180","500",2)
+    # function("180","2000",2)
 
 if __name__ == "__main__":
     main()

@@ -28,9 +28,6 @@ void Limit2D() {
    gStyle->SetFrameLineWidth(1);
    gStyle->SetOptTitle(0);
 
-//   gStyle->SetLabelOffset(0.007, "XYZ");
-//   gStyle->SetLabelSize(0.04, "XYZ");
-
    TCanvas *c1a = new TCanvas("c1a","c1a" ,800,800);
 
    c1a->cd() ;
@@ -43,34 +40,9 @@ void Limit2D() {
    c1a->SetLogy() ;
 
 
-   
-   //************************** EXO-14-017*******************************//
-   //************** Observed 8 TeV Limits ********************************//
-
-   Double_t obs_cms_conv8TeV[6]={198, 227., 256., 256., 227., 198};
-
-   //Full CLs |  Real CTau with GMSB bin 1 set to 0                            
-   Double_t obs_ct_conv8TeV[6]={0.3, 1.2, 9, 9, 30., 50.};  // MET > 60        
-
-   TGraph* obs_cms8_conv_gr;
-   obs_cms8_conv_gr = new TGraph(6, obs_cms_conv8TeV, obs_ct_conv8TeV );
-   obs_cms8_conv_gr->GetXaxis()->SetLimits( 100, 460 ) ;
-   obs_cms8_conv_gr->SetMaximum(1000000 ) ;
-   obs_cms8_conv_gr->SetMinimum(0.1 ) ;
-   obs_cms8_conv_gr->GetYaxis()->SetTitle( "Mean Lifetime  c#tau_{#tilde{#chi}^{0}_{1}} (cm)"  ) ;
-   obs_cms8_conv_gr->GetXaxis()->SetTitle( "#tilde{#chi}^{0}_{1} Mass (GeV)") ;
-   obs_cms8_conv_gr->GetYaxis()->SetTitleSize(0.047);
-   obs_cms8_conv_gr->GetXaxis()->SetTitleSize(0.047);
-   obs_cms8_conv_gr->GetXaxis()->SetTitleOffset(1.45);
-   obs_cms8_conv_gr->GetYaxis()->SetTitleOffset(1.45);
-   obs_cms8_conv_gr->SetFillColor(kBlue);
-   obs_cms8_conv_gr->SetLineColor(kBlue);
-   obs_cms8_conv_gr->SetLineWidth(4);
-   obs_cms8_conv_gr->SetLineStyle(7);
-   obs_cms8_conv_gr->Draw("ALsames");
-   c1a->Update() ;
 
    //************** Observed 8 TeV Limits ********************************//
+   // TIMING //
    // Mass  = 1.45*Lambda - 5
    // fitted tip: (321.08, 141.84)
    Double_t obs_cms_8TeV[13] = {  140,   169,   198,  227,   256,    314,    314, 285,    256,     227,     198,     169,     140 }; 
@@ -78,9 +50,48 @@ void Limit2D() {
 
    TGraph* obs_cms_gr = new TGraph(13, obs_cms_8TeV, obs_ct_8TeV );
    obs_cms_gr->SetLineColor(2);
+   obs_cms_gr->GetXaxis()->SetLimits( 100, 460 ) ;
+   obs_cms_gr->SetMaximum(1000000 ) ;
+   obs_cms_gr->SetMinimum(0.1 ) ;
+   obs_cms_gr->GetYaxis()->SetTitle( "Mean Lifetime  c#tau_{#tilde{#chi}^{0}_{1}} (cm)"  ) ;
+   obs_cms_gr->GetXaxis()->SetTitle( "#tilde{#chi}^{0}_{1} Mass (GeV)") ;
+   obs_cms_gr->GetYaxis()->SetTitleSize(0.047);
+   obs_cms_gr->GetXaxis()->SetTitleSize(0.047);
+   obs_cms_gr->GetXaxis()->SetTitleOffset(1.45);
+   obs_cms_gr->GetYaxis()->SetTitleOffset(1.45);
    obs_cms_gr->SetLineWidth(4);
    obs_cms_gr->SetLineStyle(7);
-   //obs_cms_gr->Draw("Lsames");
+   //obs_cms_gr->Draw("AL");
+   c1a->Update() ;
+
+   
+   //************************** EXO-14-017*******************************//
+   //************** Observed 8 TeV Limits ********************************//
+   // CONVERSIONS //
+
+   Double_t obs_cms_conv8TeV[6]={198, 227., 256., 256., 227., 198};
+
+   //Full CLs |  Real CTau with GMSB bin 1 set to 0                            
+   Double_t obs_ct_conv8TeV[6]={0.3, 1.2, 9, 9, 25., 50.};  // MET > 60        
+
+   TGraph* obs_cms8_conv_gr;
+   obs_cms8_conv_gr = new TGraph(6, obs_cms_conv8TeV, obs_ct_conv8TeV );
+   obs_cms8_conv_gr->SetFillColor(2);
+   obs_cms8_conv_gr->SetLineColor(2);
+   
+   obs_cms8_conv_gr->GetXaxis()->SetLimits( 100, 460 ) ;
+   obs_cms8_conv_gr->SetMaximum(10000 ) ;
+   obs_cms8_conv_gr->SetMinimum(0.1 ) ;
+   obs_cms8_conv_gr->GetYaxis()->SetTitle( "Mean Lifetime  c#tau_{#tilde{#chi}^{0}_{1}} (cm)"  ) ;
+   obs_cms8_conv_gr->GetXaxis()->SetTitle( "#tilde{#chi}^{0}_{1} Mass (GeV)") ;
+   obs_cms8_conv_gr->GetYaxis()->SetTitleSize(0.047);
+   obs_cms8_conv_gr->GetXaxis()->SetTitleSize(0.047);
+   obs_cms8_conv_gr->GetXaxis()->SetTitleOffset(1.45);
+   obs_cms8_conv_gr->GetYaxis()->SetTitleOffset(1.45);
+
+   obs_cms8_conv_gr->SetLineWidth(4);
+   obs_cms8_conv_gr->SetLineStyle(7);
+   obs_cms8_conv_gr->Draw("AL");
    c1a->Update() ;
 
 
@@ -90,10 +101,10 @@ void Limit2D() {
 
    TGraph* obs_cms7_gr;
    obs_cms7_gr = new TGraph(16, obs_cms_7TeV, obs_ct_7TeV );
-   obs_cms7_gr->SetFillColor(5);
+   obs_cms7_gr->SetFillColor(kYellow);
    obs_cms7_gr->SetLineColor(1);
    //obs_cms7_gr->SetFillStyle(3001) ;
-   obs_cms7_gr->Draw("FL");
+   obs_cms7_gr->Draw("FLsames");
    c1a->Update() ;
 
    //**************************observed cdf*******************************//
@@ -102,14 +113,15 @@ void Limit2D() {
 
    TGraph* obs_cdf_gr;
    obs_cdf_gr = new TGraph(6, obs_cdf, ct_cdf );
-   obs_cdf_gr->SetFillColor(28);
-   obs_cdf_gr->SetFillStyle(3001);
+   obs_cdf_gr->SetFillColor(kBlue-7);
+   //obs_cdf_gr->SetFillStyle(3001);
    obs_cdf_gr->SetLineColor(1);
    obs_cdf_gr->Draw("FLsames");
 
    c1a->Update() ;
 
    //************************** EXO-14-017*******************************//
+   // CONVERSIONS //
    //Double_t exp_cms_conv8TeV[4]={198, 227., 227., 198};  // MET > 50 (only 4 points)
    //Double_t ct_conv8TeV[4]={1.0, 1.0, 50., 100.}; // MET > 50 (only 4 points)
 
@@ -131,17 +143,18 @@ void Limit2D() {
 
 
    //Full CLs |  Real CTau with GMSB bin 1 set to 0
-   Double_t ct_conv8TeV[6]={0.2, 0.55, 1.5, 20., 35., 80.};  // MET > 60
+   Double_t ct_conv8TeV[6]={0.2, 0.55, 1.5, 20., 35., 70.};  // MET > 60
 
    TGraph* exp_cms8_conv_gr;
    exp_cms8_conv_gr = new TGraph(6, exp_cms_conv8TeV, ct_conv8TeV );
-   exp_cms8_conv_gr->SetFillColor(kBlue);
-   exp_cms8_conv_gr->SetLineColor(kBlue);
+   exp_cms8_conv_gr->SetFillColor(2);
+   exp_cms8_conv_gr->SetLineColor(2);
    exp_cms8_conv_gr->SetFillStyle(3244);
    exp_cms8_conv_gr->Draw("FLsames");
    c1a->Update() ;
 
    //************** Expected 8 TeV Limits ********************************//
+   // TIMING //
    // Neutralino Mass = 1.45*Lambda -5
    // falling : ctau = -11.017*Mass +3813.5 , raising : ctau = 0.514*mass - 68.5  crossing : (336.6 , 104.5)
    //Double_t exp_cms_8TeV[12] = { 100., 120,  140,  160,  180,  220,           220    180,    160,    140,    120,    100 }; 
@@ -199,7 +212,7 @@ void Limit2D() {
 
    // new axis
    //TGaxis *lAxis = new TGaxis(140,0.16,430,0.16,100, 300, 8,"+L");
-   TGaxis *lAxis = new TGaxis(140,3.303691,428.794,3.303691,100,300,8,"+L");
+   TGaxis *lAxis = new TGaxis(140,0.6303691,428.794,0.6303691,100,300,8,"+L");
    lAxis->SetLabelOffset(0.005);
    lAxis->SetLabelSize(0.04);
    lAxis->SetTickSize(0.03);
@@ -219,7 +232,7 @@ void Limit2D() {
 
    TString gPlotname = hfolder +  limitPlotName  ;
    c1a->Print( gPlotname +".png" ) ;
-   //c1a->Print( gPlotname +".pdf") ;
+   c1a->Print( gPlotname +".pdf") ;
    delete c1a ;
 
 }

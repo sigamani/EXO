@@ -198,9 +198,14 @@ void makeAllFiles(int Lambda, int ctau) {
       if (Lambda == 140 && ctau == 500 ) sig_syst_err = 28.109;
       if (Lambda == 140 && ctau == 1000 ) sig_syst_err = 34.09;
       if (Lambda == 140 && ctau == 2000 ) sig_syst_err = 34.09;
-      
 
-	  double sig_err_percentage = 0.01*sig_syst_err + 1.;
+      if (Lambda == 100 && ctau == 10 ) sig_syst_err = 9.14;
+      if (Lambda == 100 && ctau == 100 ) sig_syst_err = 13.7;
+      if (Lambda == 100 && ctau == 500 ) sig_syst_err = 41.8;
+      if (Lambda == 100 && ctau == 1000 ) sig_syst_err = 65.1;
+      if (Lambda == 100 && ctau == 2000 ) sig_syst_err = 65.1;
+      
+      double sig_err_percentage = 0.01*sig_syst_err + 1.;
 	  makeCards(Lambda, ctau, ndata, nsignal, sig_err_percentage, nbkg, nbins);
 
       fout->cd();

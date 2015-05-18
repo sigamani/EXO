@@ -199,12 +199,103 @@ void plot_limit_mass(std::string LAMBDA){
   obs_lim[4] = xsec*CT500histo1->GetMean();
   obs_lim[5] = xsec*CT2000histo1->GetMean();
 
+  cout << upperlimit500[2] << endl;
+
   exp_lim[0] = xsec*upperlimit1[2];
   exp_lim[1] = xsec*upperlimit10[2];
   exp_lim[2] = xsec*upperlimit50[2];
   exp_lim[3] = xsec*upperlimit250[2];
   exp_lim[4] = xsec*upperlimit500[2];
   exp_lim[5] = xsec*upperlimit2000[2];
+
+
+  ofstream myfile;
+  myfile.open ("events_Lambda180.tex");
+
+  myfile << "\\documentclass[11pt]{article}" << endl;
+  myfile << "\\usepackage{multirow}" << endl;
+  myfile << "\\begin{document}" << endl;
+
+  myfile << "SIGNAL EVENTS: " << int(xsec*19700) << endl << endl;
+
+  myfile << "\\begin{table}[h!]" << endl;
+  myfile << "\\begin{tabular}{|c|c|c|}" << endl;
+  myfile << "\\hline" << endl;
+  myfile << "CTAU 1 & Expected & Observed \\\\ \\hline" << endl;
+  myfile << "-2$\\sigma$ & " << int(xsec*upperlimit1[0]*19700) << " & \\multirow{3}{*}{" << int(obs_lim[0]*19700) << "} \\\\" << endl;
+  myfile << "Events & " << int(exp_lim[0]*19700) << " & \\\\"<< endl;
+  myfile << "+2$\\sigma$ & " << int(xsec*upperlimit1[4]*19700) <<" & \\\\"<< endl;
+  myfile <<  "\\hline"<< endl;
+  myfile << "\\end{tabular}"<< endl;
+  myfile << "\\end{table}"<< endl<< endl;
+
+
+  myfile << "\\begin{table}[h!]" << endl;
+  myfile << "\\begin{tabular}{|c|c|c|}" << endl;
+  myfile << "\\hline" << endl;
+  myfile << "CTAU 10 & Expected & Observed \\\\ \\hline" << endl;
+  myfile << "-2$\\sigma$ & " << int(xsec*upperlimit10[0]*19700) << " & \\multirow{3}{*}{" << int(obs_lim[1]*19700) << "}  \\\\" << endl;
+  myfile << "Events & " << int(exp_lim[1]*19700) << " & \\\\"<< endl;
+  myfile << "+2$\\sigma$ & " << int(xsec*upperlimit10[4]*19700) <<" & \\\\"<< endl;
+  myfile <<  "\\hline"<< endl;
+  myfile << "\\end{tabular}"<< endl;
+  myfile << "\\end{table}"<< endl<< endl;
+
+
+  myfile << "\\begin{table}[h!]" << endl;
+  myfile << "\\begin{tabular}{|c|c|c|}" << endl;
+  myfile << "\\hline" << endl;
+  myfile << "CTAU 50 & Expected & Observed \\\\ \\hline" << endl;
+  myfile << "-2$\\sigma$ & " << int(xsec*upperlimit50[0]*19700) << " & \\multirow{3}{*}{" << int(obs_lim[2]*19700) << "}  \\\\" << endl;
+  myfile << "Events & " << int(exp_lim[2]*19700) << " & \\\\"<< endl;
+  myfile << "+2$\\sigma$ & " << int(xsec*upperlimit50[4]*19700) << " & \\\\"<< endl;
+  myfile <<  "\\hline"<< endl;
+  myfile << "\\end{tabular}"<< endl;
+  myfile << "\\end{table}"<< endl << endl;
+
+
+  myfile << "\\begin{table}[h!]" << endl;
+  myfile << "\\begin{tabular}{|c|c|c|}" << endl;
+  myfile << "\\hline" << endl;
+  myfile << "CTAU 250 & Expected & Observed \\\\ \\hline" << endl;
+  myfile << "-2$\\sigma$ & " << int(xsec*upperlimit250[0]*19700) << " & \\multirow{3}{*}{" << int(obs_lim[3]*19700) << "}  \\\\" << endl;
+  myfile << "Events & " << int(exp_lim[3]*19700) << " & \\\\"<< endl;
+  myfile << "+2$\\sigma$ & " << int(xsec*upperlimit250[4]*19700) <<" & \\\\"<< endl;
+  myfile <<  "\\hline"<< endl;
+  myfile << "\\end{tabular}"<< endl;
+  myfile << "\\end{table}"<< endl << endl;
+
+
+  myfile << "\\begin{table}[h!]" << endl;
+  myfile << "\\begin{tabular}{|c|c|c|}" << endl;
+  myfile << "\\hline" << endl;
+  myfile << "CTAU 500 & Expected & Observed \\\\ \\hline" << endl;
+  myfile << "-2$\\sigma$ & " << int(xsec*upperlimit500[0]*19700) << " & \\multirow{3}{*}{" << int(obs_lim[4]*19700) << "}  \\\\" << endl;
+  myfile << "Events & " << int(exp_lim[4]*19700) << " & \\\\"<< endl;
+  myfile << "+2$\\sigma$ & " << int(xsec*upperlimit500[4]*19700) <<" & \\\\"<< endl;
+  myfile <<  "\\hline"<< endl;
+  myfile << "\\end{tabular}"<< endl;
+  myfile << "\\end{table}"<< endl << endl;
+
+
+  myfile << "\\begin{table}[h!]" << endl;
+  myfile << "\\begin{tabular}{|c|c|c|}" << endl;
+  myfile << "\\hline" << endl;
+  myfile << "CTAU 2000 & Expected & Observed \\\\ \\hline" << endl;
+  myfile << "-2$\\sigma$ & " << int(xsec*upperlimit2000[0]*19700) << " & \\multirow{3}{*}{" << int(obs_lim[5]*19700) << "}  \\\\" << endl;
+  myfile << "Events & " << int(exp_lim[5]*19700) << " & \\\\"<< endl;
+  myfile << "+2$\\sigma$ & " << int(xsec*upperlimit2000[4]*19700) <<" & \\\\"<< endl;
+  myfile <<  "\\hline"<< endl;
+  myfile << "\\end{tabular}"<< endl;
+  myfile << "\\end{table}"<< endl << endl;
+
+
+  myfile << "\\end{document}"<< endl;
+
+
+
+
+  myfile.close();
 
   //Theoretical CTAU
   //Double_t mTh[6] = {0.1,1.0,5.0,25.0,50.0,200.0};
@@ -243,8 +334,6 @@ void plot_limit_mass(std::string LAMBDA){
                              xsec*upperlimit50[4],
                              xsec*upperlimit10[4],
                              xsec*upperlimit1[4]};
-
-  cout << endl << upperlimit1[0] << endl;
 
   TGraph* Onesig_graph;
   Onesig_graph = new TGraph(12., x_pdf, y_pdf_1sig );

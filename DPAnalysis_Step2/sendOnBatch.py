@@ -11,6 +11,7 @@ pwd = os.environ['PWD']
 dataset_name        = ['Run2012A', 'Run2012B_1', 'Run2012B_2', 'Run2012B_3', 'Run2012B_4', 
 					   'Run2012C_1', 'Run2012C_2', 'Run2012C_3', 'Run2012C_4', 'Run2012C_5', 
 					   'Run2012D_1', 'Run2012D_2', 'Run2012D_3', 'Run2012D_4', 'Run2012D_5', 
+                                           'GMSB_Lambda-100_CTau-1', 'GMSB_Lambda-100_CTau-10','GMSB_Lambda-100_CTau-100','GMSB_Lambda-100_CTau-1000', 'GMSB_Lambda-100_CTau-2000', 'GMSB_Lambda-100_CTau-250', 'GMSB_Lambda-100_CTau-500',
 					   'GMSB_Lambda-140_CTau-1', 'GMSB_Lambda-140_CTau-10','GMSB_Lambda-140_CTau-100','GMSB_Lambda-140_CTau-1000', 'GMSB_Lambda-140_CTau-2000', 'GMSB_Lambda-140_CTau-50', 'GMSB_Lambda-140_CTau-500', 
 					   'GMSB_Lambda-160_CTau-1', 'GMSB_Lambda-160_CTau-10', 'GMSB_Lambda-160_CTau-100', 'GMSB_Lambda-160_CTau-1000', 'GMSB_Lambda-160_CTau-2000', 'GMSB_Lambda-160_CTau-50', 'GMSB_Lambda-160_CTau-500', 
 					   'GMSB_Lambda-180_CTau-1', 'GMSB_Lambda-180_CTau-10', 'GMSB_Lambda-180_CTau-2000', 'GMSB_Lambda-180_CTau-250', 'GMSB_Lambda-180_CTau-50', 'GMSB_Lambda-180_CTau-500', 
@@ -35,7 +36,7 @@ dataset_name_inverted = ['Run2012A', 'Run2012B_1', 'Run2012B_2', 'Run2012B_3', '
 queue              	= "1nh" 
 executable         	= "tmp/main" 
 
-destinationfolder       = "/../DPAnalysis_Step3/v24triggered/"
+destinationfolder       = "/../DPAnalysis_Step3/v24/"
 
 for z in range(len(dataset_name)):
 
