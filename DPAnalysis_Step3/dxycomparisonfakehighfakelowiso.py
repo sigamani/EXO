@@ -225,7 +225,7 @@ def plot(dxy):
     CMS_lumi.writeExtraText = 1
     CMS_lumi.extraText = ""
 
-    iPos = 30
+    iPos = 11
     if( iPos==0 ): CMS_lumi.relPosX = 0.12
 
     H_ref = 600;
