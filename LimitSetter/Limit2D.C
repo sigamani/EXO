@@ -28,7 +28,7 @@ void Limit2D() {
    gStyle->SetFrameLineWidth(1);
    gStyle->SetOptTitle(0);
 
-   TCanvas *c1a = new TCanvas("c1a","c1a" ,800,800);
+   TCanvas *c1a = new TCanvas("c1a","c1a" ,800,720);
 
    c1a->cd() ;
    //c1a->SetGridy() ;
@@ -72,7 +72,7 @@ void Limit2D() {
    Double_t obs_cms_conv8TeV[6]={198, 227., 256., 256., 227., 198};
 
    //Full CLs |  Real CTau with GMSB bin 1 set to 0                            
-   Double_t obs_ct_conv8TeV[6]={0.3, 1.2, 9, 9, 25., 50.};  // MET > 60        
+   Double_t obs_ct_conv8TeV[6]={0.4, 2, 9, 9, 25., 50.};  // MET > 60 
 
    TGraph* obs_cms8_conv_gr;
    obs_cms8_conv_gr = new TGraph(6, obs_cms_conv8TeV, obs_ct_conv8TeV );
@@ -147,13 +147,15 @@ void Limit2D() {
 
 
    //Full CLs |  Real CTau with GMSB bin 1 set to 0
-   Double_t ct_conv8TeV[6]={0.2, 0.55, 1.5, 20., 35., 70.};  // MET > 60
+   Double_t ct_conv8TeV[6]={0.25, 0.8, 3., 18., 30., 65.};  // MET > 60
+
 
    TGraph* exp_cms8_conv_gr;
    exp_cms8_conv_gr = new TGraph(6, exp_cms_conv8TeV, ct_conv8TeV );
    exp_cms8_conv_gr->SetFillColor(2);
    exp_cms8_conv_gr->SetLineColor(2);
    exp_cms8_conv_gr->SetFillStyle(3244);
+   //exp_cms8_conv_gr->SetFillStyle(3001);
    exp_cms8_conv_gr->Draw("FLsames");
    c1a->Update() ;
 
@@ -196,21 +198,27 @@ void Limit2D() {
    //obs_atlas_gr->Draw("Lsames");
    //c1a->Update() ;
 
-   TLegend* leg = new TLegend(0.4, 0.66, 0.7, 0.88);
+
+           TLatex l1;
+           l1.SetTextAlign(12);
+           l1.SetTextSize(0.045);
+           l1.SetNDC();
+           l1.DrawLatex(0.6, 0.55, "GMSB SPS8");
+
+
+   TLegend* leg = new TLegend(0.35, 0.65, 0.65, 0.85);
    leg->SetFillStyle(0); 
    leg->SetBorderSize(0); 
    leg->SetFillColor(0);
-   leg->SetTextSize(0.030) ;
+   leg->SetTextSize(0.032) ;
  
-   // leg ->SetTextFont(22);
    leg ->SetTextFont(42);
-   leg->AddEntry(exp_cms_gr,      "CMS Timing Exp. #scale[0.7]{(19.1 fb^{-1} at 8 TeV)}",   "F" );
-   leg->AddEntry(obs_cms_gr,      "CMS Timing Obs. #scale[0.7]{(19.1 fb^{-1} at 8 TeV)}",   "L" );
-   //leg->AddEntry(exp_cms8_conv_gr,"CMS Conversions Exp. #scale[0.7]{(19.7 fb^{-1} at 8 TeV)}","F"); 
-   //leg->AddEntry(obs_cms8_conv_gr, "CMS Conversions Obs. #scale[0.7]{(19.7 fb^{-1} at 8 TeV)}","L");
-   leg->AddEntry(obs_cms7_gr,     "CMS Timing Obs. #scale[0.7]{(4.9 fb^{-1} at 7 TeV)}",   "F");
-   //leg->AddEntry(obs_atlas_gr,    "ATLAS Obs 20.3 fb^{-1} 8 TeV", "L" );
-   leg->AddEntry(obs_cdf_gr,      "CDF Obs. #scale[0.7]{(2.6 fb^{-1} at 1.96 TeV)}", "F" ); 
+   //leg->AddEntry(exp_cms_gr,      "CMS Timing Exp. #scale[1.]{(19.1 fb^{-1} at 8 TeV)}",   "F" );
+   //leg->AddEntry(obs_cms_gr,      "CMS Timing Obs. #scale[1.]{(19.1 fb^{-1} at 8 TeV)}",   "L" );
+   leg->AddEntry(exp_cms8_conv_gr,"CMS Conversions Exp. #scale[1.]{(19.7 fb^{-1} at 8 TeV)}","F"); 
+   leg->AddEntry(obs_cms8_conv_gr, "CMS Conversions Obs. #scale[1.]{(19.7 fb^{-1} at 8 TeV)}","L");
+   leg->AddEntry(obs_cms7_gr,     "CMS Timing Obs. #scale[1.]{(4.9 fb^{-1} at 7 TeV)}",   "F");
+   leg->AddEntry(obs_cdf_gr,      "CDF Obs. #scale[1.]{(2.6 fb^{-1} at 1.96 TeV)}", "F" ); 
    leg->Draw("same");
    c1a->Update() ;
 
@@ -231,8 +239,25 @@ void Limit2D() {
 
    gPad->RedrawAxis(); 
 
-   CMS_lumi( c1a, 2, 11 ) ;
-   c1a->Update();
+   //CMS_lumi( c1a, 2, 11 ) ;
+   //c1a->Update();
+
+
+   TPaveLabel *pl2 = new TPaveLabel(0.01, 0.8, 0.46, 0.88, "CMS", "brNDC");
+   pl2->SetBorderSize(0);
+   pl2->SetFillColor(0);
+   pl2->SetFillStyle(0);
+   pl2->SetTextSize(0.7);
+   pl2->SetTextFont(61);
+   pl2->Draw();
+
+   TPaveLabel *pl = new TPaveLabel(0.03, 0.758, 0.48, 0.838, "Preliminary", "brNDC");
+   pl->SetBorderSize(0);
+   pl->SetFillColor(0);
+   pl->SetFillStyle(0);
+   pl->SetTextSize(0.4);
+   pl->SetTextFont(52);
+   pl->Draw();
 
    TString gPlotname = hfolder +  limitPlotName  ;
    c1a->Print( gPlotname +".png" ) ;

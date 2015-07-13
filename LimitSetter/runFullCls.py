@@ -10,16 +10,15 @@ scram = os.environ['SCRAM_ARCH']
 
 TMP_DIR = "/tmp/sigamani/"
 
-#signal_point 		= [ 'L180CT1','L180CT10', 'L180CT50','L180CT250','L180CT500','L180CT2000',
-#			   			'L160CT1', 'L160CT10', 'L160CT100','L160CT500','L160CT1000','L160CT2000',
-#			   			'L140CT1','L140CT10', 'L140CT100','L140CT500','L140CT1000','L140CT2000'] 
+signal_point 		= [ 'L180CT1','L180CT10', 'L180CT50','L180CT250','L180CT500','L180CT2000'] #,
+			   			#'L160CT1', 'L160CT10', 'L160CT100','L160CT500','L160CT1000','L160CT2000',
+			   			#'L140CT1','L140CT10', 'L140CT100','L140CT500','L140CT1000','L140CT2000'] 
 
-signal_point 		= ['L140CT2000']
 
 for z in range(len(signal_point)):
 
 
-        outputdir = pwd + "/DATACARDS/"
+        outputdir = pwd + "/DATACARDS3/"
         output = "datacard-"+str(signal_point[z])
         outputname = outputdir+"/"+output+".src"
 
@@ -39,5 +38,5 @@ for z in range(len(signal_point)):
         outputfile.write('cp datacard-'+str(signal_point[z])+'.txt.result.txt '+outputdir+'/RESULT_'+str(signal_point[z])+'.txt; \n')
         outputfile.write('rm *root; \n')
         outputfile.close
-        os.system("echo bsub -q 2nd -o "+outputdir+"/"+output+".log source "+outputname)
-        os.system("bsub -q 2nd -o "+outputdir+"/"+output+".log source "+outputname)
+        os.system("echo bsub -q 1nw -o "+outputdir+"/"+output+".log source "+outputname)
+        os.system("bsub -q 1nw -o "+outputdir+"/"+output+".log source "+outputname)

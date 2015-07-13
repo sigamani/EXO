@@ -125,6 +125,8 @@ CMS_lumi( TPad* pad, int iPeriod, int iPosX )
 	  pad_logo->Draw();
 	  pad_logo->cd();
 	  CMS_logo->Draw("X");
+
+
 	  pad_logo->Modified();
 	  pad->cd();
 	}
